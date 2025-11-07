@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recompensas Diarias</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body class="ladybug-bg">
+  <nav class="navbar">
+    <h1>🎁 Recompensas Diarias</h1>
+    <a href="index.html" class="btn-ladybug small">🏠 Volver</a>
+  </nav>
+
+  <main class="rewards-container">
+    <div class="user-stats">
+      <p>Mis bugs: <span id="user-bugs">0</span> 🐞</p>
+      <p>Racha actual: <span id="user-streak">0</span> días 🔥</p>
+    </div>
+
+    <button id="claim-reward-btn" class="btn-ladybug large">Reclamar Recompensa</button>
+
+    <div id="reward-message" class="reward-message"></div>
+  </main>
+
+  <script src="js/supabaseClient.js" defer></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/ui.js" defer></script>
+  <script src="js/recompensas.js" defer></script>
+</body>
+</html>

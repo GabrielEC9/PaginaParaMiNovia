@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tienda</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body class="ladybug-bg">
+  <nav class="navbar">
+    <h1>🛍️ Tienda</h1>
+    <a href="index.html" class="btn-ladybug small">🏠 Volver</a>
+  </nav>
+
+  <main class="store-container">
+    <div class="user-info">
+      <p>Mis bugs: <span id="user-bugs">0</span> 🐞</p>
+    </div>
+
+    <section id="store-items" class="store-grid"></section>
+  </main>
+
+  <script src="js/supabaseClient.js" defer></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/ui.js" defer></script>
+  <script src="js/tienda.js" defer></script>
+</body>
+</html>

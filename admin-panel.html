@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel de Administración - Ladybug</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body class="ladybug-bg">
+  <nav class="navbar">
+    <h1>🐞 Panel de Administración</h1>
+    <button id="logout-btn" class="btn-ladybug small">Cerrar sesión</button>
+  </nav>
+
+  <main class="menu-container">
+    <a href="album.html" class="btn-ladybug">📸 Ver Álbum</a>
+    <a href="frases.html" class="btn-ladybug">💌 Frases del Día</a>
+    <a href="curiosidades.html" class="btn-ladybug">🐞 Curiosidades</a>
+    <a href="tienda.html" class="btn-ladybug">🛍️ Tienda</a>
+    <a href="recompensas.html" class="btn-ladybug">🎁 Recompensas</a>
+    <a href="admin_form.html" class="btn-ladybug">✏️ Subir Contenido</a>
+    <a href="notificaciones.html" class="btn-ladybug">🔔 Notificaciones</a>
+  </main>
+
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/admin-panel.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfil</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body class="ladybug-bg">
+  <nav class="navbar">
+    <h1>🐞 Mi Perfil</h1>
+    <a href="index.html" class="btn-ladybug small">🏠 Inicio</a>
+  </nav>
+
+  <main class="profile-container">
+    <section class="profile-card">
+      <img id="user-avatar" src="img/default-avatar.png" alt="Avatar" class="profile-avatar" />
+      <h2 id="user-name">Cargando nombre...</h2>
+      <p id="user-email" class="user-email">Cargando correo...</p>
+      <p class="bugs-count">🐞 Bugs acumulados: <span id="user-bugs">0</span></p>
+      <button class="btn-ladybug" id="logout-btn">Cerrar sesión</button>
+    </section>
+
+    <section class="rewards-section">
+      <h3>🎁 Recompensas Canjeadas</h3>
+      <div id="user-rewards" class="rewards-list">
+        <p class="loading-text">Cargando recompensas...</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/supabaseClient.js" defer></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/ui.js" defer></script>
+  <script src="js/perfil.js" defer></script>
+</body>
+</html>

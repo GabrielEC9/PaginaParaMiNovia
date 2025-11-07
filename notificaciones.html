@@ -1,0 +1,27 @@
+<<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notificaciones</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body class="ladybug-bg">
+  <nav class="navbar">
+    <h1>🔔 Notificaciones</h1>
+    <a href="admin-panel.html" class="btn-ladybug small">🏠 Volver</a>
+  </nav>
+
+  <main class="notifications-container">
+    <section id="notifications-list" class="notifications-list">
+      <p class="loading-text">Cargando notificaciones...</p>
+    </section>
+  </main>
+
+  <script src="js/supabaseClient.js" defer></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/ui.js" defer></script>
+  <script src="js/notificaciones.js" defer></script>
+</body>
+</html>
