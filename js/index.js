@@ -1,5 +1,4 @@
 // js/index.js
-import { supabase } from './supabaseClient.js'
 import { requireAuth, getUserProfile, logout } from './auth.js'
 
 document.addEventListener('DOMContentLoaded', async () => {
