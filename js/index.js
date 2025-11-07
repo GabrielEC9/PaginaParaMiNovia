@@ -3,11 +3,9 @@ import { supabase } from './supabaseClient.js'
 import { requireAuth, getUserProfile, logout } from './auth.js'
 
 document.addEventListener('DOMContentLoaded', async () => {
-  // Oculta ambos menús inicialmente
+  const mainContent = document.getElementById('main-content')
   const adminMenu = document.getElementById('admin-menu')
   const userMenu = document.getElementById('user-menu')
-  adminMenu.classList.add('hidden')
-  userMenu.classList.add('hidden')
 
   // Verifica sesión
   const user = await requireAuth()
@@ -24,15 +22,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     userMenu.classList.remove('hidden')
   }
 
-  // Opcional: mostrar bienvenida si quieres
-  const bienvenida = document.getElementById('bienvenida')
-  if (bienvenida) {
-    bienvenida.textContent = perfil.nombre ? `Bienvenido(a), ${perfil.nombre} 🐞` : 'Bienvenido(a) 🐞'
-  }
+  // Mostrar el contenido principal
+  mainContent.hidden = false
 
   // Configura logout
   const logoutBtn = document.getElementById('logout-btn')
-  if (logoutBtn) {
-    logoutBtn.addEventListener('click', () => logout())
-  }
+  if (logoutBtn) logoutBtn.addEventListener('click', () => logout())
 })
