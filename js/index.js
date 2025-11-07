@@ -1,35 +1,38 @@
+// js/index.js
+import { supabase } from './supabaseClient.js'
+import { requireAuth, getUserProfile, logout } from './auth.js'
+
 document.addEventListener('DOMContentLoaded', async () => {
-  const { data: { user } } = await supabase.auth.getUser()
+  // Oculta ambos menús inicialmente
+  const adminMenu = document.getElementById('admin-menu')
+  const userMenu = document.getElementById('user-menu')
+  adminMenu.classList.add('hidden')
+  userMenu.classList.add('hidden')
 
-  if (!user) {
-    window.location.href = 'login.html'
-    return
-  }
+  // Verifica sesión
+  const user = await requireAuth()
+  if (!user) return  // ya redirigió a login si no hay usuario
 
-  const { data: perfil } = await supabase
-    .from('usuarios')
-    .select('nombre, rol')
-    .eq('id_auth', user.id)
-    .single()
+  // Obtiene perfil
+  const perfil = await getUserProfile()
+  if (!perfil) return
 
-  const bienvenida = document.getElementById('bienvenida')
-  if (perfil?.nombre) {
-    bienvenida.textContent = `Bienvenido(a), ${perfil.nombre} 🐞`
+  // Muestra menú según rol
+  if (perfil.rol === 'admin') {
+    adminMenu.classList.remove('hidden')
   } else {
-    bienvenida.textContent = 'Bienvenido(a) 🐞'
+    userMenu.classList.remove('hidden')
   }
 
-  const adminBtns = document.querySelectorAll('.admin-only')
-  adminBtns.forEach(btn => {
-    if (perfil?.rol === 'admin') {
-      btn.style.display = 'inline-block'
-    } else {
-      btn.style.display = 'none'
-    }
-  })
-})
+  // Opcional: mostrar bienvenida si quieres
+  const bienvenida = document.getElementById('bienvenida')
+  if (bienvenida) {
+    bienvenida.textContent = perfil.nombre ? `Bienvenido(a), ${perfil.nombre} 🐞` : 'Bienvenido(a) 🐞'
+  }
 
-document.getElementById('logout-btn').addEventListener('click', async () => {
-  await supabase.auth.signOut()
-  window.location.href = 'login.html'
+  // Configura logout
+  const logoutBtn = document.getElementById('logout-btn')
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => logout())
+  }
 })
