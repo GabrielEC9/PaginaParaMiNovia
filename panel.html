@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ladybug Panel</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+
+<body class="ladybug-bg">
+  <div id="main-content" hidden>
+    <nav class="navbar">
+      <h1>🐞 Ladybug Panel</h1>
+      <button id="logout-btn" class="btn-ladybug small">Cerrar sesión</button>
+    </nav>
+
+    <main class="menu-container">
+      <!-- ADMIN -->
+      <div id="admin-menu" class="menu hidden">
+        <h2>Menú del Administrador</h2>
+        <a href="album.html" class="btn-ladybug">📸 Álbum</a>
+        <a href="frases.html" class="btn-ladybug">💌 Frases</a>
+        <a href="curiosidades.html" class="btn-ladybug">🐞 Curiosidades</a>
+        <a href="tienda.html" class="btn-ladybug">🛍️ Tienda</a>
+        <a href="recompensas.html" class="btn-ladybug">🎁 Recompensas</a>
+        <a href="admin-form.html" class="btn-ladybug">✏️ Subir contenido</a>
+        <a href="notificaciones.html" class="btn-ladybug">🔔 Notificaciones</a>
+      </div>
+
+      <!-- USER -->
+      <div id="user-menu" class="menu hidden">
+        <h2>Menú de Usuario</h2>
+        <a href="album.html" class="btn-ladybug">📸 Álbum</a>
+        <a href="frases.html" class="btn-ladybug">💌 Frases</a>
+        <a href="curiosidades.html" class="btn-ladybug">🐞 Curiosidades</a>
+        <a href="tienda.html" class="btn-ladybug">🛍️ Tienda</a>
+        <a href="recompensas.html" class="btn-ladybug">🎁 Recompensas</a>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="js/panel.js"></script>
+</body>
+</html>
