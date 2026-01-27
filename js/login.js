@@ -6,8 +6,8 @@ const errorMsg = document.getElementById('error-msg')
 form.addEventListener('submit', async (e) => {
   e.preventDefault()
 
-  const email = document.getElementById('email').value.trim()
-  const password = document.getElementById('password').value.trim()
+  const email = form.email.value.trim()
+  const password = form.password.value.trim()
 
   const { error } = await supabase.auth.signInWithPassword({
     email,
@@ -17,6 +17,8 @@ form.addEventListener('submit', async (e) => {
   if (error) {
     errorMsg.textContent = 'Correo o contraseña incorrectos'
     errorMsg.style.display = 'block'
+    return
   }
-  // 🚫 NO redirect aquí
+
+  window.location.replace('panel.html')
 })

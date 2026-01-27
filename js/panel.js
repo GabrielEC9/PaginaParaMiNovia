@@ -5,23 +5,37 @@ document.addEventListener('DOMContentLoaded', async () => {
   const adminMenu = document.getElementById('admin-menu')
   const userMenu = document.getElementById('user-menu')
 
-  const { data: { session } } = await supabase.auth.getSession()
-  if (!session) {
-    window.location.replace('index.html') // vuelve al gate
+  // 🔒 Verificar sesión UNA SOLA VEZ
+  const { data, error } = await supabase.auth.getSession()
+
+  if (error || !data.session) {
+    window.location.replace('login.html')
     return
   }
 
-  const { data: profile } = await supabase
+  const session = data.session
+
+  // 👤 Obtener perfil
+  const { data: profile, error: profileError } = await supabase
     .from('profiles')
     .select('role')
     .eq('id', session.user.id)
     .single()
 
-  if (profile.role === 'admin') {
-    adminMenu.classList.remove('hidden')
-  } else {
-    userMenu.classList.remove('hidden')
+  if (profileError || !profile) {
+    console.error(profileError)
+    await supabase.auth.signOut()
+    window.location.replace('login.html')
+    return
   }
 
+  // 🎭 Mostrar menú según rol
+  if (profile.role === 'admin') {
+    adminMenu?.classList.remove('hidden')
+  } else {
+    userMenu?.classList.remove('hidden')
+  }
+
+  // ✅ Mostrar panel SOLO cuando todo esté listo
   main.hidden = false
 })
