@@ -7,8 +7,8 @@ supabase.auth.onAuthStateChange((_event, session) => {
   resolved = true
 
   if (session) {
-    window.location.replace('panel.html')
+    window.location.href = '/panel.html'
   } else {
-    window.location.replace('login.html')
+    window.location.href = '/login.html'
   }
 })
