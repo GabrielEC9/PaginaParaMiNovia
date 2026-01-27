@@ -1,5 +1,4 @@
-// js/index.js
-import { requireAuth, getUserProfile, logout } from './auth.js'
+import { getSessionUser, getUserProfile, logout } from './auth.js'
 
 document.addEventListener('DOMContentLoaded', async () => {
   const mainContent = document.getElementById('main-content')
@@ -9,10 +8,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   mainContent.hidden = true
 
-  const user = await requireAuth()
-  if (!user) return
+  // ⏳ Esperar un tick a que Supabase hidrate sesión
+  await new Promise(r => setTimeout(r, 50))
 
-  const profile = await getUserProfile()
+  const user = await getSessionUser()
+  if (!user) {
+    window.location.replace('login.html')
+    return
+  }
+
+  const profile = await getUserProfile(user.id)
   if (!profile) {
     window.location.replace('login.html')
     return
@@ -27,4 +32,3 @@ document.addEventListener('DOMContentLoaded', async () => {
   mainContent.hidden = false
   logoutBtn.addEventListener('click', logout)
 })
-

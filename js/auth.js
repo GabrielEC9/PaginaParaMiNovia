@@ -1,26 +1,16 @@
 import { supabase } from './supabaseClient.js'
 
-// 🔐 Requiere sesión
-export async function requireAuth() {
+// 🔐 SOLO verifica, NO redirige
+export async function getSessionUser() {
   const { data: { session } } = await supabase.auth.getSession()
-
-  if (!session) {
-    window.location.replace('login.html')
-    return null
-  }
-
-  return session.user
+  return session?.user || null
 }
 
-// 👤 Obtener perfil
-export async function getUserProfile() {
-  const { data: { session } } = await supabase.auth.getSession()
-  if (!session) return null
-
+export async function getUserProfile(userId) {
   const { data, error } = await supabase
     .from('profiles')
     .select('*')
-    .eq('id', session.user.id)
+    .eq('id', userId)
     .single()
 
   if (error) {
@@ -31,7 +21,6 @@ export async function getUserProfile() {
   return data
 }
 
-// 🚪 Logout
 export async function logout() {
   await supabase.auth.signOut()
   window.location.replace('login.html')

@@ -1,4 +1,3 @@
-// js/login.js
 import { supabase } from './supabaseClient.js'
 
 const form = document.getElementById('login-form')
@@ -9,12 +8,9 @@ const errorMsg = document.getElementById('error-msg')
 form.addEventListener('submit', async (e) => {
   e.preventDefault()
 
-  const email = emailInput.value.trim()
-  const password = passwordInput.value.trim()
-
   const { error } = await supabase.auth.signInWithPassword({
-    email,
-    password
+    email: emailInput.value.trim(),
+    password: passwordInput.value.trim()
   })
 
   if (error) {
@@ -23,6 +19,5 @@ form.addEventListener('submit', async (e) => {
     return
   }
 
-  // ✅ SIEMPRE ir al index
   window.location.replace('index.html')
 })
