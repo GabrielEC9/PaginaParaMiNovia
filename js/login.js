@@ -24,5 +24,5 @@ form.addEventListener('submit', async (e) => {
   }
 
   // ✅ SIEMPRE ir al index
-  window.location.href = 'index.html'
+  window.location.replace('index.html')
 })

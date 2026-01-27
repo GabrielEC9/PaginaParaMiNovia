@@ -1,18 +1,8 @@
-// js/auth.js
 import { supabase } from './supabaseClient.js'
-
-// Espera a que Supabase cargue la sesión real
-export function waitForAuth() {
-  return new Promise((resolve) => {
-    supabase.auth.onAuthStateChange((_event, session) => {
-      resolve(session)
-    })
-  })
-}
 
 // 🔐 Requiere sesión
 export async function requireAuth() {
-  const session = await waitForAuth()
+  const { data: { session } } = await supabase.auth.getSession()
 
   if (!session) {
     window.location.replace('login.html')
@@ -22,9 +12,9 @@ export async function requireAuth() {
   return session.user
 }
 
-// 👤 Perfil
+// 👤 Obtener perfil
 export async function getUserProfile() {
-  const session = await waitForAuth()
+  const { data: { session } } = await supabase.auth.getSession()
   if (!session) return null
 
   const { data, error } = await supabase
@@ -34,7 +24,7 @@ export async function getUserProfile() {
     .single()
 
   if (error) {
-    console.error(error)
+    console.error('Perfil error:', error)
     return null
   }
 
