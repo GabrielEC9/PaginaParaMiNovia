@@ -182,3 +182,23 @@ footer {
     font-size: 0.9rem;
   }
 }
+
+/* ====== FONDO LADYBUG ====== */
+.ladybug-bg {
+  background:
+    radial-gradient(circle at top, rgba(229,9,20,0.25), transparent 60%),
+    radial-gradient(circle at bottom, rgba(193,7,16,0.15), transparent 60%),
+    linear-gradient(180deg, #0a0a0a, #121212);
+}
+
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
