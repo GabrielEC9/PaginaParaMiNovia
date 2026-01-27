@@ -11,11 +11,12 @@ export function onAuthReady(callback) {
       callback(session)
     }
   )
-
   return listener
 }
 
 export async function logout() {
-  await supabase.auth.signOut()
-  window.location.href = 'login.html'
+  const { error } = await supabase.auth.signOut()
+  if (error) {
+    console.error('Error al cerrar sesión:', error)
+  }
 }
