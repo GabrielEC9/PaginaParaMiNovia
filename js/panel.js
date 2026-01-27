@@ -1,21 +1,25 @@
 import { supabase } from './supabaseClient.js'
+import { logout } from './auth.js'
 
 document.addEventListener('DOMContentLoaded', async () => {
   const main = document.getElementById('main-content')
   const adminMenu = document.getElementById('admin-menu')
   const userMenu = document.getElementById('user-menu')
+  const logoutBtn = document.getElementById('logout-btn')
 
-  // 🔒 Verificar sesión UNA SOLA VEZ
+  logoutBtn?.addEventListener('click', async () => {
+    await logout()
+  })
+
   const { data, error } = await supabase.auth.getSession()
 
   if (error || !data.session) {
-    window.location.href = '/login.html'
+    window.location.href = 'login.html'
     return
   }
 
   const session = data.session
 
-  // 👤 Obtener perfil
   const { data: profile, error: profileError } = await supabase
     .from('profiles')
     .select('role')
@@ -23,19 +27,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     .single()
 
   if (profileError || !profile) {
-    console.error(profileError)
     await supabase.auth.signOut()
-    window.location.href = '/login.html'
+    window.location.href = 'login.html'
     return
   }
 
-  // 🎭 Mostrar menú según rol
   if (profile.role === 'admin') {
     adminMenu?.classList.remove('hidden')
   } else {
     userMenu?.classList.remove('hidden')
   }
 
-  // ✅ Mostrar panel SOLO cuando todo esté listo
   main.hidden = false
 })
