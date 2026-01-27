@@ -1,21 +1,30 @@
 // js/auth.js
 import { supabase } from './supabaseClient.js'
 
-// 🔐 Requiere sesión 
+// Espera a que Supabase cargue la sesión real
+export function waitForAuth() {
+  return new Promise((resolve) => {
+    supabase.auth.onAuthStateChange((_event, session) => {
+      resolve(session)
+    })
+  })
+}
+
+// 🔐 Requiere sesión
 export async function requireAuth() {
-  const { data: { session } } = await supabase.auth.getSession()
+  const session = await waitForAuth()
 
   if (!session) {
-    window.location.href = 'login.html'
+    window.location.replace('login.html')
     return null
   }
 
   return session.user
 }
 
-// 👤 Obtiene perfil desde public.profiles
+// 👤 Perfil
 export async function getUserProfile() {
-  const { data: { session } } = await supabase.auth.getSession()
+  const session = await waitForAuth()
   if (!session) return null
 
   const { data, error } = await supabase
@@ -25,7 +34,7 @@ export async function getUserProfile() {
     .single()
 
   if (error) {
-    console.error('Error obteniendo perfil:', error)
+    console.error(error)
     return null
   }
 
@@ -35,5 +44,5 @@ export async function getUserProfile() {
 // 🚪 Logout
 export async function logout() {
   await supabase.auth.signOut()
-  window.location.href = 'login.html'
+  window.location.replace('login.html')
 }
