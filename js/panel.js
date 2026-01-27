@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const { data, error } = await supabase.auth.getSession()
 
   if (error || !data.session) {
-    window.location.replace('login.html')
+    window.location.href = '/login.html'
     return
   }
 
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (profileError || !profile) {
     console.error(profileError)
     await supabase.auth.signOut()
-    window.location.replace('login.html')
+    window.location.href = '/login.html'
     return
   }
 

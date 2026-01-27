@@ -20,5 +20,5 @@ form.addEventListener('submit', async (e) => {
     return
   }
 
-  window.location.replace('panel.html')
+  window.location.href = '/panel.html'
 })
