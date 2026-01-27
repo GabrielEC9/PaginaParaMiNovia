@@ -1,27 +1,21 @@
+// js/auth.js
 import { supabase } from './supabaseClient.js'
 
-// 🔐 SOLO verifica, NO redirige
-export async function getSessionUser() {
-  const { data: { session } } = await supabase.auth.getSession()
-  return session?.user || null
-}
+let authResolved = false
 
-export async function getUserProfile(userId) {
-  const { data, error } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', userId)
-    .single()
+export function onAuthReady(callback) {
+  const { data: listener } = supabase.auth.onAuthStateChange(
+    (_event, session) => {
+      if (authResolved) return
+      authResolved = true
+      callback(session)
+    }
+  )
 
-  if (error) {
-    console.error('Perfil error:', error)
-    return null
-  }
-
-  return data
+  return listener
 }
 
 export async function logout() {
   await supabase.auth.signOut()
-  window.location.replace('login.html')
+  window.location.href = 'login.html'
 }

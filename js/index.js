@@ -1,34 +1,39 @@
-import { getSessionUser, getUserProfile, logout } from './auth.js'
+// js/index.js
+import { onAuthReady, logout } from './auth.js'
+import { supabase } from './supabaseClient.js'
 
-document.addEventListener('DOMContentLoaded', async () => {
-  const mainContent = document.getElementById('main-content')
+document.addEventListener('DOMContentLoaded', () => {
+  const main = document.getElementById('main-content')
   const adminMenu = document.getElementById('admin-menu')
   const userMenu = document.getElementById('user-menu')
   const logoutBtn = document.getElementById('logout-btn')
 
-  mainContent.hidden = true
+  main.hidden = true
 
-  // ⏳ Esperar un tick a que Supabase hidrate sesión
-  await new Promise(r => setTimeout(r, 50))
+  onAuthReady(async (session) => {
+    if (!session) {
+      window.location.href = 'login.html'
+      return
+    }
 
-  const user = await getSessionUser()
-  if (!user) {
-    window.location.replace('login.html')
-    return
-  }
+    const { data: profile, error } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', session.user.id)
+      .single()
 
-  const profile = await getUserProfile(user.id)
-  if (!profile) {
-    window.location.replace('login.html')
-    return
-  }
+    if (error || !profile) {
+      window.location.href = 'login.html'
+      return
+    }
 
-  if (profile.role === 'admin') {
-    adminMenu.classList.remove('hidden')
-  } else {
-    userMenu.classList.remove('hidden')
-  }
+    if (profile.role === 'admin') {
+      adminMenu.classList.remove('hidden')
+    } else {
+      userMenu.classList.remove('hidden')
+    }
 
-  mainContent.hidden = false
-  logoutBtn.addEventListener('click', logout)
+    main.hidden = false
+    logoutBtn.addEventListener('click', logout)
+  })
 })

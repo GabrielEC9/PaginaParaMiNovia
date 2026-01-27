@@ -1,23 +1,27 @@
+// js/login.js
 import { supabase } from './supabaseClient.js'
+import { onAuthReady } from './auth.js'
 
 const form = document.getElementById('login-form')
-const emailInput = document.getElementById('email')
-const passwordInput = document.getElementById('password')
 const errorMsg = document.getElementById('error-msg')
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault()
 
-  const { error } = await supabase.auth.signInWithPassword({
-    email: emailInput.value.trim(),
-    password: passwordInput.value.trim()
-  })
+  const email = email.value.trim()
+  const password = password.value.trim()
+
+  const { error } = await supabase.auth.signInWithPassword({ email, password })
 
   if (error) {
-    errorMsg.textContent = 'Correo o contraseña incorrectos'
+    errorMsg.textContent = 'Credenciales incorrectas'
     errorMsg.style.display = 'block'
-    return
   }
+})
 
-  window.location.replace('index.html')
+// 🔑 SOLO cuando Supabase confirma sesión
+onAuthReady((session) => {
+  if (session) {
+    window.location.href = 'index.html'
+  }
 })
