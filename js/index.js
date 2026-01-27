@@ -1,9 +1,14 @@
 import { supabase } from './supabaseClient.js'
 
-const { data } = await supabase.auth.getSession()
+let resolved = false
 
-if (data.session) {
-  window.location.replace('panel.html')
-} else {
-  window.location.replace('login.html')
-}
+supabase.auth.onAuthStateChange((_event, session) => {
+  if (resolved) return
+  resolved = true
+
+  if (session) {
+    window.location.replace('panel.html')
+  } else {
+    window.location.replace('login.html')
+  }
+})
