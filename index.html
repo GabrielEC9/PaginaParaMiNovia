@@ -7,8 +7,8 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/components.css" />
 </head>
+
 <body class="ladybug-bg">
-  <!-- Contenedor principal oculto hasta validar sesión -->
   <div id="main-content" hidden>
     <nav class="navbar">
       <h1>🐞 Ladybug Panel</h1>
@@ -16,33 +16,32 @@
     </nav>
 
     <main class="menu-container">
-      <!-- Menú del administrador -->
+      <!-- ADMIN -->
       <div id="admin-menu" class="menu hidden">
         <h2>Menú del Administrador</h2>
-        <a href="album.html" class="btn-ladybug">📸 Ver Álbum</a>
-        <a href="frases.html" class="btn-ladybug">💌 Frases del Día</a>
-        <a href="curiosidades.html" class="btn-ladybug">🐞 Domingo de Curiosidades</a>
+        <a href="album.html" class="btn-ladybug">📸 Álbum</a>
+        <a href="frases.html" class="btn-ladybug">💌 Frases</a>
+        <a href="curiosidades.html" class="btn-ladybug">🐞 Curiosidades</a>
         <a href="tienda.html" class="btn-ladybug">🛍️ Tienda</a>
         <a href="recompensas.html" class="btn-ladybug">🎁 Recompensas</a>
-        <a href="admin-form.html" class="btn-ladybug">✏️ Subir Contenido</a>
+        <a href="admin-form.html" class="btn-ladybug">✏️ Subir contenido</a>
         <a href="notificaciones.html" class="btn-ladybug">🔔 Notificaciones</a>
       </div>
 
-      <!-- Menú del usuario -->
+      <!-- USER -->
       <div id="user-menu" class="menu hidden">
         <h2>Menú de Usuario</h2>
         <a href="album.html" class="btn-ladybug">📸 Álbum</a>
-        <a href="frases.html" class="btn-ladybug">💌 Frases del Día</a>
-        <a href="curiosidades.html" class="btn-ladybug">🐞 Domingo de Curiosidades</a>
+        <a href="frases.html" class="btn-ladybug">💌 Frases</a>
+        <a href="curiosidades.html" class="btn-ladybug">🐞 Curiosidades</a>
         <a href="tienda.html" class="btn-ladybug">🛍️ Tienda</a>
         <a href="recompensas.html" class="btn-ladybug">🎁 Recompensas</a>
       </div>
     </main>
   </div>
 
-  <script src="js/supabaseClient.js" type="module"></script>
-  <script src="js/auth.js" type="module"></script>
-  <script src="js/ui.js" type="module"></script>
-  <script src="js/index.js" type="module"></script>
+  <script type="module" src="js/supabaseClient.js"></script>
+  <script type="module" src="js/auth.js"></script>
+  <script type="module" src="js/index.js"></script>
 </body>
 </html>

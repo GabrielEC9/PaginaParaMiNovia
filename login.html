@@ -5,38 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ladybug Login</title>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="img/ladybug.png" type="image/png">
 </head>
+
 <body class="ladybug-bg">
-  <main class="login-container" role="main">
-    <h1 class="login-title" aria-label="Inicio de sesión Ladybug">🐞 Ladybug Login</h1>
+  <main class="login-container">
+    <h1>🐞 Ladybug Login</h1>
 
-    <form id="login-form" novalidate autocomplete="on">
-      <label for="email" class="sr-only">Correo electrónico</label>
-      <input 
-        type="email" 
-        id="email" 
-        name="email" 
-        placeholder="Correo electrónico" 
-        required 
-        autocomplete="username"
-      >
-
-      <label for="password" class="sr-only">Contraseña</label>
-      <input 
-        type="password" 
-        id="password" 
-        name="password" 
-        placeholder="Contraseña" 
-        required 
-        autocomplete="current-password"
-      >
-
+    <form id="login-form">
+      <input type="email" id="email" placeholder="Correo" required>
+      <input type="password" id="password" placeholder="Contraseña" required>
+      <p id="error-msg" style="display:none;color:red;"></p>
       <button type="submit" class="btn-ladybug">Iniciar sesión</button>
     </form>
   </main>
 
-  <script src="js/supabaseClient.js" defer></script>
-  <script src="js/auth.js" defer></script>
+  <script type="module" src="js/supabaseClient.js"></script>
+  <script type="module" src="js/login.js"></script>
 </body>
 </html>

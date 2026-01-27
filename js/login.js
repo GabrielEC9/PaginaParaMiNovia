@@ -1,3 +1,6 @@
+// js/login.js
+import { supabase } from './supabaseClient.js'
+
 const form = document.getElementById('login-form')
 const emailInput = document.getElementById('email')
 const passwordInput = document.getElementById('password')
@@ -9,29 +12,17 @@ form.addEventListener('submit', async (e) => {
   const email = emailInput.value.trim()
   const password = passwordInput.value.trim()
 
-  const { data, error } = await supabase.auth.signInWithPassword({
+  const { error } = await supabase.auth.signInWithPassword({
     email,
     password
   })
 
   if (error) {
-    errorMsg.textContent = 'Correo o contraseña incorrectos.'
+    errorMsg.textContent = 'Correo o contraseña incorrectos'
     errorMsg.style.display = 'block'
     return
   }
 
-  const { user } = data
-  if (!user) return
-
-  const { data: perfil } = await supabase
-    .from('usuarios')
-    .select('rol')
-    .eq('id_auth', user.id)
-    .single()
-
-  if (perfil?.rol === 'admin') {
-    window.location.href = 'admin-panel.html'
-  } else {
-    window.location.href = 'index.html'
-  }
+  // ✅ SIEMPRE ir al index
+  window.location.href = 'index.html'
 })

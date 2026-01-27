@@ -5,38 +5,38 @@ document.addEventListener('DOMContentLoaded', async () => {
   const mainContent = document.getElementById('main-content')
   const adminMenu = document.getElementById('admin-menu')
   const userMenu = document.getElementById('user-menu')
+  const logoutBtn = document.getElementById('logout-btn')
+
+  // Ocultar todo mientras valida
+  mainContent.hidden = true
 
   try {
-    // Oculta el contenido principal hasta verificar sesión
-    if (mainContent) mainContent.hidden = true
-
-    // Verifica sesión
+    // 🔐 Verificar sesión
     const user = await requireAuth()
-    if (!user) return  // ya redirigió a login
+    if (!user) return
 
-    // Obtiene perfil
-    const perfil = await getUserProfile()
-    if (!perfil) {
-      console.error('No se pudo obtener perfil')
+    // 👤 Obtener perfil
+    const profile = await getUserProfile()
+    if (!profile) {
+      window.location.href = 'login.html'
       return
     }
 
-    // Muestra menú según rol
-    if (perfil.role === 'admin') {
-      adminMenu?.classList.remove('hidden')
+    // 🎭 Mostrar menú según rol
+    if (profile.role === 'admin') {
+      adminMenu.classList.remove('hidden')
     } else {
-      userMenu?.classList.remove('hidden')
+      userMenu.classList.remove('hidden')
     }
 
-    // Muestra contenido principal
-    if (mainContent) mainContent.hidden = false
+    // Mostrar contenido
+    mainContent.hidden = false
 
-    // Configura logout
-    const logoutBtn = document.getElementById('logout-btn')
-    if (logoutBtn) logoutBtn.addEventListener('click', () => logout())
+    // Logout
+    logoutBtn.addEventListener('click', logout)
 
   } catch (err) {
-    console.error('Error al cargar página:', err)
+    console.error('Error en index:', err)
     window.location.href = 'login.html'
   }
 })
