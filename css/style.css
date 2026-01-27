@@ -1,4 +1,4 @@
-/* ====== ESTILOS GLOBALES Y ESTRUCTURA ====== */
+/* ===== RESET Y BASE ===== */
 * {
   margin: 0;
   padding: 0;
@@ -6,199 +6,279 @@
   font-family: 'Poppins', sans-serif;
 }
 
+/* ===== FONDO Y CENTRADO DEL LOGIN ===== */
 body {
-  background-color: #121212;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
+  margin: 0;
   min-height: 100vh;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-/* ====== ENCABEZADO ====== */
-header {
-  background-color: #000;
-  padding: 15px 25px;
+  background: linear-gradient(to top, #87ceeb 0%, #c6f0ff 100%);
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  position: relative;
 }
 
-header h1 {
-  font-size: 1.4rem;
-  color: #e50914;
-  font-weight: 700;
-}
+/* ===== TÍTULO CARGA ===== */
+.loading-title {
+  font-size: 3.4rem;      /* ⬅️ antes 2.6rem */
+  font-weight: 900;
+  letter-spacing: 3px;
 
-nav {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-nav a {
-  padding: 8px 14px;
-  border-radius: 10px;
-  transition: 0.3s;
-}
-
-nav a:hover {
   background-color: #e50914;
-  color: #fff;
+  background-image:
+    radial-gradient(circle, #000 18%, transparent 20%);
+  background-size: 16px 16px;
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  margin-bottom: 0.8rem;
 }
 
-/* ====== CONTENIDO PRINCIPAL ====== */
-main {
-  flex: 1;
-  padding: 25px;
-  display: grid;
-  gap: 20px;
-}
 
-/* ====== BOTONES ====== */
-.btn {
+
+/* ===== TEXTO DE CARGA ===== */
+.loading-text {
+  font-size: 1.45rem;    /* ⬅️ antes 1.05rem */
+  font-weight: 800;
+  letter-spacing: 1.5px;
+
   background-color: #e50914;
-  border: none;
-  color: #fff;
-  padding: 10px 18px;
-  border-radius: 10px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+  background-image:
+    radial-gradient(circle, #000 14%, transparent 16%);
+  background-size: 12px 12px;
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-.btn:hover {
-  background-color: #c10710;
-  transform: translateY(-2px);
+.loading-title,
+.loading-text {
+  animation: dotsMove 8s linear infinite;
 }
 
-.btn-secondary {
-  background-color: #000;
-  color: #fff;
-  border: 2px solid #e50914;
-}
-
-.btn-secondary:hover {
-  background-color: #e50914;
-}
-
-/* ====== BLOQUES Y TARJETAS ====== */
-.card {
-  background: #1a1a1a;
-  border-radius: 15px;
-  padding: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  color: #fff;
-  transition: 0.3s;
-}
-
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
-}
-
-.block {
-  background: linear-gradient(135deg, #e50914, #c10710);
-  color: white;
-  padding: 15px;
-  border-radius: 12px;
-  text-align: center;
-  font-weight: bold;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
-
-/* ====== FOOTER ====== */
-footer {
-  background: #000;
-  text-align: center;
-  padding: 12px;
-  color: #aaa;
-  font-size: 0.9rem;
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.5);
-}
-
-/* ====== LOADER ====== */
-.loader {
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #e50914;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  animation: spin 0.8s linear infinite;
-  margin: 20px auto;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* ====== RESPONSIVE ====== */
-@media (max-width: 768px) {
-  header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  header h1 {
-    font-size: 1.2rem;
-  }
-
-  main {
-    padding: 15px;
-    grid-template-columns: 1fr;
-  }
-
-  .btn {
-    font-size: 0.95rem;
-  }
-
-  nav {
-    width: 100%;
-    justify-content: center;
-  }
-}
-
-@media (max-width: 480px) {
-  main {
-    padding: 10px;
-  }
-
-  .btn {
-    width: 100%;
-    padding: 12px;
-  }
-
-  header h1 {
-    font-size: 1rem;
-  }
-
-  nav a {
-    font-size: 0.9rem;
-  }
-}
-
-/* ====== FONDO LADYBUG ====== */
-.ladybug-bg {
-  background:
-    radial-gradient(circle at top, rgba(229,9,20,0.25), transparent 60%),
-    radial-gradient(circle at bottom, rgba(193,7,16,0.15), transparent 60%),
-    linear-gradient(180deg, #0a0a0a, #121212);
+@keyframes dotsMove {
+  from { background-position: 0 0; }
+  to   { background-position: 50px 50px; }
 }
 
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
+
+/* Contenedor del Login (por encima de las nubes) */
+.login-container {
+  position: relative;
+  z-index: 10; 
+  background: rgba(255, 255, 255, 0.25); /* Un poco más visible */
+  padding: 40px;
+  border-radius: 20px;
+  backdrop-filter: blur(15px); /* El blur del cristal del login se ve genial */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* ===== CONTENEDOR DE NUBES ===== */
+.sky-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
   pointer-events: none;
 }
 
+.cloud {
+  position: absolute;
+  background: #fff;
+  border-radius: 100px;
+  /* Blur reducido para que la nube sea notable */
+  filter: blur(8px); 
+  opacity: 0.8; /* Opacidad subida para dar cuerpo */
+  left: -600px;
+  animation: move-clouds linear infinite;
+}
+
+/* Agregamos bultitos internos para que no parezcan simples óvalos */
+.cloud::before, .cloud::after {
+  content: "";
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+}
+.cloud::before { width: 50%; height: 140%; top: -60%; left: 15%; }
+.cloud::after  { width: 40%; height: 120%; top: -40%; left: 45%; }
+
+/* ===== 12 NUBES CON TIEMPOS DIFERENTES ===== */
+.cloud1 { width: 350px; height: 100px; top: 5%;  animation-duration: 50s; animation-delay: -5s; }
+.cloud2 { width: 200px; height: 70px;  top: 15%; animation-duration: 40s; animation-delay: -15s; opacity: 0.5; }
+.cloud3 { width: 400px; height: 120px; top: 28%; animation-duration: 75s; animation-delay: -30s; }
+.cloud4 { width: 220px; height: 80px;  top: 38%; animation-duration: 45s; animation-delay: -10s; opacity: 0.6; }
+.cloud5 { width: 300px; height: 90px;  top: 52%; animation-duration: 65s; animation-delay: -45s; }
+.cloud6 { width: 450px; height: 130px; top: 68%; animation-duration: 90s; animation-delay: -20s; opacity: 0.4; }
+.cloud7 { width: 250px; height: 85px;  top: 82%; animation-duration: 55s; animation-delay: -35s; }
+.cloud8 { width: 380px; height: 110px; top: 12%; animation-duration: 60s; animation-delay: -55s; }
+.cloud9 { width: 280px; height: 95px;  top: 45%; animation-duration: 48s; animation-delay: -12s; }
+.cloud10 { width: 320px; height: 105px; top: 76%; animation-duration: 80s; animation-delay: -25s; opacity: 0.5; }
+.cloud11 { width: 420px; height: 130px; top: 22%; animation-duration: 68s; animation-delay: -40s; }
+.cloud12 { width: 200px; height: 70px;  top: 88%; animation-duration: 35s; animation-delay: -8s; }
+
+@keyframes move-clouds {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(100vw + 650px)); }
+}
+
+/* ===== CONTENEDOR LOGIN MARIQUITA ===== */
+.login-container {
+  position: relative;
+
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 75px 75px,
+    radial-gradient(circle, #000 28%, transparent 29%) 37px 37px / 75px 75px,
+    #ff1f1f;
+
+  width: 420px;
+  max-width: 90%;
+  padding: 3rem 2.5rem;
+
+  /* 🔲 CUADRADO SUAVE */
+  border-radius: 22px;
+
+  box-shadow:
+    0 25px 45px rgba(0, 0, 0, 0.4),
+    inset 0 0 0 4px #000;
+
+  text-align: center;
+
+  /* 🐞 ANIMACIÓN */
+  animation: ladybugMove 12s linear infinite;
+}
+
+@keyframes ladybugMove {
+  from {
+    background-position:
+      0 0,
+      37px 37px,
+      0 0;
+  }
+  to {
+    background-position:
+      75px 75px,
+      112px 112px,
+      0 0;
+  }
+}
+
+
+
+/* ===== Inputs centrados visualmente ===== */
+.login-container input {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 12px 0;
+  border-radius: 14px;
+  border: 2px solid #000;
+  background: #fff;
+  color: #000;
+  font-size: 1rem;
+  text-align: center; /* 👈 texto dentro del input */
+}
+
+.login-container input::placeholder {
+  color: #666;
+  text-align: center;
+}
+
+.login-container input:focus {
+  outline: none;
+  border-color: #ff1f1f;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+/* ===== BOTÓN LADYBUG ===== */
+.btn-ladybug {
+  margin-top: 1.2rem;
+  padding: 0.75rem;
+  width: 100%;
+
+  font-size: 0.95rem;
+  font-weight: 700;
+
+  color: #fff;
+  background: #000;
+  border: 2px solid #000;
+  border-radius: 14px;
+
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+/* PUNTOS NEGROS (un poco más pequeños) */
+.btn-ladybug::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle, #000 32%, transparent 33%) 0 0 / 36px 36px,
+    radial-gradient(circle, #000 32%, transparent 33%) 18px 18px / 36px 36px,
+    #ff1f1f;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.btn-ladybug:hover::before {
+  opacity: 1;
+}
+
+.btn-ladybug:hover {
+  transform: scale(1.06);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.btn-ladybug span {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== ERROR ===== */
+#error-msg {
+  margin-top: 0.8rem;
+  font-size: 0.85rem;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+}
+
+
+/* ===== TÍTULO LOGIN ===== */
+.login-container h1 {
+  font-size: 2.3rem;
+  font-weight: 900;
+  margin-bottom: 0.2rem;
+  color: #fff;
+  letter-spacing: 2px;
+
+  text-shadow:
+    0 2px 0 #000,
+    0 0 10px rgba(255, 255, 255, 0.35),
+    0 0 20px rgba(255, 31, 31, 0.6);
+}
+
+
+/* ===== SUBTÍTULO ===== */
+.login-subtitle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  color: #fff;
+  letter-spacing: 1.5px;
+
+  text-shadow:
+    0 2px 0 #000,
+    0 0 8px rgba(0, 0, 0, 0.5);
+}

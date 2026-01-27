@@ -7,17 +7,40 @@
 </head>
 
 <body class="ladybug-bg">
-  <main class="login-container">
-    <h1>🐞 Ladybug Login</h1>
 
-    <form id="login-form">
+<div class="sky-background">
+  <div class="cloud cloud1"></div>
+  <div class="cloud cloud2"></div>
+  <div class="cloud cloud3"></div>
+  <div class="cloud cloud4"></div>
+  <div class="cloud cloud5"></div>
+  <div class="cloud cloud6"></div>
+  <div class="cloud cloud7"></div>
+  <div class="cloud cloud8"></div>
+  <div class="cloud cloud9"></div>
+  <div class="cloud cloud10"></div>
+  <div class="cloud cloud11"></div>
+  <div class="cloud cloud12"></div>
+</div>
+
+  <main class="login-container">
+    <h1>Ladybug</h1>
+    <p class="login-subtitle">Bienvenida</p>
+
+    <form id="login-form" class="login-form">
       <input type="email" id="email" placeholder="Correo" required>
       <input type="password" id="password" placeholder="Contraseña" required>
-      <p id="error-msg" style="display:none;color:red;"></p>
-      <button type="submit" class="btn-ladybug">Iniciar sesión</button>
+
+      <p id="error-msg"></p>
+
+      <button type="submit" class="btn-ladybug">
+        <span>Iniciar sesión</span>
+      </button>
+
     </form>
   </main>
 
   <script type="module" src="js/login.js"></script>
 </body>
+
 </html>
