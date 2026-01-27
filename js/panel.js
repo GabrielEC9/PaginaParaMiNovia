@@ -7,9 +7,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   const userMenu = document.getElementById('user-menu')
   const logoutBtn = document.getElementById('logout-btn')
 
-  logoutBtn?.addEventListener('click', async () => {
-    await logout()
-  })
+ logoutBtn?.addEventListener('click', async () => {
+  await logout()
+  window.location.replace('login.html')
+})
+
 
   const { data, error } = await supabase.auth.getSession()
 
