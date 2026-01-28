@@ -334,73 +334,114 @@ body {
 
 /* ======================================================= PANEL.HTML ============================================================ */
 
-/* ===== BODY Y CONTENEDOR PRINCIPAL ===== */
 /* ===== CONTENEDOR PRINCIPAL ===== */
 #main-content {
-  position: relative;
-  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 30px 20px;
+  justify-content: flex-start;
   min-height: 100vh;
-  max-height: 100vh; /* altura máxima de pantalla */
-  overflow-y: auto;   /* permite scroll vertical si hay mucho contenido */
-  pointer-events: auto;
+  padding: 30px 20px;
+  text-align: center;
 }
 
-/* ===== MENÚS ===== */
-.menu {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
+/* ===== NAVBAR ===== */
+.navbar {
   width: 100%;
-  max-width: 600px; /* un poco más ancho para que quepan todos los botones */
-  pointer-events: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  background: rgba(0,0,0,0.25);
+  border-radius: 20px;
+  margin-bottom: 40px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-.menu h2 {
-  font-size: 1.8em;
+.navbar h1 {
+  font-family: 'Comic Sans MS', cursive;
+  font-size: 2em;
   color: #fff;
-  margin-bottom: 20px;
-  text-align: center;
-  text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
 }
 
-/* ===== BOTONES ===== */
+/* ===== INTRO TEXT ===== */
+.intro-text {
+  font-size: 1.2em;
+  margin-bottom: 30px;
+  color: #fff;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+/* ===== GRID DE BOTONES ===== */
+.menu-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 180px));
+  gap: 25px;
+  justify-content: center;
+}
+
+/* ===== BOTONES / TARJETAS ===== */
 .btn-ladybug {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
   background: #FF4136;
-  color: white;
-  padding: 12px 25px;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
+  color: #fff;
+  font-size: 1.1em;
   font-weight: bold;
-  font-size: 1em;
   text-decoration: none;
-  width: 100%;      /* ocupa todo el ancho del menú */
-  max-width: 300px; /* para que no queden demasiado grandes */
-  text-align: center;
-  transition: all 0.3s ease;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.5s ease;
+  cursor: pointer;
+  flex-direction: column;
 }
 
+/* Hover estilo “mariquita” */
 .btn-ladybug:hover {
-  background: #FF6347;
-  transform: scale(1.05);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+  background: radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 70px 70px,
+              radial-gradient(circle, #000 28%, transparent 29%) 35px 35px / 70px 70px,
+              #ff1f1f;
+}
+
+/* Animación flotante */
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.btn-ladybug {
+  animation: floaty 5s ease-in-out infinite;
 }
 
 /* ===== RESPONSIVIDAD ===== */
 @media (max-width: 768px) {
-  #main-content { padding: 20px 15px; }
-  .navbar { flex-direction: column; gap: 10px; }
-  .menu h2 { font-size: 1.5em; }
-  .btn-ladybug { font-size: 0.95em; padding: 10px 20px; max-width: 250px; }
+  .btn-ladybug {
+    width: 130px;
+    height: 130px;
+    font-size: 1em;
+  }
+  .intro-text {
+    font-size: 1em;
+  }
+  .navbar h1 {
+    font-size: 1.5em;
+  }
 }
 
 @media (max-width: 480px) {
-  #main-content { padding: 15px 10px; }
-  .menu h2 { font-size: 1.2em; }
-  .btn-ladybug { font-size: 0.9em; padding: 8px 15px; max-width: 200px; }
+  .btn-ladybug {
+    width: 110px;
+    height: 110px;
+    font-size: 0.9em;
+  }
+  .intro-text {
+    font-size: 0.9em;
+  }
+  .navbar h1 {
+    font-size: 1.2em;
+  }
 }
