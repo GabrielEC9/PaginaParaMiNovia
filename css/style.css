@@ -334,6 +334,7 @@ body {
 
 /* ======================================================= PANEL.HTML ============================================================ */
 
+/* ===== CONTENEDOR PRINCIPAL ===== */
 #main-content {
   display: flex;
   flex-direction: column;
@@ -343,7 +344,7 @@ body {
   text-align: center;
 }
 
-/* Navbar */
+/* ===== NAVBAR ===== */
 .navbar {
   width: 100%;
   display: flex;
@@ -361,16 +362,16 @@ body {
   font-family: 'Comic Sans MS', cursive;
 }
 
-/* Mensaje de bienvenida */
-.intro-text {
+/* ===== MENSAJE DE BIENVENIDA ===== */
+#menu-container .intro-text {
   font-size: 1.3em;
   color: #fff;
   margin-bottom: 15px;
   text-shadow: 0 2px 5px rgba(0,0,0,0.5);
 }
 
-/* Texto de sección */
-.section-text {
+/* ===== TEXTO DE CADA SECCIÓN ===== */
+#menu-container .section-text {
   font-size: 1em;
   color: #fff;
   margin-bottom: 25px;
@@ -378,66 +379,89 @@ body {
   text-shadow: 0 1px 3px rgba(0,0,0,0.5);
 }
 
-/* ===== BOTONES DEL PANEL (solo dentro de #menu-container) ===== */
+/* ===== GRID DE BOTONES ===== */
+#menu-container .buttons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 160px));
+  gap: 20px;
+  justify-content: center;
+}
+
+/* ===== BOTONES DEL PANEL ===== */
 #menu-container .btn-ladybug {
-  position: relative;
-  pointer-events: auto;
-  background: #FF4136; /* rojo mariquita */
-  color: white;
-  width: 160px;
-  height: 160px;
-  border-radius: 50%; /* circular */
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: #FF4136;
+  color: #fff;
   font-size: 1.1em;
   font-weight: bold;
-  text-align: center;
   text-decoration: none;
   box-shadow: 0 10px 25px rgba(0,0,0,0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.5s ease;
+  cursor: pointer;
+  flex-direction: column;
   animation: floaty 6s ease-in-out infinite;
-  margin-bottom: 30px;
 }
 
-/* Animación flotante */
-@keyframes floaty {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-/* Hover animado tipo mariquita */
+/* Hover tipo mariquita */
 #menu-container .btn-ladybug:hover {
-  transform: translateY(-15px) scale(1.05);
+  transform: translateY(-10px) scale(1.05);
   box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-
-  /* estilo tipo mariquita con lunares */
   background:
-    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 75px 75px,
-    radial-gradient(circle, #000 28%, transparent 29%) 37px 37px / 75px 75px,
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 70px 70px,
+    radial-gradient(circle, #000 28%, transparent 29%) 35px 35px / 70px 70px,
     #ff1f1f;
 }
-
-/* Texto de bienvenida */
-#menu-container .intro-text {
-  text-align: center;
-  font-size: 1.5em;
-  color: #fff;
-  margin-bottom: 30px;
-  font-family: 'Comic Sans MS', cursive;
-}
-
-/* Texto de cada sección */
-#menu-container .section-text {
-  text-align: center;
-  font-size: 1.1em;
-  color: #fff;
-  margin-bottom: 15px;
-}
-
 
 /* Animación flotante */
 @keyframes floaty {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-8px); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  #menu-container .buttons-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 140px));
+    gap: 15px;
+  }
+
+  #menu-container .btn-ladybug {
+    width: 140px;
+    height: 140px;
+    font-size: 1em;
+  }
+
+  #menu-container .intro-text {
+    font-size: 1.2em;
+  }
+
+  #menu-container .section-text {
+    font-size: 0.95em;
+  }
+}
+
+@media (max-width: 480px) {
+  #menu-container .buttons-grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 120px));
+    gap: 10px;
+  }
+
+  #menu-container .btn-ladybug {
+    width: 120px;
+    height: 120px;
+    font-size: 0.9em;
+  }
+
+  #menu-container .intro-text {
+    font-size: 1.1em;
+  }
+
+  #menu-container .section-text {
+    font-size: 0.9em;
+  }
 }
