@@ -336,10 +336,12 @@ body {
 
 /* ===== CONTENEDOR PRINCIPAL ===== */
 #main-content {
+  position: relative;
+  z-index: 2; /* sobre el fondo de nubes */
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 30px 20px;
+  padding: 50px 20px;
   min-height: 100vh;
   text-align: center;
 }
@@ -351,28 +353,32 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 20px 30px;
-  background: rgba(0,0,0,0.25);
+  background: rgba(0, 0, 0, 0.25);
   border-radius: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  backdrop-filter: blur(5px);
 }
 .navbar h1 {
   color: #fff;
-  font-size: 2em;
+  font-size: 2.2em;
   font-family: 'Comic Sans MS', cursive;
 }
 
 /* ===== MENSAJE DE BIENVENIDA ===== */
 #menu-container .intro-text {
-  font-size: 1.3em;
+  font-size: 1.6em;
+  font-weight: 500;
   color: #fff;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  max-width: 600px;
   text-shadow: 0 2px 5px rgba(0,0,0,0.5);
 }
 
 /* ===== TEXTO DE CADA SECCIÓN ===== */
 #menu-container .section-text {
-  font-size: 1em;
+  font-size: 1.2em;
+  font-weight: 400;
   color: #fff;
   margin-bottom: 25px;
   max-width: 500px;
@@ -382,9 +388,10 @@ body {
 /* ===== GRID DE BOTONES ===== */
 #menu-container .buttons-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 160px));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 180px));
+  gap: 25px;
   justify-content: center;
+  align-items: start;
 }
 
 /* ===== BOTONES DEL PANEL ===== */
@@ -392,12 +399,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 160px;
-  height: 160px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   background: #FF4136;
   color: #fff;
-  font-size: 1.1em;
+  font-size: 1.2em;
   font-weight: bold;
   text-decoration: none;
   box-shadow: 0 10px 25px rgba(0,0,0,0.3);
@@ -409,7 +416,7 @@ body {
 
 /* Hover tipo mariquita */
 #menu-container .btn-ladybug:hover {
-  transform: translateY(-10px) scale(1.05);
+  transform: translateY(-10px) scale(1.1);
   box-shadow: 0 15px 35px rgba(0,0,0,0.4);
   background:
     radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 70px 70px,
@@ -420,28 +427,43 @@ body {
 /* Animación flotante */
 @keyframes floaty {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  50% { transform: translateY(-10px); }
 }
 
 /* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  #menu-container .buttons-grid {
+    grid-template-columns: repeat(auto-fit, minmax(130px, 160px));
+    gap: 20px;
+  }
+  #menu-container .btn-ladybug {
+    width: 160px;
+    height: 160px;
+    font-size: 1.1em;
+  }
+  #menu-container .intro-text {
+    font-size: 1.4em;
+  }
+  #menu-container .section-text {
+    font-size: 1.1em;
+  }
+}
+
 @media (max-width: 768px) {
   #menu-container .buttons-grid {
     grid-template-columns: repeat(auto-fit, minmax(120px, 140px));
     gap: 15px;
   }
-
   #menu-container .btn-ladybug {
     width: 140px;
     height: 140px;
     font-size: 1em;
   }
-
   #menu-container .intro-text {
-    font-size: 1.2em;
+    font-size: 1.3em;
   }
-
   #menu-container .section-text {
-    font-size: 0.95em;
+    font-size: 1em;
   }
 }
 
@@ -450,17 +472,14 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(100px, 120px));
     gap: 10px;
   }
-
   #menu-container .btn-ladybug {
     width: 120px;
     height: 120px;
     font-size: 0.9em;
   }
-
   #menu-container .intro-text {
     font-size: 1.1em;
   }
-
   #menu-container .section-text {
     font-size: 0.9em;
   }
