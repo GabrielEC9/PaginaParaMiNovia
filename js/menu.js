@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const links = [
     { text: '📸 Álbum', href: 'album.html' },
     { text: '💌 Frases', href: 'frases.html' },
-    { text: '🐞 Curiosidades', href: 'curiosidades.html' },
+    { text: '❓ Curiosidades', href: 'curiosidades.html' },
     { text: '🛍️ Tienda', href: 'tienda.html' },
     { text: '🎁 Recompensas', href: 'recompensas.html' }
   ]
