@@ -3,24 +3,18 @@ import { logout } from './auth.js'
 
 document.addEventListener('DOMContentLoaded', async () => {
   const main = document.getElementById('main-content')
-  const adminMenu = document.getElementById('admin-menu')
-  const userMenu = document.getElementById('user-menu')
+  const menuContainer = document.getElementById('menu-container')
   const logoutBtn = document.getElementById('logout-btn')
 
-  // Ocultar ambos menús al inicio
-  adminMenu?.classList.add('hidden')
-  userMenu?.classList.add('hidden')
   main.hidden = true
 
-  // Evento de cerrar sesión
   logoutBtn?.addEventListener('click', async () => {
     await logout()
     window.location.replace('login.html')
   })
 
-  // Obtener la sesión actual
+  // Espera a que la sesión exista antes de generar el menú
   const { data: sessionData, error: sessionError } = await supabase.auth.getSession()
-
   if (sessionError || !sessionData.session) {
     window.location.href = 'login.html'
     return
@@ -29,7 +23,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const user = sessionData.session.user
 
   try {
-    // Obtener el perfil desde la tabla profiles
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('role')
@@ -40,22 +33,42 @@ document.addEventListener('DOMContentLoaded', async () => {
       throw profileError || new Error('Perfil no encontrado o rol inválido')
     }
 
-    // Debug: ver qué rol llega
-    console.log('Rol del usuario:', profile.role)
-
-    // Mostrar solo el menú correspondiente
     const role = profile.role.trim().toLowerCase()
+    console.log('Rol detectado:', role)
+
+    // Generar el menú según el rol
+    const buttons = []
     if (role === 'admin') {
-      adminMenu.classList.remove('hidden')
-      userMenu.classList.add('hidden')
+      buttons.push(
+        { text: '📸 Álbum', href: 'album.html' },
+        { text: '💌 Frases', href: 'frases.html' },
+        { text: '🐞 Curiosidades', href: 'curiosidades.html' },
+        { text: '🛍️ Tienda', href: 'tienda.html' },
+        { text: '🎁 Recompensas', href: 'recompensas.html' },
+        { text: '✏️ Subir contenido', href: 'admin-form.html' },
+        { text: '🔔 Notificaciones', href: 'notificaciones.html' }
+      )
     } else if (role === 'user') {
-      userMenu.classList.remove('hidden')
-      adminMenu.classList.add('hidden')
+      buttons.push(
+        { text: '📸 Álbum', href: 'album.html' },
+        { text: '💌 Frases', href: 'frases.html' },
+        { text: '🐞 Curiosidades', href: 'curiosidades.html' },
+        { text: '🛍️ Tienda', href: 'tienda.html' },
+        { text: '🎁 Recompensas', href: 'recompensas.html' }
+      )
     } else {
-      adminMenu.classList.add('hidden')
-      userMenu.classList.add('hidden')
-      console.warn('Rol desconocido:', profile.role)
+      throw new Error('Rol desconocido')
     }
+
+    // Limpiar menú existente y crear botones
+    menuContainer.innerHTML = ''
+    buttons.forEach(btn => {
+      const a = document.createElement('a')
+      a.href = btn.href
+      a.className = 'btn-ladybug floating-card'
+      a.textContent = btn.text
+      menuContainer.appendChild(a)
+    })
 
     // Mostrar contenedor principal
     main.hidden = false
@@ -65,3 +78,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.location.href = 'login.html'
   }
 })
+
