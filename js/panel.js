@@ -7,43 +7,48 @@ document.addEventListener('DOMContentLoaded', async () => {
   const userMenu = document.getElementById('user-menu')
   const logoutBtn = document.getElementById('logout-btn')
 
+  // Ocultar ambos menús por seguridad
+  adminMenu?.classList.add('hidden')
+  userMenu?.classList.add('hidden')
+  main.hidden = true
+
   // Evento de cerrar sesión
   logoutBtn?.addEventListener('click', async () => {
     await logout()
     window.location.replace('login.html')
   })
 
-  // Obtener sesión actual
-  const { data: { session }, error: sessionError } = await supabase.auth.getSession()
+  // Obtener usuario activo
+  const { data: { user }, error: userError } = await supabase.auth.getUser()
 
-  if (sessionError || !session) {
-    // Si no hay sesión, redirigir a login
+  if (userError || !user) {
     window.location.href = 'login.html'
     return
   }
 
   try {
-    // Obtener el perfil del usuario
+    // Obtener perfil desde la tabla profiles
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('role')
-      .eq('id', session.user.id)
+      .eq('id', user.id)
       .single()
 
-    if (profileError || !profile) throw profileError || new Error('Perfil no encontrado')
-
-    // Ocultar ambos menús por seguridad
-    adminMenu?.classList.add('hidden')
-    userMenu?.classList.add('hidden')
-
-    // Mostrar solo el menú correspondiente
-    if (profile.role === 'admin') {
-      adminMenu?.classList.remove('hidden')
-    } else {
-      userMenu?.classList.remove('hidden')
+    if (profileError || !profile || !profile.role) {
+      throw profileError || new Error('Perfil no encontrado o rol inválido')
     }
 
-    // Mostrar el contenido principal
+    // Mostrar el menú según el rol (asegurando minúsculas)
+    const role = profile.role.toLowerCase()
+    if (role === 'admin') {
+      adminMenu.classList.remove('hidden')
+    } else if (role === 'user') {
+      userMenu.classList.remove('hidden')
+    } else {
+      console.warn('Rol desconocido:', profile.role)
+    }
+
+    // Finalmente mostrar el contenedor principal
     main.hidden = false
   } catch (err) {
     console.error('Error cargando perfil:', err)
