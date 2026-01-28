@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const userMenu = document.getElementById('user-menu')
   const logoutBtn = document.getElementById('logout-btn')
 
-  // Ocultar ambos menús por seguridad desde el inicio
+  // Ocultar ambos menús al inicio
   adminMenu?.classList.add('hidden')
   userMenu?.classList.add('hidden')
   main.hidden = true
@@ -18,16 +18,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.location.replace('login.html')
   })
 
-  // Obtener usuario activo
-  const { data: { user }, error: userError } = await supabase.auth.getUser()
+  // Obtener la sesión actual
+  const { data: sessionData, error: sessionError } = await supabase.auth.getSession()
 
-  if (userError || !user) {
+  if (sessionError || !sessionData.session) {
     window.location.href = 'login.html'
     return
   }
 
+  const user = sessionData.session.user
+
   try {
-    // Obtener perfil desde la tabla profiles
+    // Obtener el perfil desde la tabla profiles
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('role')
@@ -38,13 +40,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       throw profileError || new Error('Perfil no encontrado o rol inválido')
     }
 
-    // Debug opcional: ver qué rol llega desde la base de datos
-    console.log('Perfil obtenido:', profile)
+    // Debug: ver qué rol llega
+    console.log('Rol del usuario:', profile.role)
 
     // Mostrar solo el menú correspondiente
-    const role = profile.role?.trim().toLowerCase() // limpiar espacios y forzar minúscula
-    console.log('Rol detectado:', role) // debug
-
+    const role = profile.role.trim().toLowerCase()
     if (role === 'admin') {
       adminMenu.classList.remove('hidden')
       userMenu.classList.add('hidden')
@@ -52,13 +52,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       userMenu.classList.remove('hidden')
       adminMenu.classList.add('hidden')
     } else {
-      // Rol desconocido, ocultamos todo
       adminMenu.classList.add('hidden')
       userMenu.classList.add('hidden')
       console.warn('Rol desconocido:', profile.role)
     }
 
-    // Finalmente mostrar el contenedor principal
+    // Mostrar contenedor principal
     main.hidden = false
   } catch (err) {
     console.error('Error cargando perfil:', err)
