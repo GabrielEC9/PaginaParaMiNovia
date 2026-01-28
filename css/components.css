@@ -164,3 +164,128 @@
     padding: 15px;
   }
 }
+
+/* =====================================================
+   MENÚ SUPERIOR GLOBAL - SOLO PANEL / PÁGINAS INTERNAS
+   ===================================================== */
+
+.main-menu {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  padding: 14px 24px;
+
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 75px 75px,
+    radial-gradient(circle, #000 28%, transparent 29%) 37px 37px / 75px 75px,
+    #ff1f1f;
+
+  box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+}
+
+/* Zonas */
+.menu-left,
+.menu-center,
+.menu-right {
+  display: flex;
+  align-items: center;
+}
+
+.menu-center {
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Título */
+.menu-title {
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  white-space: nowrap;
+}
+
+/* Links del menú */
+.menu-link {
+  position: relative;
+  padding: 10px 16px;
+
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+
+  background: #000;
+  border-radius: 14px;
+  overflow: hidden;
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover mariquita */
+.menu-link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(circle, #000 18%, transparent 19%) 0 0 / 22px 22px,
+    radial-gradient(circle, #000 18%, transparent 19%) 11px 11px / 22px 22px,
+    #ff2e2e;
+
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+
+.menu-link span {
+  position: relative;
+  z-index: 1;
+}
+
+.menu-link:hover::before {
+  opacity: 1;
+}
+
+.menu-link:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 18px rgba(255, 31, 31, 0.6);
+}
+
+/* Botón logout */
+.btn-logout {
+  padding: 10px 16px;
+  font-weight: 700;
+  color: #fff;
+
+  background: #000;
+  border: none;
+  border-radius: 14px;
+
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-logout:hover {
+  background: #ff2e2e;
+  transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .main-menu {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .menu-center {
+    justify-content: center;
+  }
+}

@@ -8,7 +8,8 @@
   <link rel="stylesheet" href="./css/components.css">
 </head>
 
-<body class="ladybug-bg">
+<body class="ladybug-bg panel-page">
+
 
 <div class="sky-background">
   <div class="cloud cloud1"></div>
@@ -21,18 +22,46 @@
   <div class="cloud cloud8"></div>
 </div>
 
-<div id="main-content" hidden>
-  <nav class="navbar">
-    <h1>Panel</h1>
-    <button id="logout-btn" class="btn-ladybug small">Cerrar sesión</button>
+<!-- MENÚ GLOBAL -->
+<header class="main-menu">
+  <div class="menu-left">
+    <span class="menu-title">Menu</span>
+  </div>
+
+  <nav class="menu-center" id="menu-links">
+    <!-- botones desde menu.js -->
   </nav>
 
-  <main id="menu-container" class="menu-container">
-    <!-- Mensaje + botones generados dinámicamente -->
-  </main>
+  <div class="menu-right">
+    <button id="logout-btn" class="btn-logout">Salir</button>
+  </div>
+</header>
+
+<!-- CONTENIDO DEL PANEL -->
+<div class="panel-container">
+  <article class="love-letter">
+    <h1>Para ti 💕</h1>
+
+    <p>
+      Desde que imaginé este lugar pensé en algo más que una página.
+      Pensé en un espacio donde pudiera dejarte palabras,
+      recuerdos y pequeñas cosas que nos representan.
+    </p>
+
+    <p>
+      Este sitio es solo una excusa bonita para decirte
+      que cada sección, cada detalle y cada punto
+      está hecho pensando en ti.
+    </p>
+
+    <p class="signature">
+      — Con cariño, yo 🐞
+    </p>
+  </article>
 </div>
 
 
+<script type="module" src="js/menu.js"></script>
 <script type="module" src="js/panel.js"></script>
 </body>
 </html>
