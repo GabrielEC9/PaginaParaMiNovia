@@ -406,9 +406,18 @@ body {
 
 /* ============= BOTÓN ACTIVO  ====================== */
 
-.menu-btn:active {
-  transform: scale(0.97);
+.menu-btn.active {
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 50px 50px,
+    radial-gradient(circle, #000 28%, transparent 29%) 25px 25px / 50px 50px,
+    #ff1f1f;
+
+  color: #fff;
+  box-shadow:
+    0 0 0 2px #000,
+    0 6px 18px rgba(0,0,0,0.4);
 }
+
 
 /* =========== BOTÓN SALIR ============ */
 

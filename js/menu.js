@@ -5,11 +5,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   const menu = document.getElementById('menu-links')
   const logoutBtn = document.getElementById('logout-btn')
 
+  // ===== LOGOUT =====
   logoutBtn?.addEventListener('click', async () => {
     await logout()
     window.location.replace('login.html')
   })
 
+  // ===== SESIÓN =====
   const { data: sessionData } = await supabase.auth.getSession()
   if (!sessionData?.session) {
     window.location.href = 'login.html'
@@ -32,14 +34,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const role = profile.role
 
-const links = [
-  { text: '🏠 Inicio', href: 'panel.html' }, 
-  { text: '📸 Álbum', href: 'album.html' },
-  { text: '💌 Frases', href: 'frases.html' },
-  { text: '❓ Curiosidades', href: 'curiosidades.html' },
-  { text: '🛍️ Tienda', href: 'tienda.html' },
-  { text: '🎁 Recompensas', href: 'recompensas.html' }
-]
+  // ===== LINKS DEL MENÚ =====
+  const links = [
+    { text: '🏠 Inicio', href: 'panel.html' },
+    { text: '📸 Álbum', href: 'album.html' },
+    { text: '💌 Frases', href: 'frases.html' },
+    { text: '❓ Curiosidades', href: 'curiosidades.html' },
+    { text: '🛍️ Tienda', href: 'tienda.html' },
+    { text: '🎁 Recompensas', href: 'recompensas.html' }
+  ]
 
   if (role === 'admin') {
     links.push(
@@ -48,6 +51,7 @@ const links = [
     )
   }
 
+  // ===== CREAR BOTONES =====
   menu.innerHTML = ''
   links.forEach(link => {
     const a = document.createElement('a')
@@ -55,5 +59,14 @@ const links = [
     a.textContent = link.text
     a.className = 'menu-btn'
     menu.appendChild(a)
+  })
+
+  
+  const currentPage = window.location.pathname.split('/').pop()
+
+  menu.querySelectorAll('.menu-btn').forEach(btn => {
+    if (btn.getAttribute('href') === currentPage) {
+      btn.classList.add('active')
+    }
   })
 })
