@@ -20,13 +20,12 @@ body {
 
 /* ===== TÍTULO CARGA ===== */
 .loading-title {
-  font-size: 3.4rem;      /* ⬅️ antes 2.6rem */
+  font-size: clamp(2.4rem, 6vw, 3.4rem); /* 🔁 responsive */
   font-weight: 900;
-  letter-spacing: 3px;
+  letter-spacing: clamp(1.5px, 0.6vw, 3px);
 
   background-color: #e50914;
-  background-image:
-    radial-gradient(circle, #000 18%, transparent 20%);
+  background-image: radial-gradient(circle, #000 18%, transparent 20%);
   background-size: 16px 16px;
 
   -webkit-background-clip: text;
@@ -36,17 +35,14 @@ body {
   margin-bottom: 0.8rem;
 }
 
-
-
 /* ===== TEXTO DE CARGA ===== */
 .loading-text {
-  font-size: 1.45rem;    /* ⬅️ antes 1.05rem */
+  font-size: clamp(1.1rem, 3.5vw, 1.45rem); /* 🔁 responsive */
   font-weight: 800;
-  letter-spacing: 1.5px;
+  letter-spacing: clamp(0.8px, 0.4vw, 1.5px);
 
   background-color: #e50914;
-  background-image:
-    radial-gradient(circle, #000 14%, transparent 16%);
+  background-image: radial-gradient(circle, #000 14%, transparent 16%);
   background-size: 12px 12px;
 
   -webkit-background-clip: text;
@@ -64,85 +60,142 @@ body {
   to   { background-position: 50px 50px; }
 }
 
-
-
-/* Contenedor del Login (por encima de las nubes) */
-.login-container {
-  position: relative;
-  z-index: 10; 
-  background: rgba(255, 255, 255, 0.25); /* Un poco más visible */
-  padding: 40px;
-  border-radius: 20px;
-  backdrop-filter: blur(15px); /* El blur del cristal del login se ve genial */
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
 /* ===== CONTENEDOR DE NUBES ===== */
 .sky-background {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   z-index: 1;
   pointer-events: none;
+  overflow: hidden; /* 🔑 importante para que no aparezcan al salir */
 }
+
 
 .cloud {
   position: absolute;
   background: #fff;
-  border-radius: 100px;
-  /* Blur reducido para que la nube sea notable */
-  filter: blur(8px); 
-  opacity: 0.8; /* Opacidad subida para dar cuerpo */
-  left: -600px;
-  animation: move-clouds linear infinite;
+  border-radius: 120px;
+  filter: blur(8px);
+  opacity: 0.85;
+
+  animation-name: cloud-drift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+
+  will-change: transform;
 }
 
-/* Agregamos bultitos internos para que no parezcan simples óvalos */
-.cloud::before, .cloud::after {
+
+.cloud1 {
+  top: 6%;
+  left: 5%;
+  width: 420px;
+  height: 140px;
+  animation-duration: 120s;
+  transform: translateX(10vw);
+}
+
+.cloud2 {
+  top: 18%;
+  left: 60%;
+  width: 300px;
+  height: 95px;
+  animation-duration: 90s;
+  transform: translateX(45vw);
+  opacity: 0.55;
+}
+
+.cloud3 {
+  top: 30%;
+  left: 25%;
+  width: 500px;
+  height: 160px;
+  animation-duration: 150s;
+  transform: translateX(70vw);
+}
+
+.cloud4 {
+  top: 42%;
+  left: 75%;
+  width: 260px;
+  height: 85px;
+  animation-duration: 80s;
+  transform: translateX(25vw);
+}
+
+.cloud5 {
+  top: 55%;
+  left: 10%;
+  width: 360px;
+  height: 120px;
+  animation-duration: 110s;
+  transform: translateX(55vw);
+}
+
+.cloud6 {
+  top: 68%;
+  left: 50%;
+  width: 480px;
+  height: 150px;
+  animation-duration: 160s;
+  transform: translateX(85vw);
+  opacity: 0.45;
+}
+
+.cloud7 {
+  top: 80%;
+  left: 30%;
+  width: 290px;
+  height: 95px;
+  animation-duration: 95s;
+  transform: translateX(35vw);
+}
+
+.cloud8 {
+  top: 12%;
+  left: 85%;
+  width: 340px;
+  height: 110px;
+  animation-duration: 105s;
+  transform: translateX(65vw);
+}
+
+@keyframes cloud-drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(140vw);
+  }
+}
+
+
+
+/* ===== NUBES (SIN CAMBIOS VISUALES) ===== */
+.cloud::before,
+.cloud::after {
   content: "";
   position: absolute;
   background: #fff;
   border-radius: 50%;
 }
+
 .cloud::before { width: 50%; height: 140%; top: -60%; left: 15%; }
 .cloud::after  { width: 40%; height: 120%; top: -40%; left: 45%; }
 
-/* ===== 12 NUBES CON TIEMPOS DIFERENTES ===== */
-.cloud1 { width: 350px; height: 100px; top: 5%;  animation-duration: 50s; animation-delay: -5s; }
-.cloud2 { width: 200px; height: 70px;  top: 15%; animation-duration: 40s; animation-delay: -15s; opacity: 0.5; }
-.cloud3 { width: 400px; height: 120px; top: 28%; animation-duration: 75s; animation-delay: -30s; }
-.cloud4 { width: 220px; height: 80px;  top: 38%; animation-duration: 45s; animation-delay: -10s; opacity: 0.6; }
-.cloud5 { width: 300px; height: 90px;  top: 52%; animation-duration: 65s; animation-delay: -45s; }
-.cloud6 { width: 450px; height: 130px; top: 68%; animation-duration: 90s; animation-delay: -20s; opacity: 0.4; }
-.cloud7 { width: 250px; height: 85px;  top: 82%; animation-duration: 55s; animation-delay: -35s; }
-.cloud8 { width: 380px; height: 110px; top: 12%; animation-duration: 60s; animation-delay: -55s; }
-.cloud9 { width: 280px; height: 95px;  top: 45%; animation-duration: 48s; animation-delay: -12s; }
-.cloud10 { width: 320px; height: 105px; top: 76%; animation-duration: 80s; animation-delay: -25s; opacity: 0.5; }
-.cloud11 { width: 420px; height: 130px; top: 22%; animation-duration: 68s; animation-delay: -40s; }
-.cloud12 { width: 200px; height: 70px;  top: 88%; animation-duration: 35s; animation-delay: -8s; }
-
-@keyframes move-clouds {
-  from { transform: translateX(0); }
-  to { transform: translateX(calc(100vw + 650px)); }
-}
 
 /* ===== CONTENEDOR LOGIN MARIQUITA ===== */
 .login-container {
   position: relative;
+  z-index: 10;
 
   background:
     radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 75px 75px,
     radial-gradient(circle, #000 28%, transparent 29%) 37px 37px / 75px 75px,
     #ff1f1f;
 
-  width: 420px;
-  max-width: 90%;
-  padding: 3rem 2.5rem;
+  width: min(420px, 92vw); /* 🔁 responsive */
+  padding: clamp(2rem, 5vw, 3rem) clamp(1.8rem, 4vw, 2.5rem);
 
-  /* 🔲 CUADRADO SUAVE */
   border-radius: 22px;
 
   box-shadow:
@@ -150,59 +203,42 @@ body {
     inset 0 0 0 4px #000;
 
   text-align: center;
-
-  /* 🐞 ANIMACIÓN */
   animation: ladybugMove 12s linear infinite;
 }
 
 @keyframes ladybugMove {
   from {
-    background-position:
-      0 0,
-      37px 37px,
-      0 0;
+    background-position: 0 0, 37px 37px, 0 0;
   }
   to {
-    background-position:
-      75px 75px,
-      112px 112px,
-      0 0;
+    background-position: 75px 75px, 112px 112px, 0 0;
   }
 }
 
-
-
-/* ===== Inputs centrados visualmente ===== */
+/* ===== INPUTS ===== */
 .login-container input {
   width: 100%;
-  padding: 12px 15px;
+  padding: clamp(0.7rem, 2.5vw, 0.9rem);
   margin: 12px 0;
   border-radius: 14px;
   border: 2px solid #000;
   background: #fff;
   color: #000;
-  font-size: 1rem;
-  text-align: center; /* 👈 texto dentro del input */
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  text-align: center;
 }
 
 .login-container input::placeholder {
   color: #666;
-  text-align: center;
 }
 
-.login-container input:focus {
-  outline: none;
-  border-color: #ff1f1f;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-}
-
-/* ===== BOTÓN LADYBUG ===== */
+/* ===== BOTÓN ===== */
 .btn-ladybug {
   margin-top: 1.2rem;
-  padding: 0.75rem;
+  padding: clamp(0.6rem, 2.5vw, 0.75rem);
   width: 100%;
 
-  font-size: 0.95rem;
+  font-size: clamp(0.85rem, 2.5vw, 0.95rem);
   font-weight: 700;
 
   color: #fff;
@@ -213,72 +249,36 @@ body {
   cursor: pointer;
   position: relative;
   overflow: hidden;
-
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-
-/* PUNTOS NEGROS (un poco más pequeños) */
-.btn-ladybug::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle, #000 32%, transparent 33%) 0 0 / 36px 36px,
-    radial-gradient(circle, #000 32%, transparent 33%) 18px 18px / 36px 36px,
-    #ff1f1f;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.btn-ladybug:hover::before {
-  opacity: 1;
-}
-
-.btn-ladybug:hover {
-  transform: scale(1.06);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-}
-
-.btn-ladybug span {
-  position: relative;
-  z-index: 1;
 }
 
 /* ===== ERROR ===== */
 #error-msg {
   margin-top: 0.8rem;
-  font-size: 0.85rem;
+  font-size: clamp(0.75rem, 2.5vw, 0.85rem);
   color: #fff;
   text-align: center;
-  text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
 }
-
 
 /* ===== TÍTULO LOGIN ===== */
 .login-container h1 {
-  font-size: 2.3rem;
+  font-size: clamp(1.9rem, 5vw, 2.3rem);
   font-weight: 900;
   margin-bottom: 0.2rem;
   color: #fff;
   letter-spacing: 2px;
-
-  text-shadow:
-    0 2px 0 #000,
-    0 0 10px rgba(255, 255, 255, 0.35),
-    0 0 20px rgba(255, 31, 31, 0.6);
 }
-
 
 /* ===== SUBTÍTULO ===== */
 .login-subtitle {
-  font-size: 1.15rem;
+  font-size: clamp(1rem, 3vw, 1.15rem);
   font-weight: 700;
   margin-bottom: 1.2rem;
   color: #fff;
-  letter-spacing: 1.5px;
+}
 
-  text-shadow:
-    0 2px 0 #000,
-    0 0 8px rgba(0, 0, 0, 0.5);
+/* ===== AJUSTES EXTRA SOLO PARA MÓVIL ===== */
+@media (max-width: 480px) {
+  .cloud {
+    filter: blur(6px);
+  }
 }
