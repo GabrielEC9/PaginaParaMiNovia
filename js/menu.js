@@ -61,7 +61,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     menu.appendChild(a)
   })
 
-  
   const currentPage = window.location.pathname.split('/').pop()
 
   menu.querySelectorAll('.menu-btn').forEach(btn => {

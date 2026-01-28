@@ -605,3 +605,9 @@ body.panel-page {
   font-style: italic;
   font-weight: 600;
 }
+
+/* ===== PERMITIR SCROLL SOLO EN PANEL ===== */
+body.panel-page {
+  overflow-y: auto;     /* ✅ permite bajar */
+  overflow-x: hidden;  /* evita scroll horizontal raro */
+}
