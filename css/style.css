@@ -32,7 +32,6 @@ body {
   background-clip: text;
   color: transparent;
 
-  z-index: 3;
   margin-bottom: 0.8rem;
 }
 
@@ -49,11 +48,12 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  z-index: 3;
 }
 
 .loading-title,
 .loading-text {
+  position: relative;
+  z-index: 12;
   animation: dotsMove 8s linear infinite;
 }
 
@@ -277,6 +277,13 @@ body {
   margin-bottom: 1.2rem;
   color: #fff;
 }
+
+.login-container h1,
+.login-container .login-subtitle {
+  position: relative; /* 👈 asegúrate que esté sobre el fondo */
+  z-index: 12;        /* opcional, solo para reforzar */
+}
+
 
 /* ===== AJUSTES EXTRA SOLO PARA MÓVIL ===== */
 @media (max-width: 480px) {
