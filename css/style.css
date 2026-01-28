@@ -18,6 +18,9 @@ body {
   position: relative;
 }
 
+
+/* ===== INDEX.HTML ===== */
+
 /* ===== TÍTULO CARGA ===== */
 .loading-title {
   font-size: clamp(2.4rem, 6vw, 3.4rem); /* 🔁 responsive */
@@ -61,6 +64,9 @@ body {
   from { background-position: 0 0; }
   to   { background-position: 50px 50px; }
 }
+
+
+/* ===== FONDO GLOBLAL ===== */
 
 /* ===== CONTENEDOR DE NUBES ===== */
 .sky-background {
@@ -184,6 +190,7 @@ body {
 .cloud::before { width: 50%; height: 140%; top: -60%; left: 15%; }
 .cloud::after  { width: 40%; height: 120%; top: -40%; left: 45%; }
 
+/* ===== LOGIN.HTML ===== */
 
 /* ===== CONTENEDOR LOGIN MARIQUITA ===== */
 .login-container {
@@ -289,5 +296,140 @@ body {
 @media (max-width: 480px) {
   .cloud {
     filter: blur(6px);
+  }
+}
+
+
+/* ===== PANEL.HTML ===== */
+
+/* ===== CONTENEDOR PRINCIPAL ===== */
+#main-content {
+  position: relative;
+  z-index: 2; /* arriba de las nubes */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* navbar arriba */
+  min-height: 100vh;
+  padding: 20px;
+  background: rgba(220, 20, 60, 0.9); /* rojo tipo mariquita */
+  border-radius: 25px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  color: white;
+  text-align: center;
+  margin: 40px auto;
+  max-width: 1000px;
+  animation: float 6s ease-in-out infinite;
+}
+
+/* ===== ANIMACIÓN FLOTANTE ===== */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.navbar h1 {
+  font-family: 'Comic Sans MS', cursive;
+  font-size: 2em;
+  color: #fff;
+}
+
+/* ===== BOTONES ===== */
+.btn-ladybug {
+  background: #FF4136; /* rojo mariquita */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.btn-ladybug:hover {
+  background: #FF6347;
+  transform: scale(1.05);
+}
+
+/* ===== MENÚS ===== */
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.menu h2 {
+  font-size: 1.8em;
+  margin-bottom: 15px;
+  color: #fff;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+}
+
+.menu a.btn-ladybug {
+  width: 200px;
+  text-align: center;
+}
+
+/* ===== RESPONSIVIDAD ===== */
+@media (max-width: 768px) { /* tablet y celular */
+  #main-content {
+    padding: 15px;
+    margin: 20px auto;
+  }
+
+  .menu h2 {
+    font-size: 1.5em;
+  }
+
+  .menu a.btn-ladybug {
+    width: 160px;
+    padding: 8px 15px;
+  }
+
+  .navbar {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) { /* celular pequeño */
+  #main-content {
+    padding: 10px;
+    margin: 10px auto;
+  }
+
+  .menu h2 {
+    font-size: 1.3em;
+  }
+
+  .menu a.btn-ladybug {
+    width: 140px;
+    padding: 7px 12px;
+  }
+
+  .navbar h1 {
+    font-size: 1.5em;
   }
 }
