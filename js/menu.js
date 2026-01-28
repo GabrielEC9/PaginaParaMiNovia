@@ -32,14 +32,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const role = profile.role
 
-  const links = [
-    { text: '🐞Inicio', href: 'panel.html' },
-    { text: '📸 Álbum', href: 'album.html' },
-    { text: '💌 Frases', href: 'frases.html' },
-    { text: '❓ Curiosidades', href: 'curiosidades.html' },
-    { text: '🛍️ Tienda', href: 'tienda.html' },
-    { text: '🎁 Recompensas', href: 'recompensas.html' }
-  ]
+const links = [
+  { text: '🏠 Inicio', href: 'panel.html' }, 
+  { text: '📸 Álbum', href: 'album.html' },
+  { text: '💌 Frases', href: 'frases.html' },
+  { text: '❓ Curiosidades', href: 'curiosidades.html' },
+  { text: '🛍️ Tienda', href: 'tienda.html' },
+  { text: '🎁 Recompensas', href: 'recompensas.html' }
+]
 
   if (role === 'admin') {
     links.push(
