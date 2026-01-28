@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const userMenu = document.getElementById('user-menu')
   const logoutBtn = document.getElementById('logout-btn')
 
-  // Ocultar ambos menús por seguridad
+  // Ocultar ambos menús por seguridad desde el inicio
   adminMenu?.classList.add('hidden')
   userMenu?.classList.add('hidden')
   main.hidden = true
@@ -38,13 +38,23 @@ document.addEventListener('DOMContentLoaded', async () => {
       throw profileError || new Error('Perfil no encontrado o rol inválido')
     }
 
-    // Mostrar el menú según el rol (asegurando minúsculas)
-    const role = profile.role.toLowerCase()
+    // Debug opcional: ver qué rol llega desde la base de datos
+    console.log('Perfil obtenido:', profile)
+
+    // Mostrar solo el menú correspondiente
+    const role = profile.role?.trim().toLowerCase() // limpiar espacios y forzar minúscula
+    console.log('Rol detectado:', role) // debug
+
     if (role === 'admin') {
       adminMenu.classList.remove('hidden')
+      userMenu.classList.add('hidden')
     } else if (role === 'user') {
       userMenu.classList.remove('hidden')
+      adminMenu.classList.add('hidden')
     } else {
+      // Rol desconocido, ocultamos todo
+      adminMenu.classList.add('hidden')
+      userMenu.classList.add('hidden')
       console.warn('Rol desconocido:', profile.role)
     }
 
