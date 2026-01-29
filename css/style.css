@@ -732,6 +732,14 @@ body.panel-page {
   z-index: 1;
 }
 
+.upload-form .btn-ladybug span {
+  position: relative;
+  z-index: 2;
+}
+
+.upload-form .btn-ladybug span {
+  pointer-events: none;
+}
 
 
 /* ===============================
