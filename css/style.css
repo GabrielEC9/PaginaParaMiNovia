@@ -749,7 +749,7 @@ body.panel-page {
   pointer-events: none;
 }
 
-/* =============================== GRID DE RECUERDOS =============================== */
+/* ============== GRID DE RECUERDOS =================== */
 .album-view {
   width: 100%; /* ocupa todo el ancho disponible para el grid */
 }
@@ -787,7 +787,7 @@ body.panel-page {
   grid-auto-flow: row; /* fotos se acomodan por niveles */
 }
 
-/* =============================== FOTO CARD =============================== */
+/* ================= FOTO CARD =========== */
 .foto-card {
   position: relative;
   padding: 14px;
@@ -844,8 +844,11 @@ body.panel-page {
 
 /* =============================== BOTÓN BORRAR =============================== */
 .btn-delete {
-  margin-top: auto;
-  align-self: center; /* centra el botón horizontalmente dentro del card */
+  margin-top: 10px;        
+  display: block;         
+  margin-left: auto;       
+  margin-right: auto;      
+  
   padding: 6px 14px;
   background: #000;
   color: #ff1f1f;
@@ -861,6 +864,7 @@ body.panel-page {
   color: #000;
   transform: scale(1.05);
 }
+
 
 /* =============================== RESPONSIVE =============================== */
 @media (max-width: 600px) {
