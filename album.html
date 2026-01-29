@@ -38,53 +38,55 @@
     <nav id="menu-links"></nav>
   </header>
 
-    <!-- CONTENIDO DEL ÁLBUM -->
-    <div class="panel-container album-page">
+<!-- CONTENIDO DEL ÁLBUM -->
+<div class="panel-container album-page">
 
-      <h1>📸 Álbum</h1>
+  <h1>📸 Álbum</h1>
 
-      <!-- Zona de subida -->
-      <div class="album-upload">
+  <!-- Zona de subida -->
+  <div class="album-upload">
 
-        <h2>Subir nueva foto</h2>
+    <h2>Subir nueva foto</h2>
 
-        <form id="upload-form" class="upload-form">
-          <input type="file" id="photo-upload" accept="image/*" required>
+    <form id="upload-form" class="upload-form">
 
-          <input
-            type="text"
-            id="photo-description"
-            placeholder="Escribe una descripción..."
-            maxlength="150"
-          >
+      <input
+        type="file"
+        id="photo-upload"
+        accept="image/*"
+        required
+      >
 
-          <button type="submit" class="btn-ladybug">
-            Subir Foto
-          </button>
-        </form>
+      <input
+        type="text"
+        id="photo-description"
+        placeholder="Escribe una descripción..."
+        maxlength="150"
+      >
 
-        <!-- 👇 AQUÍ VA EL MENSAJE -->
-        <p id="upload-message" class="upload-message"></p>
+      <button type="submit" class="btn-ladybug">
+        Subir Foto
+      </button>
 
-      </div>
+    </form>
 
-      <!-- Aquí sigue tu grid del álbum -->
-      <section id="album-grid" class="album-grid"></section>
+    <!-- Mensaje de estado -->
+    <p id="upload-message" class="upload-message"></p>
 
-    </div>
+  </div>
 
-      <!-- Zona de visualización -->
-      <div class="album-view">
+  <!-- Zona de visualización -->
+  <div class="album-view">
 
-        <h2>Recuerdos</h2>
+    <h2>Recuerdos</h2>
 
-        <section id="album-grid" class="album-grid">
-          <!-- Las fotos se insertan aquí dinámicamente con JS -->
-        </section>
+    <section id="album-grid" class="album-grid">
+      <!-- Las fotos se insertan aquí dinámicamente con JS -->
+    </section>
 
-      </div>
+  </div>
 
-    </div>
+</div>
 
 
   <!-- JS -->

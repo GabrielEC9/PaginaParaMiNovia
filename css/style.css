@@ -620,23 +620,138 @@ body.panel-page {
 
 /* ========================================= ALBUM.HTML ========================================= */
 
+.album-page {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* ===============================
+   SUBIDA
+================================ */
+
+.album-upload {
+  background: #fff;
+  padding: 25px;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  max-width: 500px;
+}
+
+.album-upload h2 {
+  margin-bottom: 15px;
+  color: #000;
+}
+
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.upload-form input[type="file"],
+.upload-form input[type="text"] {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 2px solid #ff1f1f;
+  font-size: 0.95rem;
+}
+
+.upload-form input:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(255, 31, 31, 0.4);
+}
+
 .upload-message {
-  margin-top: 15px;
+  margin-top: 10px;
   font-weight: bold;
-  text-align: center;
   opacity: 0;
-  transform: translateY(-5px);
-  transition: all 0.4s ease;
+  transition: opacity 0.4s ease;
 }
 
 .upload-message.success {
-  color: #1faa00;
+  color: #2ecc71;
   opacity: 1;
-  transform: translateY(0);
 }
 
-.upload-message.error {
+/* ===============================
+   GRID
+================================ */
+
+.album-view h2 {
+  margin-bottom: 15px;
+}
+
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+/* ===============================
+   CARD
+================================ */
+
+.foto-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.foto-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+}
+
+.foto-item {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.foto-desc {
+  font-size: 0.85rem;
+  color: #333;
+}
+
+/* ===============================
+   BOTÓN BORRAR
+================================ */
+
+.btn-delete {
+  margin-top: auto;
+  padding: 6px 10px;
+  background: #000;
   color: #ff1f1f;
-  opacity: 1;
-  transform: translateY(0);
+  border: 2px solid #ff1f1f;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+
+.btn-delete:hover {
+  background: #ff1f1f;
+  color: #000;
+  transform: scale(1.05);
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 600px) {
+  .album-upload {
+    max-width: 100%;
+  }
+
+  .foto-item {
+    height: 140px;
+  }
 }
