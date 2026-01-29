@@ -783,10 +783,11 @@ body.panel-page {
 /* ================= GRID DE RECUERDOS ================= */
 .album-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 columnas fijas */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* cada card mínimo 200px, máximo 1fr */
   gap: 20px;
-  justify-content: center; /* centra el grid horizontalmente si hay menos de 3 fotos */
+  justify-content: center; /* centra el grid si hay pocas fotos */
 }
+
 
 /* ================= FOTO CARD =========== */
 .foto-card {
@@ -833,11 +834,12 @@ body.panel-page {
 
 .foto-item {
   width: 100%;
-  max-height: 280px;
+  max-height: 350px; /* más alto para fotos verticales */
   height: auto;
-  object-fit: contain;
+  object-fit: cover; /* llena la card sin deformar */
   border-radius: 12px;
 }
+
 
 .foto-desc {
   font-size: 0.9rem;
@@ -877,7 +879,7 @@ body.panel-page {
 /* =============================== RESPONSIVE =============================== */
 @media (max-width: 900px) {
   .album-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 por fila en tablet/ móvil grande */
+    grid-template-columns: repeat(2, 1fr); 
   }
 }
 
