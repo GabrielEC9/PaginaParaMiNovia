@@ -783,10 +783,11 @@ body.panel-page {
 /* ================= GRID DE RECUERDOS ================= */
 .album-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* cards decentes */
-  gap: 20px;
-  justify-content: center;
+  grid-template-columns: repeat(3, 250px); /* 3 columnas fijas de 250px */
+  gap: 20px; /* espacio entre las cards */
+  justify-content: center; /* centra el grid si hay menos de 3 fotos */
 }
+
 
 /* ================= FOTO CARD =========== */
 .foto-card {
