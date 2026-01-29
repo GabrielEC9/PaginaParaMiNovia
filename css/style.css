@@ -618,36 +618,36 @@ body.panel-page {
 }
 
 
-/* ========================================= ALBUM.HTML ========================================= */
+/* ========================================= ALBUM ========================================= */
 
 .album-page {
   display: flex;
   flex-direction: column;
   gap: 30px;
-  align-items: center;
+  align-items: center; /* Título y contenedor centrados */
 }
 
+/* TÍTULO DEL ÁLBUM */
 .album-page h1 {
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 20px;
-  text-align: center; /* 👈 esto centra el texto */
-  width: 100%; /* asegura que ocupe todo el ancho del contenedor */
+  text-align: center; /* centra el texto */
+  width: 100%;
+  color: #ff1f1f;
+  letter-spacing: 1px;
 }
 
-
-/* ===============================
-   SUBIDA
-================================ */
-
+/* =============================== SUBIDA DE FOTOS =============================== */
 .album-upload {
   position: relative;
   padding: 28px;
   border-radius: 22px;
   max-width: 500px;
-  width: 100%;          
-  margin: 0 auto;       
+  width: 100%;
+  margin: 0 auto; /* centra horizontalmente */
 
+  /* borde mariquita */
   background:
     radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 75px 75px,
     radial-gradient(circle, #000 28%, transparent 29%) 37px 37px / 75px 75px,
@@ -670,7 +670,6 @@ body.panel-page {
   z-index: 1;
 }
 
-
 .album-upload h2 {
   margin-bottom: 18px;
   color: #000;
@@ -679,7 +678,7 @@ body.panel-page {
   letter-spacing: 0.5px;
 }
 
-
+/* FORMULARIO DE SUBIDA */
 .upload-form {
   display: flex;
   flex-direction: column;
@@ -711,6 +710,7 @@ body.panel-page {
   opacity: 1;
 }
 
+/* BOTÓN SUBIR FOTO */
 .upload-form .btn-ladybug {
   margin-top: 10px;
   padding: 12px;
@@ -725,12 +725,12 @@ body.panel-page {
   cursor: pointer;
 
   transition: all 0.4s ease;
-   position: relative; 
-   overflow: hidden;
+  position: relative;
+  overflow: hidden;
 }
 
 .upload-form .btn-ladybug:hover {
-  color: #fff; 
+  color: #fff;
   border-color: #ff1f1f;
 
   background:
@@ -740,37 +740,32 @@ body.panel-page {
 
   transform: translateY(-2px) scale(1.03);
   box-shadow: 0 10px 25px rgba(0,0,0,0.35);
-
   z-index: 1;
 }
 
 .upload-form .btn-ladybug span {
   position: relative;
   z-index: 2;
-}
-
-.upload-form .btn-ladybug span {
   pointer-events: none;
 }
 
-
-/* ===============================
-   GRID
-================================ */
+/* =============================== GRID DE RECUERDOS =============================== */
+.album-view {
+  width: 100%; /* ocupa todo el ancho disponible para el grid */
+}
 
 .album-view h2 {
   font-size: 2.2rem;
   font-weight: 900;
   text-align: center;
   margin: 50px 0 25px;
-
   color: #000;
   letter-spacing: 2px;
   text-transform: uppercase;
   position: relative;
 }
 
-/* Línea decorativa mariquita */
+/* Línea decorativa tipo mariquita */
 .album-view h2::after {
   content: "";
   display: block;
@@ -785,28 +780,14 @@ body.panel-page {
     #ff1f1f;
 }
 
-
 .album-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 20px;
-
-  grid-auto-flow: row;
+  grid-auto-flow: row; /* fotos se acomodan por niveles */
 }
 
-.album-page {
-  align-items: stretch;
-}
-
-
-.album-view {
-  width: 100%;
-}
-
-/* ===============================
-   CARD
-================================ */
-
+/* =============================== FOTO CARD =============================== */
 .foto-card {
   position: relative;
   padding: 14px;
@@ -842,7 +823,6 @@ body.panel-page {
   box-shadow: 0 14px 32px rgba(0,0,0,0.25);
 }
 
-
 .foto-item {
   width: 100%;
   max-height: 280px;
@@ -851,30 +831,21 @@ body.panel-page {
   border-radius: 12px;
 }
 
-
-
 .foto-desc {
   font-size: 0.9rem;
   text-align: center;
   font-style: italic;
   color: #444;
   line-height: 1.4;
-
   padding: 6px 10px;
   border-radius: 10px;
-
   background: rgba(255, 31, 31, 0.08);
 }
 
-
-/* ===============================
-   BOTÓN BORRAR
-================================ */
-
+/* =============================== BOTÓN BORRAR =============================== */
 .btn-delete {
   margin-top: auto;
-  align-self: center; 
-  
+  align-self: center; /* centra el botón horizontalmente dentro del card */
   padding: 6px 14px;
   background: #000;
   color: #ff1f1f;
@@ -882,10 +853,8 @@ body.panel-page {
   border-radius: 10px;
   cursor: pointer;
   font-size: 0.85rem;
-
   transition: all 0.3s ease;
 }
-
 
 .btn-delete:hover {
   background: #ff1f1f;
@@ -893,10 +862,7 @@ body.panel-page {
   transform: scale(1.05);
 }
 
-/* ===============================
-   RESPONSIVE
-================================ */
-
+/* =============================== RESPONSIVE =============================== */
 @media (max-width: 600px) {
   .album-upload {
     max-width: 100%;
@@ -911,4 +877,3 @@ body.panel-page {
     height: 140px;
   }
 }
-
