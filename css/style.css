@@ -638,7 +638,7 @@ body.panel-page {
   letter-spacing: 1px;
 }
 
-/* =============================== SUBIDA DE FOTOS =============================== */
+/* ======================== SUBIDA DE FOTOS ======================= */
 .album-upload {
   position: relative;
   padding: 28px;
@@ -782,10 +782,11 @@ body.panel-page {
 
 .album-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas fijas */
   gap: 20px;
-  grid-auto-flow: row; /* fotos se acomodan por niveles */
+  justify-content: center; /* centra el grid horizontalmente si hay menos de 3 fotos */
 }
+
 
 /* ================= FOTO CARD =========== */
 .foto-card {
@@ -882,5 +883,9 @@ body.panel-page {
 
   .foto-item {
     height: 140px;
+  }
+
+    .album-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 por fila en móviles */
   }
 }
