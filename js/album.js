@@ -1,7 +1,9 @@
+import { supabase } from './supabaseClient.js'
+
 document.addEventListener('DOMContentLoaded', async () => {
 
-  // 🔐 Verificar sesión
   const { data: { user } } = await supabase.auth.getUser()
+
   if (!user) {
     window.location.href = 'login.html'
     return
