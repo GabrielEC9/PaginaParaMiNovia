@@ -26,7 +26,6 @@
 
   <!-- MENÚ GLOBAL -->
   <header class="main-menu">
-
     <div class="menu-left">
       <span class="menu-title">Menu</span>
     </div>
@@ -37,22 +36,48 @@
     </div>
 
     <nav id="menu-links"></nav>
-
   </header>
 
-  <!-- CONTENIDO DEL ÁLBUM -->
-  <div class="panel-container album-page">
+    <!-- CONTENIDO DEL ÁLBUM -->
+    <div class="panel-container album-page">
 
-    <h1>📸 Álbum</h1>
+      <h1>📸 Álbum</h1>
 
-    <form id="upload-form" class="upload-form">
-      <input type="file" id="photo-upload" accept="image/*" required>
-      <button type="submit" class="btn-ladybug">Subir Foto</button>
-    </form>
+      <!-- Zona de subida -->
+      <div class="album-upload">
 
-    <section id="album-grid" class="album-grid"></section>
+        <h2>Subir nueva foto</h2>
 
-  </div>
+        <form id="upload-form" class="upload-form">
+          <input type="file" id="photo-upload" accept="image/*" required>
+
+          <input
+            type="text"
+            id="photo-description"
+            placeholder="Escribe una descripción..."
+            maxlength="150"
+          >
+
+          <button type="submit" class="btn-ladybug">
+            Subir Foto
+          </button>
+        </form>
+
+      </div>
+
+      <!-- Zona de visualización -->
+      <div class="album-view">
+
+        <h2>Recuerdos</h2>
+
+        <section id="album-grid" class="album-grid">
+          <!-- Las fotos se insertan aquí dinámicamente con JS -->
+        </section>
+
+      </div>
+
+    </div>
+
 
   <!-- JS -->
   <script type="module" src="/js/menu.js"></script>

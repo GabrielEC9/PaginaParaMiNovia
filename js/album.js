@@ -1,23 +1,28 @@
 document.addEventListener('DOMContentLoaded', async () => {
+
+  // 🔐 Verificar sesión
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) {
     window.location.href = 'login.html'
     return
   }
 
-  const fileInput = document.getElementById('foto-input')
-  const uploadBtn = document.getElementById('subir-foto-btn')
-  const albumContainer = document.getElementById('album-container')
+  // 📌 Elementos del DOM
+  const fileInput = document.getElementById('photo-upload')
+  const descriptionInput = document.getElementById('photo-description')
+  const uploadForm = document.getElementById('upload-form')
+  const albumContainer = document.getElementById('album-grid')
 
+  // 📸 Cargar fotos del álbum
   async function cargarAlbum() {
     const { data: fotos, error } = await supabase
       .from('album')
       .select('*')
-      .order('fecha', { ascending: false })
+      .order('uploaded_at', { ascending: false })
 
     albumContainer.innerHTML = ''
 
-    if (error || !fotos?.length) {
+    if (error || !fotos.length) {
       albumContainer.innerHTML = '<p>No hay fotos aún 🐞</p>'
       return
     }
@@ -26,47 +31,53 @@ document.addEventListener('DOMContentLoaded', async () => {
       const div = document.createElement('div')
       div.classList.add('foto-card')
       div.innerHTML = `
-        <img src="${foto.url}" alt="foto subida" class="foto-item">
-        <p class="foto-user">${foto.usuario}</p>
+        <img src="${foto.image_url}" class="foto-item" />
+        ${foto.description ? `<p class="foto-desc">${foto.description}</p>` : ''}
       `
       albumContainer.appendChild(div)
     })
   }
 
-  uploadBtn.addEventListener('click', async () => {
+  // ⬆️ Subir nueva foto
+  uploadForm.addEventListener('submit', async (e) => {
+    e.preventDefault()
+
     const file = fileInput.files[0]
     if (!file) return
 
+    const description = descriptionInput.value.trim()
+
     const filePath = `${user.id}/${Date.now()}_${file.name}`
-    const { data: uploadData, error: uploadError } = await supabase.storage
+
+    // 📤 Subir imagen a Supabase Storage
+    const { error: uploadError } = await supabase.storage
       .from('fotos')
       .upload(filePath, file)
 
     if (uploadError) {
-      alert('Error al subir la foto.')
+      alert('Error al subir la foto 😢')
       return
     }
 
-    const { data: publicUrl } = supabase.storage
+    // 🌐 Obtener URL pública
+    const { data } = supabase.storage
       .from('fotos')
       .getPublicUrl(filePath)
 
+    // 🧾 Guardar registro en la BD
     await supabase.from('album').insert({
-      usuario: user.email,
-      url: publicUrl.publicUrl,
-      fecha: new Date()
+      user_id: user.id,
+      image_url: data.publicUrl,
+      description: description || null
     })
 
-    await supabase.from('notificaciones').insert({
-      tipo: 'foto',
-      mensaje: `${user.email} subió una nueva foto.`,
-      fecha: new Date()
-    })
-
-    alert('Foto subida correctamente 🐞')
+    // 🧹 Limpiar formulario
     fileInput.value = ''
+    descriptionInput.value = ''
+
     cargarAlbum()
   })
 
+  // 🚀 Inicial
   cargarAlbum()
 })
