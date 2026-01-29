@@ -624,7 +624,9 @@ body.panel-page {
   display: flex;
   flex-direction: column;
   gap: 30px;
+  align-items: center;
 }
+
 
 /* ===============================
    SUBIDA
@@ -835,9 +837,7 @@ body.panel-page {
   width: 100%;
   max-height: 280px;
   height: auto;
-
   object-fit: contain;
-  background: #000;
   border-radius: 12px;
 }
 
