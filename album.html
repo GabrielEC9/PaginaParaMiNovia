@@ -1,45 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Álbum 📸</title>
+
+  <!-- CSS GLOBAL (el mismo del panel) -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+
 <body class="ladybug-bg panel-page">
 
-<div class="sky-background">
-  <div class="cloud cloud1"></div>
-  <div class="cloud cloud2"></div>
-  <div class="cloud cloud3"></div>
-  <div class="cloud cloud4"></div>
-  <div class="cloud cloud5"></div>
-  <div class="cloud cloud6"></div>
-  <div class="cloud cloud7"></div>
-  <div class="cloud cloud8"></div>
-</div>
-
-<!-- MENÚ GLOBAL -->
-<header class="main-menu">
-  <div class="menu-left">
-    <span class="menu-title">Menu</span>
+  <!-- FONDO DEL CIELO -->
+  <div class="sky-background">
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
+    <div class="cloud cloud4"></div>
+    <div class="cloud cloud5"></div>
+    <div class="cloud cloud6"></div>
+    <div class="cloud cloud7"></div>
+    <div class="cloud cloud8"></div>
   </div>
 
-  <div class="menu-right">
-    <button class="menu-toggle">☰</button>
-    <button id="logout-btn">Salir</button>
-  </div>
+  <!-- MENÚ GLOBAL -->
+  <header class="main-menu">
+    <div class="menu-left">
+      <span class="menu-title">Menú</span>
+    </div>
 
-  <nav id="menu-links"></nav>
-</header>
+    <div class="menu-right">
+      <button class="menu-toggle">☰</button>
+      <button id="logout-btn">Salir</button>
+    </div>
 
+    <nav id="menu-links"></nav>
+  </header>
 
-<!-- CONTENIDO DEL ÁLBUM -->
-<main class="panel-container album-page">
+  <!-- CONTENIDO DEL ÁLBUM -->
+  <main class="panel-container album-page">
 
-  <h1>📸 Álbum</h1>
+    <h1>📸 Álbum</h1>
 
-  <form id="upload-form" class="upload-form">
-    <input type="file" id="photo-upload" accept="image/*" required />
-    <button type="submit" class="btn-ladybug">Subir Foto</button>
-  </form>
+    <form id="upload-form" class="upload-form">
+      <input type="file" id="photo-upload" accept="image/*" required>
+      <button type="submit" class="btn-ladybug">Subir Foto</button>
+    </form>
 
-  <section id="album-grid" class="album-grid"></section>
+    <section id="album-grid" class="album-grid"></section>
 
-</main>
+  </main>
 
-<script type="module" src="js/menu.js"></script>
-<script type="module" src="js/album.js"></script>
+  <!-- JS (siempre al final del body) -->
+  <script type="module" src="js/menu.js"></script>
+  <script type="module" src="js/album.js"></script>
+
 </body>
+</html>
