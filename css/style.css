@@ -783,9 +783,11 @@ body.panel-page {
 /* ================= GRID DE RECUERDOS ================= */
 .album-grid {
   display: grid;
-  grid-template-columns: repeat(3, 250px); /* 3 columnas fijas de 250px */
-  gap: 20px; /* espacio entre las cards */
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales */
+  gap: 20px; /* espacio entre cards */
   justify-content: center; /* centra el grid si hay menos de 3 fotos */
+  max-width: 900px; /* ancho máximo total del grid */
+  margin: 0 auto; /* centra todo el grid en la página */
 }
 
 
@@ -798,8 +800,7 @@ body.panel-page {
   border-radius: 18px;
   position: relative;
 
-  width: 100%;
-  max-width: 250px; /* ancho fijo razonable para fotos verticales */
+  max-width: 250px; /* limita tamaño de la card */
   box-sizing: border-box;
 
   background:
