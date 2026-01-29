@@ -4,14 +4,20 @@ import { logout } from './auth.js'
 document.addEventListener('DOMContentLoaded', async () => {
   const menu = document.getElementById('menu-links')
   const logoutBtn = document.getElementById('logout-btn')
+  const toggleBtn = document.getElementById('menu-toggle')
 
-  // ===== LOGOUT =====
+  /* ===== TOGGLE MENU ===== */
+  toggleBtn?.addEventListener('click', () => {
+    menu.classList.toggle('open')
+  })
+
+  /* ===== LOGOUT ===== */
   logoutBtn?.addEventListener('click', async () => {
     await logout()
     window.location.replace('login.html')
   })
 
-  // ===== SESIÓN =====
+  /* ===== SESIÓN ===== */
   const { data: sessionData } = await supabase.auth.getSession()
   if (!sessionData?.session) {
     window.location.href = 'login.html'
@@ -20,21 +26,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const user = sessionData.session.user
 
-  const { data: profile, error } = await supabase
+  const { data: profile } = await supabase
     .from('profiles')
     .select('role')
     .eq('id', user.id)
     .single()
 
-  if (error || !profile) {
-    await supabase.auth.signOut()
-    window.location.href = 'login.html'
-    return
-  }
+  const role = profile?.role || 'user'
 
-  const role = profile.role
-
-  // ===== LINKS DEL MENÚ =====
+  /* ===== LINKS ===== */
   const links = [
     { text: '🏠 Inicio', href: 'panel.html' },
     { text: '📸 Álbum', href: 'album.html' },
@@ -51,18 +51,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     )
   }
 
-  // ===== CREAR BOTONES =====
   menu.innerHTML = ''
   links.forEach(link => {
     const a = document.createElement('a')
     a.href = link.href
     a.textContent = link.text
     a.className = 'menu-btn'
+
+    a.addEventListener('click', () => {
+      menu.classList.remove('open')
+    })
+
     menu.appendChild(a)
   })
 
   const currentPage = window.location.pathname.split('/').pop()
-
   menu.querySelectorAll('.menu-btn').forEach(btn => {
     if (btn.getAttribute('href') === currentPage) {
       btn.classList.add('active')
