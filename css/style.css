@@ -332,7 +332,7 @@ body {
 }
 
 
-/* ================= MENU GLOBAL ================= */
+/* ========================================= MENU GLOBAL ========================================= */
 
 .main-menu {
   position: fixed;
@@ -477,6 +477,27 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+/* ===== ORDEN DESKTOP ===== */
+@media (min-width: 901px) {
+
+  .menu-left {
+    order: 1;
+  }
+
+  #menu-links {
+    order: 2;
+  }
+
+  .menu-right {
+    order: 3;
+  }
+
+  /* ocultar hamburguesa en desktop */
+  .menu-toggle {
+    display: none;
+  }
 }
 
 
