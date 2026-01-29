@@ -627,6 +627,14 @@ body.panel-page {
   align-items: center;
 }
 
+.album-page h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center; /* 👈 esto centra el texto */
+  width: 100%; /* asegura que ocupe todo el ancho del contenedor */
+}
+
 
 /* ===============================
    SUBIDA
@@ -637,6 +645,8 @@ body.panel-page {
   padding: 28px;
   border-radius: 22px;
   max-width: 500px;
+  width: 100%;          
+  margin: 0 auto;       
 
   background:
     radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 75px 75px,
