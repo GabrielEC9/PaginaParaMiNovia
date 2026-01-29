@@ -778,7 +778,10 @@ body.panel-page {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 20px;
+
+  grid-auto-flow: row;
 }
+
 
 /* ===============================
    CARD
