@@ -436,26 +436,32 @@ body {
 @media (max-width: 900px) {
 
   /* ocultar links en header */
-  #menu-links {
-    position: fixed;
-    top: 70px;
-    left: 0;
-    width: 100%;
+#menu-links {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  width: 100%;
 
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 
-    padding: 15px;
-    background: #ff1f1f;
+  padding: 15px;
+  background: #ff1f1f;
 
-    display: none;
-    z-index: 999;
-  }
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
 
-  #menu-links.open {
-    display: flex;
-  }
+  transition: 0.3s ease;
+}
+
+#menu-links.open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
 
   .menu-toggle {
     display: block;
