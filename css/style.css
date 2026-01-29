@@ -616,3 +616,27 @@ body.panel-page {
   overflow-y: auto;     /* ✅ permite bajar */
   overflow-x: hidden;  /* evita scroll horizontal raro */
 }
+
+
+/* ========================================= ALBUM.HTML ========================================= */
+
+.upload-message {
+  margin-top: 15px;
+  font-weight: bold;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(-5px);
+  transition: all 0.4s ease;
+}
+
+.upload-message.success {
+  color: #1faa00;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.upload-message.error {
+  color: #ff1f1f;
+  opacity: 1;
+  transform: translateY(0);
+}

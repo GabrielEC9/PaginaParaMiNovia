@@ -14,6 +14,16 @@ document.addEventListener('DOMContentLoaded', async () => {
   const descriptionInput = document.getElementById('photo-description')
   const uploadForm = document.getElementById('upload-form')
   const albumContainer = document.getElementById('album-grid')
+  const message = document.getElementById("upload-message");
+
+message.textContent = "✅ Foto subida exitosamente";
+message.className = "upload-message success";
+
+setTimeout(() => {
+  message.className = "upload-message";
+  message.textContent = "";
+}, 3000);
+
 
   // 📸 Cargar fotos del álbum
   async function cargarAlbum() {
