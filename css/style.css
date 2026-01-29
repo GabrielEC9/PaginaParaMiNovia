@@ -798,7 +798,7 @@ body.panel-page {
   position: relative;
 
   width: 100%;
-  max-width: 280px; /* evita que se estiren demasiado las verticales */
+  max-width: 250px; /* ancho fijo razonable para fotos verticales */
   box-sizing: border-box;
 
   background:
@@ -809,6 +809,7 @@ body.panel-page {
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
+
 
 /* Capa interna blanca */
 .foto-card::before {
@@ -833,9 +834,9 @@ body.panel-page {
 
 .foto-item {
   width: 100%;
-  max-height: 400px; /* permite que las verticales suban más */
+  max-height: 350px; /* altura máxima para verticales */
   height: auto;
-  object-fit: cover;  /* mantiene proporción sin deformar */
+  object-fit: contain; /* muestra la foto completa, no recortada */
   border-radius: 12px;
 }
 
