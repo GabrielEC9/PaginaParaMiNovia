@@ -780,6 +780,7 @@ body.panel-page {
     #ff1f1f;
 }
 
+/* ================= GRID DE RECUERDOS ================= */
 .album-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3 columnas fijas */
@@ -787,15 +788,18 @@ body.panel-page {
   justify-content: center; /* centra el grid horizontalmente si hay menos de 3 fotos */
 }
 
-
 /* ================= FOTO CARD =========== */
 .foto-card {
   display: flex;
   flex-direction: column;
-  align-items: center; /* 👈 centra todos los elementos horizontalmente */
+  align-items: center; /* centra todos los elementos horizontalmente */
   padding: 14px;
   border-radius: 18px;
   position: relative; /* necesario para la capa ::before */
+
+  width: 100%;          /* ocupa todo el ancho de la celda del grid */
+  max-width: 180px;     /* limita la anchura de la card */
+  box-sizing: border-box; /* asegura que padding no expanda la card más allá del max-width */
 
   background:
     radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 40px 40px,
@@ -871,6 +875,12 @@ body.panel-page {
 
 
 /* =============================== RESPONSIVE =============================== */
+@media (max-width: 900px) {
+  .album-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 por fila en tablet/ móvil grande */
+  }
+}
+
 @media (max-width: 600px) {
   .album-upload {
     max-width: 100%;
@@ -882,10 +892,14 @@ body.panel-page {
   }
 
   .foto-item {
-    height: 140px;
+    height: 180px; /* fotos un poco más grandes en móvil */
   }
 
-    .album-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 por fila en móviles */
+  .album-grid {
+    grid-template-columns: 1fr; /* 1 por fila en celular */
+  }
+
+  .foto-card {
+    max-width: 100%; /* card ocupa todo el ancho disponible */
   }
 }
