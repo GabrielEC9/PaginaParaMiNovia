@@ -1118,7 +1118,7 @@ body.frases-page {
   box-shadow: 0 10px 22px rgba(0,0,0,0.35);
 }
 
-/* ===== CARTA DESBLOQUEADA CORREGIDA (DEBUG ACTIVO) ===== */
+* /*===== CARTA DESBLOQUEADA CORREGIDA (DEBUG ACTIVO) ===== */
 .frase-card.frase-unlocked {
   position: relative;       /* importante para ::before */
   z-index: 0;               /* asegura que ::before quede detrás */
@@ -1139,7 +1139,6 @@ body.frases-page {
 }
 
 /* ===== FONDO PUNTEADO SOLO AL HOVER ===== */
-/* ===== CARTA DESBLOQUEADA: marco de mariquitas ===== */
 .frase-card.frase-unlocked::before {
     content: "";
     position: absolute;
@@ -1178,7 +1177,6 @@ body.frases-page {
   z-index: 1;             /* asegura que contenido esté encima del fondo */
   background-image: none !important;
 }
-
 
 
 /* ====================================================
