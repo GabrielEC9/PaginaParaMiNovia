@@ -1118,10 +1118,10 @@ body.frases-page {
   box-shadow: 0 10px 22px rgba(0,0,0,0.35);
 }
 
-/* ===== CARTA DESBLOQUEADA CORREGIDA ===== */
+/* ===== CARTA DESBLOQUEADA CORREGIDA (DEBUG ACTIVO) ===== */
 .frase-card.frase-unlocked {
   position: relative;       /* importante para ::before */
-  z-index: 0;               /* asegura que el ::before quede detrás */
+  z-index: 0;               /* asegura que ::before quede detrás */
   border-radius: 22px;
   padding: 28px;
   min-height: 260px;
@@ -1138,25 +1138,33 @@ body.frases-page {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* ===== CARTA DESBLOQUEADA: fondo punteado solo al hover ===== */
+/* ===== FONDO PUNTEADO SOLO AL HOVER ===== */
 .frase-card.frase-unlocked::before {
-    content: "DEBUG";  /* 🔹 poner un texto temporal */
-    color: white;
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255,0,0,0.3); /* semitransparente */
-    z-index: 5; /* encima del contenido */
+  content: "DEBUG";  /* 🔹 texto temporal para ver si ::before se aplica */
+  position: absolute;
+  inset: 0;  /* ocupa toda la carta */
+  border-radius: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 40px 40px,
+    radial-gradient(circle, #000 28%, transparent 29%) 20px 20px / 40px 40px,
+    rgba(255, 31, 31, 0.2); /* fondo rojo semitransparente */
+
+  opacity: 0;             /* inicialmente invisible */
+  transition: opacity 0.3s ease;
+  z-index: 0;             /* debajo del contenido */
 }
 
-/* Cuando pasas el mouse por encima, muestra el fondo punteado */
+/* Hover: muestra punteado */
 .frase-card.frase-unlocked:hover::before {
   opacity: 1;
 }
 
-
-/* hover solo mueve tarjeta y sombra */
+/* Hover solo mueve tarjeta y sombra */
 .frase-card.frase-unlocked:hover {
   transform: translateY(-4px);
   box-shadow: 0 18px 40px rgba(0,0,0,0.35);
@@ -1165,25 +1173,10 @@ body.frases-page {
 /* contenido sobre ::before */
 .frase-card.frase-unlocked > * {
   position: relative;
-  z-index: 1;
+  z-index: 1;             /* asegura que contenido esté encima del fondo */
   background-image: none !important;
 }
 
-.frase-card.frase-unlocked h3 {
-  font-size: 1.7rem;
-  font-weight: 900;
-  letter-spacing: 1px;
-  margin-bottom: 18px;
-  text-align: center;
-  color: #ff1f1f;
-}
-
-.frase-card.frase-unlocked p {
-  font-size: 1.05rem;
-  line-height: 1.75;
-  color: #222;
-  text-align: center;
-}
 
 
 /* ====================================================
