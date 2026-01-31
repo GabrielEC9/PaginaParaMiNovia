@@ -1161,7 +1161,7 @@ body.frases-page .phrases-grid .frase-card.unlocked {
 }
 
 /* borde mariquita */
-body.frases-page .phrases-grid .frase-card.unlocked::before {
+.frase-card.unlocked::before {
   content: "";
   position: absolute;
   top: -6px;
@@ -1173,15 +1173,13 @@ body.frases-page .phrases-grid .frase-card.unlocked::before {
   background:
     radial-gradient(circle, #000 30%, transparent 31%) 0 0 / 22px 22px,
     radial-gradient(circle, #000 30%, transparent 31%) 11px 11px / 22px 22px,
-    #ff1f1f;
+    transparent; /* ⚡ cambiar #ff1f1f a transparente */
 
   z-index: -1;
   background-origin: border-box;
   background-clip: content-box, content-box, border-box;
-
-  /* ⚡ eliminar transición de background */
-  transition: none;
 }
+
 
 /* Hover solo movimiento y sombra, sin tocar fondo ni borde */
 body.frases-page .phrases-grid .frase-card.unlocked:hover {
