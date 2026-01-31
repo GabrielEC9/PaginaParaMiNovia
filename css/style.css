@@ -1121,6 +1121,9 @@ body.frases-page {
 /* ====================================================
    frase desbloqueada
 ==================================================== */
+/* ====================================================
+   FRASE DESBLOQUEADA
+==================================================== */
 .frase-card.frase-unlocked {
   position: relative;
   z-index: 0;
@@ -1136,7 +1139,7 @@ body.frases-page {
   justify-content: center;
   align-items: center;
 
-  overflow: visible;
+  overflow: visible; /* para que el borde no se corte */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -1150,16 +1153,13 @@ body.frases-page {
   bottom: -6px;
   border-radius: 28px;
 
-  /* solo borde punteado, interior transparente */
-  background: #fff;          /* para que el centro siga blanco */
-  background-clip: padding-box;
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 22px 22px,
+    radial-gradient(circle, #000 28%, transparent 29%) 11px 11px / 22px 22px,
+    #fff; /* fondo interior blanco */
 
-  border: 6px solid transparent; /* el grosor del borde */
-  border-image: 
-    radial-gradient(circle, #000 28%, transparent 29%) 6; /* patrón de mariquitas en el borde */
-  
   z-index: 0;            /* detrás del contenido */
-  pointer-events: none;  /* para que no interfiera con el hover */
+  pointer-events: none;  /* no interfiere con hover */
 }
 
 /* Hover: solo mueve tarjeta y sombra */
@@ -1184,13 +1184,13 @@ body.frases-page {
   text-align: center;
 }
 
-/* P dentro de la tarjeta */
 .frase-card.frase-unlocked p {
   font-size: 1.1rem;
   color: #000; /* negro */
   line-height: 1.6;
   text-align: center;
 }
+
 
 
 /* ====================================================
