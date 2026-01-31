@@ -2,17 +2,16 @@ import { supabase } from './supabaseClient.js'
 
 document.addEventListener('DOMContentLoaded', async () => {
   // =========================
-  // 1. Auth
+  // 1. Verificar auth
   // =========================
   const { data: { user }, error: authError } = await supabase.auth.getUser()
-
   if (authError || !user) {
     window.location.href = 'login.html'
     return
   }
 
   const contenedor = document.getElementById('phrases-list')
-  contenedor.innerHTML = ''
+  contenedor.innerHTML = '' // limpiar contenedor
 
   // =========================
   // 2. Traer frases
@@ -24,12 +23,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     .order('created_at', { ascending: true })
 
   if (frasesError) {
-    console.error('Error frases:', frasesError)
+    console.error('Error al cargar frases:', frasesError)
     return
   }
 
   // =========================
-  // 3. Traer desbloqueos
+  // 3. Traer desbloqueos del usuario
   // =========================
   const { data: desbloqueos, error: unlocksError } = await supabase
     .from('unlocks')
@@ -37,14 +36,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     .eq('user_id', user.id)
 
   if (unlocksError) {
-    console.error('Error unlocks:', unlocksError)
+    console.error('Error al cargar desbloqueos:', unlocksError)
     return
   }
 
   const idsDesbloqueadas = desbloqueos.map(d => d.content_id)
 
   // =========================
-  // 4. Render tarjetas
+  // 4. Renderizar tarjetas
   // =========================
   frases.forEach(frase => {
     const card = document.createElement('div')
@@ -53,18 +52,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     const desbloqueada = idsDesbloqueadas.includes(frase.id)
 
     if (desbloqueada) {
-      card.classList.add('frase-unlocked') // ✅ Solo desbloqueadas
-
+      // CARTA DESBLOQUEADA
+      card.classList.add('frase-unlocked')
       const h3 = document.createElement('h3')
       h3.textContent = frase.title
-
       const p = document.createElement('p')
       p.textContent = frase.text
-
       card.appendChild(h3)
       card.appendChild(p)
     } else {
-      card.classList.add('frase-locked') // ✅ Solo bloqueadas
+      // CARTA BLOQUEADA
+      card.classList.add('frase-locked')
 
       const lockDiv = document.createElement('div')
       lockDiv.classList.add('ladybug-lock')
@@ -88,7 +86,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   })
 
   // =========================
-  // 5. Evento desbloquear
+  // 5. Evento para desbloquear
   // =========================
   contenedor.addEventListener('click', async (e) => {
     const btn = e.target.closest('.btn-unlock')
@@ -98,6 +96,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const card = btn.closest('.frase-card')
     const contentId = btn.dataset.id
 
+    // Insertar desbloqueo en Supabase
     const { error } = await supabase
       .from('unlocks')
       .insert({
@@ -106,23 +105,24 @@ document.addEventListener('DOMContentLoaded', async () => {
       })
 
     if (error) {
-      console.error(error)
+      console.error('Error al desbloquear:', error)
       btn.disabled = false
       return
     }
 
     // =========================
-    // 6. Renderizar desbloqueada limpio
+    // 6. Renderizar la carta como desbloqueada
     // =========================
     const frase = frases.find(f => f.id == contentId)
 
     card.classList.remove('frase-locked')
     card.classList.add('frase-unlocked')
 
-    // Eliminar elementos de bloqueo
+    // Eliminar lock y botón
     card.querySelector('.ladybug-lock')?.remove()
     btn.remove()
 
+    // Agregar contenido de la frase
     const h3 = document.createElement('h3')
     h3.textContent = frase.title
 
