@@ -33,13 +33,17 @@ document.addEventListener('DOMContentLoaded', async () => {
       const div = document.createElement('div')
       div.classList.add('foto-card')
 
-      div.innerHTML = `
-        <img src="${foto.image_url}" class="foto-item" />
-        ${foto.description ? `<p class="foto-desc">${foto.description}</p>` : ''}
-        <button class="btn-delete" data-id="${foto.id}" data-url="${foto.image_url}">
-          🗑️ Borrar
-        </button>
-      `
+div.innerHTML = `
+  <div class="foto-img-box">
+    <img src="${foto.image_url}" class="foto-item" />
+  </div>
+
+  ${foto.description ? `<p class="foto-desc">${foto.description}</p>` : ''}
+
+  <button class="btn-delete" data-id="${foto.id}" data-url="${foto.image_url}">
+    🗑️ Borrar
+  </button>
+`
 
       albumContainer.appendChild(div)
     })
