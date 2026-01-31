@@ -1216,6 +1216,20 @@ body.frases-page .phrases-grid .frase-card.unlocked p {
   text-align: center;
 }
 
+/* Bloquea cualquier hover global solo para frases desbloqueadas */
+body.frases-page .frase-card.unlocked,
+body.frases-page .frase-card.unlocked::before,
+body.frases-page .frase-card.unlocked * {
+  background: unset !important; /* borra cualquier hover global */
+  transition: none !important;  /* evita que cualquier transición afecte */
+}
+
+/* Hover solo movimiento y sombra */
+body.frases-page .frase-card.unlocked:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+}
+
 
 /* ====================================================
    ANIMACIÓN DE ENTRADA
