@@ -1185,10 +1185,12 @@ body.frases-page .phrases-grid .frase-card.unlocked {
 
 
 /* Hover solo movimiento y sombra, sin tocar fondo ni borde */
-body.frases-page .phrases-grid .frase-card.unlocked:hover {
+.frase-card.unlocked:hover {
   transform: translateY(-4px);
   box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+  /* ⚡ no tocar background */
 }
+
 
 /* Contenido por encima del ::before */
 body.frases-page .phrases-grid .frase-card.unlocked h3,
