@@ -1170,14 +1170,17 @@ body.frases-page .phrases-grid .frase-card.unlocked {
   bottom: -6px;
   border-radius: 28px;
 
+  /* ⚡ Borde mariquita solo */
   background:
     radial-gradient(circle, #000 30%, transparent 31%) 0 0 / 22px 22px,
     radial-gradient(circle, #000 30%, transparent 31%) 11px 11px / 22px 22px,
-    transparent; /* ⚡ cambiar #ff1f1f a transparente */
+    #ff1f1f; /* rojo de borde */
 
   z-index: -1;
+
+  /* ⚡ clave: limitar al borde sin tapar el contenido */
   background-origin: border-box;
-  background-clip: content-box, content-box, border-box;
+  background-clip: padding-box, padding-box, border-box;
 }
 
 
