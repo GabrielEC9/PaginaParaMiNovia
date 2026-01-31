@@ -33,23 +33,30 @@ document.addEventListener('DOMContentLoaded', async () => {
       const div = document.createElement('div')
       div.classList.add('foto-card')
 
-div.innerHTML = `
-  <div class="foto-img-box">
-    <img src="${foto.image_url}" class="foto-item" />
-  </div>
+      // 🗑️ Botón solo si es el dueño
+      const botonBorrar =
+        foto.user_id === user.id
+          ? `
+            <button 
+              class="btn-delete"
+              data-id="${foto.id}"
+              data-url="${foto.image_url}"
+              data-owner="${foto.user_id}"
+            >
+              🗑️ Borrar
+            </button>
+          `
+          : ''
 
-  ${foto.description ? `<p class="foto-desc">${foto.description}</p>` : ''}
+      div.innerHTML = `
+        <div class="foto-img-box">
+          <img src="${foto.image_url}" class="foto-item" />
+        </div>
 
-<button 
-  class="btn-delete"
-  data-id="${foto.id}"
-  data-url="${foto.image_url}"
-  data-owner="${foto.user_id}"
->
-  🗑️ Borrar
-</button>
+        ${foto.description ? `<p class="foto-desc">${foto.description}</p>` : ''}
 
-`
+        ${botonBorrar}
+      `
 
       albumContainer.appendChild(div)
     })
@@ -60,18 +67,17 @@ div.innerHTML = `
   // 🗑️ Borrar foto
   function activarBorrado() {
     document.querySelectorAll('.btn-delete').forEach(btn => {
-btn.addEventListener('click', async () => {
+      btn.addEventListener('click', async () => {
 
-  const ownerId = btn.dataset.owner
+        const ownerId = btn.dataset.owner
 
-  // 🚫 Si no es quien la subió
-  if (ownerId !== user.id) {
-    alert('❌ No puedes borrar esta foto porque no la subiste tú')
-    return
-  }
+        // 🚫 Seguridad extra (por si alguien fuerza el botón)
+        if (ownerId !== user.id) {
+          alert('❌ No puedes borrar esta foto porque no la subiste tú')
+          return
+        }
 
-  if (!confirm('¿Seguro que quieres borrar esta foto? 🐞')) return
-
+        if (!confirm('¿Seguro que quieres borrar esta foto? 🐞')) return
 
         const photoId = btn.dataset.id
         const imageUrl = btn.dataset.url
