@@ -956,24 +956,15 @@ body.panel-page {
 }
 
 .frases-title {
-  font-size: 2.6rem;
-  font-weight: bold;
+  font-size: clamp(2.4rem, 6vw, 3rem);
+  font-weight: 900;
+  letter-spacing: 2px;
 
-  background:
-    radial-gradient(circle, #000 26%, transparent 27%) 0 0 / 24px 24px,
-    radial-gradient(circle, #000 26%, transparent 27%) 12px 12px / 24px 24px,
-    #ff1f1f;
-
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-
-  text-shadow:
-    1px 1px 0 rgba(0,0,0,0.25);
+  color: #ff1f1f;
 
   margin: 0;
+  text-align: center;
 }
-
 
 /* ====================================================
    CONTENEDOR DE FRASES
@@ -1094,4 +1085,15 @@ body.panel-page {
   inset: 0;
   z-index: -1;
   pointer-events: none;
+}
+
+/* ================== FIX LAYOUT FRASES ================== */
+body.frases-page {
+  display: block;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.frases-container {
+  padding-top: 90px;
 }
