@@ -40,9 +40,15 @@ div.innerHTML = `
 
   ${foto.description ? `<p class="foto-desc">${foto.description}</p>` : ''}
 
-  <button class="btn-delete" data-id="${foto.id}" data-url="${foto.image_url}">
-    🗑️ Borrar
-  </button>
+<button 
+  class="btn-delete"
+  data-id="${foto.id}"
+  data-url="${foto.image_url}"
+  data-owner="${foto.user_id}"
+>
+  🗑️ Borrar
+</button>
+
 `
 
       albumContainer.appendChild(div)
@@ -54,9 +60,18 @@ div.innerHTML = `
   // 🗑️ Borrar foto
   function activarBorrado() {
     document.querySelectorAll('.btn-delete').forEach(btn => {
-      btn.addEventListener('click', async () => {
+btn.addEventListener('click', async () => {
 
-        if (!confirm('¿Seguro que quieres borrar esta foto? 🐞')) return
+  const ownerId = btn.dataset.owner
+
+  // 🚫 Si no es quien la subió
+  if (ownerId !== user.id) {
+    alert('❌ No puedes borrar esta foto porque no la subiste tú')
+    return
+  }
+
+  if (!confirm('¿Seguro que quieres borrar esta foto? 🐞')) return
+
 
         const photoId = btn.dataset.id
         const imageUrl = btn.dataset.url
