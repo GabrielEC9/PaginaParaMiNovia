@@ -1132,16 +1132,12 @@ body.frases-page {
    FRASE DESBLOQUEADA — borde mariquita solo
 ==================================================== */
 .frase-card.unlocked {
-  position: relative; /* importante para ::before */
+  position: relative; /* necesario para ::before */
   border-radius: 22px;
   padding: 28px;
   min-height: 260px;
 
-  /* borde mariquita */
-  background:
-    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 30px 30px,
-    radial-gradient(circle, #000 28%, transparent 29%) 15px 15px / 30px 30px,
-    #ff1f1f;
+  background: #fff; /* fondo blanco */
 
   box-shadow: 0 16px 36px rgba(0,0,0,0.3);
 
@@ -1155,15 +1151,23 @@ body.frases-page {
 .frase-card.unlocked::before {
   content: "";
   position: absolute;
-  inset: 6px; /* espacio del borde */
-  border-radius: 16px;
-  background: #fff; /* fondo blanco interno */
-  z-index: 0;
+  inset: -6px;           /* grosor del borde */
+  border-radius: 28px;    /* ligeramente mayor que la carta */
+  
+  /* Solo borde mariquita */
+  background:
+    radial-gradient(circle, #000 30%, transparent 31%) 0 0 / 30px 30px,
+    radial-gradient(circle, #000 30%, transparent 31%) 15px 15px / 30px 30px,
+    #ff1f1f;
+    
+  z-index: -1;
+  background-origin: border-box;
+  background-clip: content-box, content-box, border-box;
 }
 
 .frase-card.unlocked h3,
 .frase-card.unlocked p {
-  position: relative; /* para que esté sobre ::before */
+  position: relative;
   z-index: 1;
 }
 
@@ -1185,6 +1189,19 @@ body.frases-page {
   line-height: 1.75;
   color: #222;
   text-align: center;
+}
+
+/* ====================================================
+   LÍNEA SEPARADORA — ENTRE TÍTULO Y FRASES
+==================================================== */
+.frases-header::after {
+  content: "";
+  display: block;
+  width: 80px;           /* ancho de la línea */
+  height: 4px;           /* grosor */
+  margin: 20px auto 0;   /* centrado y espacio arriba */
+  background-color: #ff1f1f; /* color mariquita */
+  border-radius: 2px;    /* bordes redondeados */
 }
 
 
@@ -1214,20 +1231,16 @@ body.frases-page {
   .frase-card.unlocked::before {
     content: "";
     position: absolute;
-    top: -6px;    /* grosor del borde */
-    left: -6px;
-    right: -6px;
-    bottom: -6px;
-    border-radius: 28px; /* ajusta ligeramente menor al card */
-
+    inset: -5px; /* grosor del borde en móvil */
+    border-radius: 26px; /* ligeramente mayor que la card */
+    
     /* Solo borde mariquita */
     background:
-      radial-gradient(circle, #000 30%, transparent 31%) 0 0 / 22px 22px,
-      radial-gradient(circle, #000 30%, transparent 31%) 11px 11px / 22px 22px,
+      radial-gradient(circle, #000 30%, transparent 31%) 0 0 / 20px 20px,
+      radial-gradient(circle, #000 30%, transparent 31%) 10px 10px / 20px 20px,
       #ff1f1f;
 
     z-index: -1;
-
     background-origin: border-box;
     background-clip: content-box, content-box, border-box;
   }
