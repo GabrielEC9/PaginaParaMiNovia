@@ -926,49 +926,157 @@ body.panel-page {
 
 /* ==================================================== FRASES.HTML =============================================================== */
 
+/* ====================================================
+   FRASES.HTML — ESTILOS AISLADOS
+==================================================== */
+
+/* Estructura general de la página */
+.frases-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ====================================================
+   MENÚ GLOBAL (NO SE ROMPE)
+==================================================== */
 .frases-page .main-menu {
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
-.frases-page .phrases-container {
-  padding-top: 20px;
+/* ====================================================
+   HEADER DEL TÍTULO
+==================================================== */
+.frases-header {
+  text-align: center;
+  margin: 30px 0 10px;
 }
 
+.frases-title {
+  font-size: 2.6rem;
+  font-weight: bold;
+  color: #ff1f1f;
+
+  /* Borde negro tipo mariquita */
+  text-shadow:
+    2px 2px 0 #000,
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000;
+}
+
+/* ====================================================
+   CONTENEDOR DE FRASES
+==================================================== */
+.frases-page .phrases-container {
+  width: 100%;
+  padding: 20px 30px 40px;
+  display: block;
+}
+
+/* Grid */
 .frases-page .phrases-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 30px;
-  padding: 30px;
 }
 
+/* ====================================================
+   TARJETAS DE FRASES
+==================================================== */
 .frases-page .frase-card {
   border-radius: 20px;
-  transition: transform 0.5s ease, box-shadow 0.5s;
+  padding: 25px;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
+.frases-page .frase-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.25);
+}
+
+/* ====================================================
+   FRASE BLOQUEADA
+==================================================== */
+.frases-page .frase-card.locked {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+/* Fondo mariquita */
 .frases-page .frase-card.locked .ladybug-lock {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+
   background:
     radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 40px 40px,
     radial-gradient(circle, #000 28%, transparent 29%) 20px 20px / 40px 40px,
     #ff1f1f;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* Candado */
+.frases-page .lock-icon {
+  font-size: 3rem;
+  transition: transform 0.3s ease;
 }
 
 .frases-page .frase-card.locked:hover .lock-icon {
-  transform: scale(1.2);
+  transform: scale(1.2) rotate(-5deg);
 }
+
+/* ====================================================
+   FRASE DESBLOQUEADA
+==================================================== */
 .frases-page .frase-card.unlocked {
   border: 6px solid transparent;
+
   background:
     radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 30px 30px,
     radial-gradient(circle, #000 28%, transparent 29%) 15px 15px / 30px 30px,
     #fff;
 }
 
-.frases-page .navbar h1 {
-  background:
-    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 40px 40px,
-    radial-gradient(circle, #000 28%, transparent 29%) 20px 20px / 40px 40px,
-    #ff1f1f;
+.frases-page .frase-card.unlocked h3 {
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+  color: #ff1f1f;
+  text-shadow: 1px 1px 0 #000;
+}
+
+.frases-page .frase-card.unlocked p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #222;
+}
+
+/* ====================================================
+   ANIMACIÓN DE ENTRADA
+==================================================== */
+.frases-page .phrases-container {
+  animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
