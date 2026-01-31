@@ -54,20 +54,34 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (desbloqueada) {
       card.classList.add('unlocked')
-      card.innerHTML = `
-        <h3>${frase.title}</h3>
-        <p>${frase.text}</p>
-      `
+
+      const h3 = document.createElement('h3')
+      h3.textContent = frase.title
+
+      const p = document.createElement('p')
+      p.textContent = frase.text
+
+      card.appendChild(h3)
+      card.appendChild(p)
     } else {
       card.classList.add('locked')
-      card.innerHTML = `
-        <div class="ladybug-lock">
-          <span class="lock-icon">🔒</span>
-        </div>
-        <button class="btn-unlock" data-id="${frase.id}">
-          Desbloquear
-        </button>
-      `
+
+      const lockDiv = document.createElement('div')
+      lockDiv.classList.add('ladybug-lock')
+
+      const lockIcon = document.createElement('span')
+      lockIcon.classList.add('lock-icon')
+      lockIcon.textContent = '🔒'
+
+      lockDiv.appendChild(lockIcon)
+      card.appendChild(lockDiv)
+
+      const btn = document.createElement('button')
+      btn.classList.add('btn-unlock')
+      btn.dataset.id = frase.id
+      btn.textContent = 'Desbloquear'
+
+      card.appendChild(btn)
     }
 
     contenedor.appendChild(card)
@@ -97,15 +111,25 @@ document.addEventListener('DOMContentLoaded', async () => {
       return
     }
 
-// Animación + render sin reload
-const frase = frases.find(f => f.id == contentId)
+    // =========================
+    // 6. Renderizar desbloqueada sin romper el CSS
+    // =========================
+    const frase = frases.find(f => f.id == contentId)
 
-card.classList.remove('locked')
-card.classList.add('unlocked')
-card.innerHTML = `
-  <h3>${frase.title}</h3>
-  <p>${frase.text}</p>
-`
+    card.classList.remove('locked')
+    card.classList.add('unlocked')
 
+    // Eliminar elementos de bloqueo, pero no tocar ::before
+    card.querySelector('.ladybug-lock')?.remove()
+    btn.remove()
+
+    const h3 = document.createElement('h3')
+    h3.textContent = frase.title
+
+    const p = document.createElement('p')
+    p.textContent = frase.text
+
+    card.appendChild(h3)
+    card.appendChild(p)
   })
 })
