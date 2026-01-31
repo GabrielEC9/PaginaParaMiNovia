@@ -46,7 +46,7 @@
   transition: 0.3s;
 }
 
-.block-item:hover {
+.block-item:hover:not(.frase-card.unlocked) {
   background: linear-gradient(135deg, #e50914, #c10710);
 }
 
