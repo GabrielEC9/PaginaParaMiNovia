@@ -926,145 +926,186 @@ body.panel-page {
 
 /* ==================================================== FRASES.HTML =============================================================== */
 
-/* ====================================================
+//* ====================================================
    FRASES.HTML — ESTILOS AISLADOS
 ==================================================== */
 
-/* Estructura general de la página */
-.frases-page {
-  position: relative;
-  display: flex;
-  flex-direction: column;
+body.frases-page {
+  display: block;
   min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
 }
 
 /* ====================================================
    MENÚ GLOBAL (NO SE ROMPE)
 ==================================================== */
 .frases-page .main-menu {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
   z-index: 1000;
+}
+
+/* ====================================================
+   FONDO DEL CIELO (DECORATIVO)
+==================================================== */
+.sky-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
 }
 
 /* ====================================================
    HEADER DEL TÍTULO
 ==================================================== */
 .frases-header {
+  margin-top: 90px;
   text-align: center;
-  margin: 30px 0 10px;
 }
 
 .frases-title {
-  font-size: clamp(2.4rem, 6vw, 3rem);
+  font-size: clamp(2.2rem, 6vw, 3rem);
   font-weight: 900;
   letter-spacing: 2px;
-
   color: #ff1f1f;
-
   margin: 0;
-  text-align: center;
 }
 
 /* ====================================================
-   CONTENEDOR DE FRASES
+   CONTENEDOR GENERAL
 ==================================================== */
-.frases-page .phrases-container {
+.frases-container {
   width: 100%;
-  padding: 20px 30px 40px;
-  display: block;
-}
-
-/* Grid */
-.frases-page .phrases-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 30px;
+  padding: 40px 20px 60px;
+  display: flex;
+  justify-content: center;
 }
 
 /* ====================================================
-   TARJETAS DE FRASES
+   GRID DE FRASES
 ==================================================== */
-.frases-page .frase-card {
-  border-radius: 20px;
-  padding: 25px;
-  background: #fff;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+.phrases-grid {
+  width: 100%;
+  max-width: 1200px;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
 }
 
-.frases-page .frase-card:hover {
+/* Responsive */
+@media (max-width: 1024px) {
+  .phrases-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .phrases-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ====================================================
+   TARJETA BASE
+==================================================== */
+.frase-card {
+  background: #fff;
+  border-radius: 22px;
+  padding: 22px;
+
+  min-height: 260px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.2),
+    inset 0 0 0 2px rgba(0,0,0,0.12);
+
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.frase-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 14px 30px rgba(0,0,0,0.25);
+  box-shadow:
+    0 18px 38px rgba(0,0,0,0.3),
+    inset 0 0 0 2px rgba(0,0,0,0.15);
 }
 
 /* ====================================================
    FRASE BLOQUEADA
 ==================================================== */
-.frases-page .frase-card.locked {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 200px;
+.frase-card.locked {
+  padding: 0;
 }
 
-/* Fondo mariquita */
-.frases-page .frase-card.locked .ladybug-lock {
+.frase-card.locked .ladybug-lock {
   width: 100%;
   height: 100%;
-  border-radius: 16px;
+  border-radius: 22px;
 
   background:
-    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 40px 40px,
-    radial-gradient(circle, #000 28%, transparent 29%) 20px 20px / 40px 40px,
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 36px 36px,
+    radial-gradient(circle, #000 28%, transparent 29%) 18px 18px / 36px 36px,
     #ff1f1f;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 16px;
+  padding: 20px;
+  text-align: center;
 }
 
-/* Candado */
-.frases-page .lock-icon {
+.lock-icon {
   font-size: 3rem;
   transition: transform 0.3s ease;
 }
 
-.frases-page .frase-card.locked:hover .lock-icon {
+.frase-card.locked:hover .lock-icon {
   transform: scale(1.2) rotate(-5deg);
+}
+
+.frase-card button {
+  margin-top: 10px;
 }
 
 /* ====================================================
    FRASE DESBLOQUEADA
 ==================================================== */
-.frases-page .frase-card.unlocked {
-  border: 6px solid transparent;
-
+.frase-card.unlocked {
   background:
-    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 30px 30px,
-    radial-gradient(circle, #000 28%, transparent 29%) 15px 15px / 30px 30px,
+    radial-gradient(circle, #000 26%, transparent 27%) 0 0 / 30px 30px,
+    radial-gradient(circle, #000 26%, transparent 27%) 15px 15px / 30px 30px,
     #fff;
 }
 
-.frases-page .frase-card.unlocked h3 {
+.frase-card.unlocked h3 {
   font-size: 1.4rem;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   color: #ff1f1f;
-  text-shadow: 1px 1px 0 #000;
+  text-align: center;
 }
 
-.frases-page .frase-card.unlocked p {
+.frase-card.unlocked p {
   font-size: 1.05rem;
   line-height: 1.6;
   color: #222;
+  text-align: center;
 }
 
 /* ====================================================
    ANIMACIÓN DE ENTRADA
 ==================================================== */
-.frases-page .phrases-container {
+.phrases-container {
   animation: fadeInUp 0.6s ease;
 }
 
@@ -1077,23 +1118,4 @@ body.panel-page {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-/* Fondo del cielo NO afecta layout */
-.sky-background {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-}
-
-/* ================== FIX LAYOUT FRASES ================== */
-body.frases-page {
-  display: block;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-.frases-container {
-  padding-top: 90px;
 }
