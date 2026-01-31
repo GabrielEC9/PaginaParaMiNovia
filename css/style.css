@@ -971,7 +971,7 @@ body.frases-page {
   font-size: clamp(2.2rem, 6vw, 3rem);
   font-weight: 900;
   letter-spacing: 2px;
-  color: #ff1f1f;
+  color: #ff1f1f; /* rojo mariquita */
   margin: 0;
 }
 
@@ -983,6 +983,7 @@ body.frases-page {
   padding: 40px 20px 60px;
   display: flex;
   justify-content: center;
+  animation: fadeInUp 0.6s ease;
 }
 
 /* ====================================================
@@ -1017,7 +1018,6 @@ body.frases-page {
   background: #fff;
   border-radius: 22px;
   padding: 22px;
-
   min-height: 260px;
 
   display: flex;
@@ -1068,14 +1068,44 @@ body.frases-page {
 .lock-icon {
   font-size: 3rem;
   transition: transform 0.3s ease;
+  color: #fff;
 }
 
 .frase-card.locked:hover .lock-icon {
   transform: scale(1.2) rotate(-5deg);
 }
 
-.frase-card button {
+/* ====================================================
+   BOTÓN DESBLOQUEAR  🔑 (ARREGLADO)
+==================================================== */
+.btn-unlock {
+  width: 100%;
   margin-top: 10px;
+  padding: 12px;
+
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+
+  /* TEXTO */
+  color: #fff;
+  font-weight: bold;
+  font-size: 0.95rem;
+  text-align: center;
+
+  /* FONDO MARIQUITA */
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 30px 30px,
+    radial-gradient(circle, #000 28%, transparent 29%) 15px 15px / 30px 30px,
+    #ff1f1f;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-unlock:hover {
+  color: #fff; /* ← CLAVE: evita que el texto desaparezca */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.35);
 }
 
 /* ====================================================
@@ -1105,10 +1135,6 @@ body.frases-page {
 /* ====================================================
    ANIMACIÓN DE ENTRADA
 ==================================================== */
-.phrases-container {
-  animation: fadeInUp 0.6s ease;
-}
-
 @keyframes fadeInUp {
   from {
     opacity: 0;
