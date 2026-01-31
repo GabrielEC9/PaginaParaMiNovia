@@ -1139,25 +1139,27 @@ body.frases-page {
 }
 
 /* ===== FONDO PUNTEADO SOLO AL HOVER ===== */
+/* ===== CARTA DESBLOQUEADA: marco de mariquitas ===== */
 .frase-card.frase-unlocked::before {
-  content: "DEBUG";  /* 🔹 texto temporal para ver si ::before se aplica */
-  position: absolute;
-  inset: 0;  /* ocupa toda la carta */
-  border-radius: 22px;
+    content: "";
+    position: absolute;
+    top: -6px;   /* margen externo del marco */
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    border-radius: 28px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    /* fondo punteado tipo mariquita */
+    background:
+      radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 22px 22px,
+      radial-gradient(circle, #000 28%, transparent 29%) 11px 11px / 22px 22px,
+      #ff1f1f;
 
-  background:
-    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 40px 40px,
-    radial-gradient(circle, #000 28%, transparent 29%) 20px 20px / 40px 40px,
-    rgba(255, 31, 31, 0.2); /* fondo rojo semitransparente */
-
-  opacity: 0;             /* inicialmente invisible */
-  transition: opacity 0.3s ease;
-  z-index: 0;             /* debajo del contenido */
+    z-index: 0;            /* detrás del contenido */
+    opacity: 1;            /* siempre visible */
+    pointer-events: none;  /* para que no interfiera con el hover */
 }
+
 
 /* Hover: muestra punteado */
 .frase-card.frase-unlocked:hover::before {
