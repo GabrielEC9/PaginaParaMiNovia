@@ -925,3 +925,50 @@ body.panel-page {
 }
 
 /* ==================================================== FRASES.HTML =============================================================== */
+
+.frases-page .main-menu {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.frases-page .phrases-container {
+  padding-top: 20px;
+}
+
+.frases-page .phrases-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+  padding: 30px;
+}
+
+.frases-page .frase-card {
+  border-radius: 20px;
+  transition: transform 0.5s ease, box-shadow 0.5s;
+}
+
+.frases-page .frase-card.locked .ladybug-lock {
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 40px 40px,
+    radial-gradient(circle, #000 28%, transparent 29%) 20px 20px / 40px 40px,
+    #ff1f1f;
+}
+
+.frases-page .frase-card.locked:hover .lock-icon {
+  transform: scale(1.2);
+}
+.frases-page .frase-card.unlocked {
+  border: 6px solid transparent;
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 30px 30px,
+    radial-gradient(circle, #000 28%, transparent 29%) 15px 15px / 30px 30px,
+    #fff;
+}
+
+.frases-page .navbar h1 {
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 40px 40px,
+    radial-gradient(circle, #000 28%, transparent 29%) 20px 20px / 40px 40px,
+    #ff1f1f;
+}

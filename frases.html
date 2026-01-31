@@ -4,12 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Frases del Día</title>
+
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/components.css">
 </head>
-<body class="ladybug-bg">
 
-    <!-- FONDO DEL CIELO -->
+<body class="ladybug-bg frases-page">
+
+  <!-- FONDO DEL CIELO -->
   <div class="sky-background">
     <div class="cloud cloud1"></div>
     <div class="cloud cloud2"></div>
@@ -21,7 +23,7 @@
     <div class="cloud cloud8"></div>
   </div>
 
-  <!-- MENÚ GLOBAL -->
+  <!-- MENÚ GLOBAL (NO SE TOCA) -->
   <header class="main-menu">
     <div class="menu-left">
       <span class="menu-title">Menu</span>
@@ -35,19 +37,22 @@
     <nav id="menu-links"></nav>
   </header>
 
-<!-- CONTENIDO DE LAS FRASES -->
+  <!-- TÍTULO FRASES -->
   <nav class="navbar">
     <h1>💌 Frases del Día</h1>
   </nav>
 
+  <!-- CONTENIDO FRASES -->
   <main class="phrases-container">
     <section id="phrases-list" class="phrases-grid"></section>
   </main>
 
+  <!-- JS -->
   <script src="js/supabaseClient.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/frases.js"></script>
   <script type="module" src="/js/menu.js"></script>
+
 </body>
 </html>
