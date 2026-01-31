@@ -1139,14 +1139,15 @@ body.frases-page {
   color: #fff;
 }
 
-/* ===================== FRASE DESBLOQUEADA CORREGIDA ===================== */
-.frase-card.unlocked {
-  position: relative;           /* necesario para ::before */
+/* ===================== FRASE DESBLOQUEADA ===================== */
+.frase-card.unlocked,
+.frase-card.frase-unlocked {
+  position: relative;
   border-radius: 22px;
   padding: 28px;
   min-height: 260px;
 
-  background: #fff;             /* fondo blanco interno */
+  background: #fff;             /* fondo limpio */
   box-shadow: 0 16px 36px rgba(0,0,0,0.3);
 
   display: flex;
@@ -1157,8 +1158,8 @@ body.frases-page {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* borde mariquita estilo puntos */
-.frase-card.unlocked::before {
+/* borde punteado estilo mariquita */
+.frase-card.frase-unlocked::before {
   content: "";
   position: absolute;
   top: -6px;
@@ -1170,30 +1171,27 @@ body.frases-page {
   background:
     radial-gradient(circle, #000 30%, transparent 31%) 0 0 / 22px 22px,
     radial-gradient(circle, #000 30%, transparent 31%) 11px 11px / 22px 22px,
-    #ff1f1f; /* rojo de borde */
+    #ff1f1f;
 
-  z-index: -1;                  /* siempre detrás del contenido */
+  z-index: -1;
   background-origin: border-box;
   background-clip: padding-box, padding-box, border-box;
 }
 
-/* Hover solo mueve la tarjeta y sombra, no toca fondo ni borde */
-.frase-card.unlocked:hover {
+/* hover solo mueve tarjeta y sombra */
+.frase-card.frase-unlocked:hover {
   transform: translateY(-4px);
   box-shadow: 0 18px 40px rgba(0,0,0,0.35);
 }
 
-/* Contenido interno sobre ::before */
-.frase-card.unlocked > * {
+/* contenido sobre ::before */
+.frase-card.frase-unlocked > * {
   position: relative;
   z-index: 1;
-
-  /* ⚡ bloquear solo background interno, no el borde */
   background-image: none !important;
 }
 
-/* título */
-.frase-card.unlocked h3 {
+.frase-card.frase-unlocked h3 {
   font-size: 1.7rem;
   font-weight: 900;
   letter-spacing: 1px;
@@ -1202,8 +1200,7 @@ body.frases-page {
   color: #ff1f1f;
 }
 
-/* texto */
-.frase-card.unlocked p {
+.frase-card.frase-unlocked p {
   font-size: 1.05rem;
   line-height: 1.75;
   color: #222;
@@ -1227,12 +1224,12 @@ body.frases-page {
 
 /* ===================== RESPONSIVE MÓVIL ===================== */
 @media (max-width: 640px) {
-  .frase-card.unlocked {
+  .frase-card.frase-unlocked {
     padding: 22px;
-    background: #fff; /* mantener fondo blanco */
+    background: #fff;
   }
 
-  .frase-card.unlocked::before {
+  .frase-card.frase-unlocked::before {
     top: -6px;
     left: -6px;
     right: -6px;
@@ -1249,11 +1246,11 @@ body.frases-page {
     background-clip: padding-box, padding-box, border-box;
   }
 
-  .frase-card.unlocked h3 {
+  .frase-card.frase-unlocked h3 {
     font-size: 1.4rem;
   }
 
-  .frase-card.unlocked p {
+  .frase-card.frase-unlocked p {
     font-size: 1rem;
   }
 }

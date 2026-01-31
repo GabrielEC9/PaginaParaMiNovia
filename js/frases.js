@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const desbloqueada = idsDesbloqueadas.includes(frase.id)
 
     if (desbloqueada) {
-      card.classList.add('unlocked')
+      card.classList.add('frase-unlocked') // ✅ Solo desbloqueadas
 
       const h3 = document.createElement('h3')
       h3.textContent = frase.title
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       card.appendChild(h3)
       card.appendChild(p)
     } else {
-      card.classList.add('locked')
+      card.classList.add('frase-locked') // ✅ Solo bloqueadas
 
       const lockDiv = document.createElement('div')
       lockDiv.classList.add('ladybug-lock')
@@ -112,14 +112,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // =========================
-    // 6. Renderizar desbloqueada sin romper el CSS
+    // 6. Renderizar desbloqueada limpio
     // =========================
     const frase = frases.find(f => f.id == contentId)
 
-    card.classList.remove('locked')
-    card.classList.add('unlocked')
+    card.classList.remove('frase-locked')
+    card.classList.add('frase-unlocked')
 
-    // Eliminar elementos de bloqueo, pero no tocar ::before
+    // Eliminar elementos de bloqueo
     card.querySelector('.ladybug-lock')?.remove()
     btn.remove()
 
