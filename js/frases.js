@@ -1,3 +1,5 @@
+import { supabase } from './supabaseClient.js'
+
 document.addEventListener('DOMContentLoaded', async () => {
   // =========================
   // 1. Auth
