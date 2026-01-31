@@ -1079,6 +1079,10 @@ body.frases-page {
    BOTÓN DESBLOQUEAR (AISLADO, SIN CONFLICTOS)
 ==================================================== */
 
+/* ====================================================
+   BOTÓN DESBLOQUEAR — ESTABLE (SIN ANIMACIÓN DE PUNTOS)
+==================================================== */
+
 .btn-unlock {
   width: 100%;
   margin-top: 14px;
@@ -1103,13 +1107,13 @@ body.frases-page {
 
   box-shadow: 0 6px 14px rgba(0,0,0,0.25);
 
+  /* ❌ NO animar background */
   transition:
     transform 0.2s ease,
-    box-shadow 0.2s ease,
-    background 0.3s ease;
+    box-shadow 0.2s ease;
 }
 
-/* Hover mariquita SOLO aquí */
+/* Hover mariquita SIN movimiento */
 .btn-unlock:hover {
   background:
     radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 30px 30px,
@@ -1120,12 +1124,14 @@ body.frases-page {
   box-shadow: 0 10px 22px rgba(0,0,0,0.35);
 }
 
-/* Nunca perder el texto */
+/* El texto nunca desaparece */
+.btn-unlock,
 .btn-unlock:hover,
 .btn-unlock:focus,
 .btn-unlock:active {
   color: #fff;
 }
+
 
 /* ====================================================
    FRASE DESBLOQUEADA
