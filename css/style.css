@@ -783,12 +783,13 @@ body.panel-page {
 /* ================= GRID DE RECUERDOS ================= */
 .album-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales */
-  gap: 20px; /* espacio entre cards */
-  justify-content: center; /* centra el grid si hay menos de 3 fotos */
-  max-width: 900px; /* ancho máximo total del grid */
-  margin: 0 auto; /* centra todo el grid en la página */
+  grid-template-columns: repeat(5, 1fr); /* 5 por fila */
+  gap: 18px; /* separación más natural */
+  max-width: 1200px; /* controla el ancho total */
+  margin: 0 auto; /* centra el grid */
+  justify-items: center; /* centra cada card dentro de su celda */
 }
+
 
 
 /* ================= FOTO CARD =========== */
