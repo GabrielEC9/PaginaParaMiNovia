@@ -1140,25 +1140,14 @@ body.frases-page {
 
 /* ===== CARTA DESBLOQUEADA: fondo punteado solo al hover ===== */
 .frase-card.frase-unlocked::before {
-  content: "";
-  position: absolute;
-  top: -6px;
-  left: -6px;
-  right: -6px;
-  bottom: -6px;
-  border-radius: 28px;
-
-  background:
-    radial-gradient(circle, #000 30%, transparent 31%) 0 0 / 22px 22px,
-    radial-gradient(circle, #000 30%, transparent 31%) 11px 11px / 22px 22px,
-    #ff1f1f;
-
-  z-index: -1;
-  background-origin: border-box;
-  background-clip: padding-box, padding-box, border-box;
-
-  opacity: 0; /* 🔑 invisible por defecto */
-  transition: opacity 0.3s ease;
+    content: "DEBUG";  /* 🔹 poner un texto temporal */
+    color: white;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,0,0,0.3); /* semitransparente */
+    z-index: 5; /* encima del contenido */
 }
 
 /* Cuando pasas el mouse por encima, muestra el fondo punteado */
