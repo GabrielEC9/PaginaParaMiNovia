@@ -958,15 +958,22 @@ body.panel-page {
 .frases-title {
   font-size: 2.6rem;
   font-weight: bold;
-  color: #ff1f1f;
 
-  /* Borde negro tipo mariquita */
+  background:
+    radial-gradient(circle, #000 26%, transparent 27%) 0 0 / 24px 24px,
+    radial-gradient(circle, #000 26%, transparent 27%) 12px 12px / 24px 24px,
+    #ff1f1f;
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
   text-shadow:
-    2px 2px 0 #000,
-    -2px -2px 0 #000,
-    2px -2px 0 #000,
-    -2px 2px 0 #000;
+    1px 1px 0 rgba(0,0,0,0.25);
+
+  margin: 0;
 }
+
 
 /* ====================================================
    CONTENEDOR DE FRASES
@@ -1079,4 +1086,12 @@ body.panel-page {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Fondo del cielo NO afecta layout */
+.sky-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
 }
