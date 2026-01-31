@@ -1184,9 +1184,10 @@ body.frases-page {
   text-align: center;
 }
 
+/* P dentro de la tarjeta */
 .frase-card.frase-unlocked p {
   font-size: 1.1rem;
-  color: #333;
+  color: #000; /* negro */
   line-height: 1.6;
   text-align: center;
 }
