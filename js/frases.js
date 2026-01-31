@@ -2,7 +2,7 @@ import { supabase } from './supabaseClient.js'
 
 document.addEventListener('DOMContentLoaded', async () => {
   // =========================
-  // 1. Verificar auth
+  // 1. Verificar usuario
   // =========================
   const { data: { user }, error: authError } = await supabase.auth.getUser()
   if (authError || !user) {
@@ -52,7 +52,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const desbloqueada = idsDesbloqueadas.includes(frase.id)
 
     if (desbloqueada) {
-      // CARTA DESBLOQUEADA
       card.classList.add('frase-unlocked')
       const h3 = document.createElement('h3')
       h3.textContent = frase.title
@@ -61,16 +60,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       card.appendChild(h3)
       card.appendChild(p)
     } else {
-      // CARTA BLOQUEADA
       card.classList.add('frase-locked')
-
       const lockDiv = document.createElement('div')
       lockDiv.classList.add('ladybug-lock')
-
       const lockIcon = document.createElement('span')
       lockIcon.classList.add('lock-icon')
       lockIcon.textContent = '🔒'
-
       lockDiv.appendChild(lockIcon)
       card.appendChild(lockDiv)
 
@@ -78,7 +73,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       btn.classList.add('btn-unlock')
       btn.dataset.id = frase.id
       btn.textContent = 'Desbloquear'
-
       card.appendChild(btn)
     }
 
@@ -96,13 +90,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const card = btn.closest('.frase-card')
     const contentId = btn.dataset.id
 
-    // Insertar desbloqueo en Supabase
     const { error } = await supabase
       .from('unlocks')
-      .insert({
-        user_id: user.id,
-        content_id: contentId
-      })
+      .insert({ user_id: user.id, content_id: contentId })
 
     if (error) {
       console.error('Error al desbloquear:', error)
@@ -111,24 +101,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // =========================
-    // 6. Renderizar la carta como desbloqueada
+    // 6. Renderizar carta desbloqueada
     // =========================
     const frase = frases.find(f => f.id == contentId)
-
     card.classList.remove('frase-locked')
     card.classList.add('frase-unlocked')
 
-    // Eliminar lock y botón
+    // eliminar lock y botón
     card.querySelector('.ladybug-lock')?.remove()
     btn.remove()
 
-    // Agregar contenido de la frase
     const h3 = document.createElement('h3')
     h3.textContent = frase.title
-
     const p = document.createElement('p')
     p.textContent = frase.text
-
     card.appendChild(h3)
     card.appendChild(p)
   })
