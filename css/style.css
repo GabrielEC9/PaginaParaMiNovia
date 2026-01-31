@@ -1118,11 +1118,10 @@ body.frases-page {
   box-shadow: 0 10px 22px rgba(0,0,0,0.35);
 }
 
-/* ====================================================
-   FRASE DESBLOQUEADA
-==================================================== */
+/* ===== CARTA DESBLOQUEADA CORREGIDA ===== */
 .frase-card.frase-unlocked {
-  position: relative;
+  position: relative;       /* importante para ::before */
+  z-index: 0;               /* asegura que el ::before quede detrás */
   border-radius: 22px;
   padding: 28px;
   min-height: 260px;
@@ -1135,6 +1134,7 @@ body.frases-page {
   justify-content: center;
   align-items: center;
 
+  overflow: visible;        /* 🔑 evita que ::before se corte */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -1186,6 +1186,7 @@ body.frases-page {
   color: #222;
   text-align: center;
 }
+
 
 /* ====================================================
    ANIMACIÓN DE ENTRADA
