@@ -1143,6 +1143,7 @@ body.frases-page {
    FRASE DESBLOQUEADA — borde mariquita solo
    Hover aislado sin tocar borde ni fondo
 ==================================================== */
+
 body.frases-page .phrases-grid .frase-card.unlocked {
   position: relative;
   border-radius: 22px;
@@ -1175,7 +1176,6 @@ body.frases-page .phrases-grid .frase-card.unlocked::before {
     #ff1f1f;
 
   z-index: -1;
-
   background-origin: border-box;
   background-clip: content-box, content-box, border-box;
 
@@ -1183,12 +1183,10 @@ body.frases-page .phrases-grid .frase-card.unlocked::before {
   transition: none;
 }
 
-/* Hover solo movimiento y sombra */
+/* Hover solo movimiento y sombra, sin tocar fondo ni borde */
 body.frases-page .phrases-grid .frase-card.unlocked:hover {
   transform: translateY(-4px);
   box-shadow: 0 18px 40px rgba(0,0,0,0.35);
-
-  /* ⚡ no tocar ::before ni background */
 }
 
 /* Contenido por encima del ::before */
@@ -1216,18 +1214,11 @@ body.frases-page .phrases-grid .frase-card.unlocked p {
   text-align: center;
 }
 
-/* Bloquea cualquier hover global solo para frases desbloqueadas */
-body.frases-page .frase-card.unlocked,
-body.frases-page .frase-card.unlocked::before,
-body.frases-page .frase-card.unlocked * {
-  background: unset !important; /* borra cualquier hover global */
-  transition: none !important;  /* evita que cualquier transición afecte */
-}
-
-/* Hover solo movimiento y sombra */
-body.frases-page .frase-card.unlocked:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+/* ⚡ Bloqueo hover global solo de fondo, sin eliminar el fondo real */
+body.frases-page .phrases-grid .frase-card.unlocked,
+body.frases-page .phrases-grid .frase-card.unlocked * {
+  /* bloquea hover global solo para background y evita cambios de gradiente */
+  background-image: none !important;
 }
 
 
