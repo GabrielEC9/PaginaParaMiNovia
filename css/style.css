@@ -783,14 +783,12 @@ body.panel-page {
 /* ================= GRID DE RECUERDOS ================= */
 .album-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5 por fila */
-  gap: 18px; /* separación más natural */
-  max-width: 1200px; /* controla el ancho total */
-  margin: 0 auto; /* centra el grid */
-  justify-items: center; /* centra cada card dentro de su celda */
+  grid-template-columns: repeat(7, 1fr); /* 7 por fila */
+  gap: 14px; /* menor separación para que no se vea vacío */
+  max-width: 1400px; /* controla el ancho total */
+  margin: 0 auto;
+  justify-items: center;
 }
-
-
 
 /* ================= FOTO CARD =========== */
 .foto-card {
