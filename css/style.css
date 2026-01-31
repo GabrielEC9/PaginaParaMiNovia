@@ -618,7 +618,7 @@ body.panel-page {
 }
 
 
-/* ========================================= ALBUM.HTML ========================================= */
+/* ==================================================== ALBUM.HTML =============================================================== */
 
 .album-page {
   display: flex;
@@ -886,7 +886,7 @@ body.panel-page {
 }
 
 
-/* =============================== RESPONSIVE =============================== */
+/* ===================== RESPONSIVE ==================== */
 @media (max-width: 900px) {
   .album-grid {
     grid-template-columns: repeat(2, 1fr); 
@@ -903,15 +903,25 @@ body.panel-page {
     inset: 8px;
   }
 
-  .foto-item {
-    height: 180px; /* fotos un poco más grandes en móvil */
-  }
-
   .album-grid {
-    grid-template-columns: 1fr; /* 1 por fila en celular */
+    grid-template-columns: 1fr; 
   }
 
   .foto-card {
-    max-width: 100%; /* card ocupa todo el ancho disponible */
+    max-width: 100%; 
+  }
+
+  .foto-img-box {
+    height: auto;        
+    max-height: 80vh;   
+  }
+
+  .foto-item {
+    width: 100%;
+    height: auto;       
+    max-height: 80vh;
+    object-fit: contain; 
   }
 }
+
+/* ==================================================== FRASES.HTML =============================================================== */
