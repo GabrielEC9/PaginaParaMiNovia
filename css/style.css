@@ -1141,6 +1141,7 @@ body.frases-page {
 
 /* ====================================================
    FRASE DESBLOQUEADA — borde mariquita solo
+   Bloquea cualquier hover global
 ==================================================== */
 body.frases-page .frase-card.unlocked {
   position: relative;
@@ -1155,9 +1156,11 @@ body.frases-page .frase-card.unlocked {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* borde mariquita */
 body.frases-page .frase-card.unlocked::before {
   content: "";
   position: absolute;
@@ -1167,7 +1170,6 @@ body.frases-page .frase-card.unlocked::before {
   bottom: -6px;
   border-radius: 28px;
 
-  /* borde mariquita */
   background:
     radial-gradient(circle, #000 30%, transparent 31%) 0 0 / 22px 22px,
     radial-gradient(circle, #000 30%, transparent 31%) 11px 11px / 22px 22px,
@@ -1179,18 +1181,22 @@ body.frases-page .frase-card.unlocked::before {
   background-clip: content-box, content-box, border-box;
 }
 
-body.frases-page .frase-card.unlocked:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
-  background: #fff !important; /* sobrescribe hover global */
+/* hover solo flotante y sombra, bloqueando cualquier cambio de color */
+body.frases-page .frase-card.unlocked:hover,
+body.frases-page .frase-card.unlocked:hover::before {
+  transform: translateY(-4px);             /* flotación */
+  box-shadow: 0 18px 40px rgba(0,0,0,0.35); /* sombra más profunda */
+  background: #fff !important;            /* fuerza fondo blanco */
 }
 
+/* contenido por encima del ::before */
 .frase-card.unlocked h3,
 .frase-card.unlocked p {
   position: relative;
   z-index: 1;
 }
 
+/* título */
 .frase-card.unlocked h3 {
   font-size: 1.7rem;
   font-weight: 900;
@@ -1200,12 +1206,14 @@ body.frases-page .frase-card.unlocked:hover {
   color: #ff1f1f;
 }
 
+/* texto */
 .frase-card.unlocked p {
   font-size: 1.05rem;
   line-height: 1.75;
   color: #222;
   text-align: center;
 }
+
 
 /* ====================================================
    ANIMACIÓN DE ENTRADA
