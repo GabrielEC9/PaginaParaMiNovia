@@ -1076,37 +1076,60 @@ body.frases-page {
 }
 
 /* ====================================================
-   BOTÓN DESBLOQUEAR  🔑 (ARREGLADO)
+   BOTÓN DESBLOQUEAR — AISLADO DE ESTILOS GLOBALES
 ==================================================== */
-.btn-unlock {
-  width: 100%;
-  margin-top: 10px;
-  padding: 12px;
 
-  border: none;
+.frase-card .btn-unlock {
+  all: unset; /* 🔥 resetea TODA la basura global */
+
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px 16px;
+
   border-radius: 14px;
   cursor: pointer;
 
-  /* TEXTO */
+  background-color: #ff1f1f;
   color: #fff;
-  font-weight: bold;
-  font-size: 0.95rem;
-  text-align: center;
 
-  /* FONDO MARIQUITA */
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+
+  transition:
+    background 0.3s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* HOVER → MARIQUITA */
+.frase-card .btn-unlock:hover {
+  color: #fff;
+
   background:
     radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 30px 30px,
     radial-gradient(circle, #000 28%, transparent 29%) 15px 15px / 30px 30px,
     #ff1f1f;
 
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.35);
 }
 
-.btn-unlock:hover {
-  color: #fff; /* ← CLAVE: evita que el texto desaparezca */
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.35);
+/* EVITA DESAPARICIÓN EN FOCUS / ACTIVE */
+.frase-card .btn-unlock:focus,
+.frase-card .btn-unlock:active {
+  color: #fff;
+  background-color: #ff1f1f;
+  outline: none;
 }
+
 
 /* ====================================================
    FRASE DESBLOQUEADA
