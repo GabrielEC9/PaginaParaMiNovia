@@ -1131,7 +1131,7 @@ body.frases-page {
 /* ====================================================
    FRASE DESBLOQUEADA
 ==================================================== */
-..frase-card.unlocked {
+.frase-card.unlocked {
   position: relative;
   background: #fff;
   border-radius: 22px;
