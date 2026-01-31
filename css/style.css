@@ -1135,7 +1135,11 @@ body.frases-page {
    FRASE DESBLOQUEADA — borde mariquita solo
    Bloquea cualquier hover global
 ============================== */
-.frase-card.unlocked {
+/* =========================
+   FRASE DESBLOQUEADA — borde mariquita solo
+   NO cambia de color al hover
+========================= */
+body.frases-page .frase-card.unlocked {
   position: relative;
   border-radius: 22px;
   padding: 28px;
@@ -1149,12 +1153,9 @@ body.frases-page {
   justify-content: center;
   align-items: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-  /* ❌ evitar heredar hover global */
-  pointer-events: auto;
 }
 
-.frase-card.unlocked::before {
+body.frases-page .frase-card.unlocked::before {
   content: "";
   position: absolute;
   top: -6px;    
@@ -1175,13 +1176,14 @@ body.frases-page {
   background-clip: content-box, content-box, border-box;
 }
 
-.frase-card.unlocked:hover {
+body.frases-page .frase-card.unlocked:hover {
   transform: translateY(-4px);
   box-shadow: 0 18px 40px rgba(0,0,0,0.35);
 
-  /* ❌ asegura que el fondo NO cambie */
+  /* ⚡ Forzar fondo blanco, sobrescribiendo hover global */
   background: #fff !important;
 }
+
 
 .frase-card.unlocked h3,
 .frase-card.unlocked p {
