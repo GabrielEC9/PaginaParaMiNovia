@@ -934,8 +934,11 @@ body.frases-page {
   display: block;
   min-height: 100vh;
   overflow-x: hidden;
+  overflow-y: auto; /* <-- permite scroll vertical */
   position: relative;
+  -webkit-overflow-scrolling: touch; /* mejora el scroll en móviles */
 }
+
 
 /* ====================================================
    MENÚ GLOBAL (NO SE ROMPE)
@@ -1131,14 +1134,14 @@ body.frases-page {
 /* ====================================================
    FRASE DESBLOQUEADA — borde mariquita solo
 ==================================================== */
+/* FRASE DESBLOQUEADA — borde mariquita solo */
 .frase-card.unlocked {
-  position: relative; /* necesario para ::before */
+  position: relative; /* importante para ::before */
   border-radius: 22px;
   padding: 28px;
   min-height: 260px;
 
-  background: #fff; /* fondo blanco */
-
+  background: #fff; /* fondo blanco siempre */
   box-shadow: 0 16px 36px rgba(0,0,0,0.3);
 
   display: flex;
@@ -1151,29 +1154,35 @@ body.frases-page {
 .frase-card.unlocked::before {
   content: "";
   position: absolute;
-  inset: -6px;           /* grosor del borde */
-  border-radius: 28px;    /* ligeramente mayor que la carta */
-  
+  top: -6px;    
+  left: -6px;
+  right: -6px;
+  bottom: -6px;
+  border-radius: 28px; /* ajusta ligeramente menor al card */
+
   /* Solo borde mariquita */
   background:
-    radial-gradient(circle, #000 30%, transparent 31%) 0 0 / 30px 30px,
-    radial-gradient(circle, #000 30%, transparent 31%) 15px 15px / 30px 30px,
+    radial-gradient(circle, #000 30%, transparent 31%) 0 0 / 22px 22px,
+    radial-gradient(circle, #000 30%, transparent 31%) 11px 11px / 22px 22px,
     #ff1f1f;
-    
+
   z-index: -1;
+
   background-origin: border-box;
   background-clip: content-box, content-box, border-box;
 }
 
+.frase-card.unlocked:hover {
+  transform: translateY(-4px);
+  /* no cambiar background, solo sombra y movimiento */
+}
+
 .frase-card.unlocked h3,
 .frase-card.unlocked p {
-  position: relative;
+  position: relative; /* para que esté sobre ::before */
   z-index: 1;
 }
 
-.frase-card.unlocked:hover {
-  transform: translateY(-4px);
-}
 
 .frase-card.unlocked h3 {
   font-size: 1.7rem;
