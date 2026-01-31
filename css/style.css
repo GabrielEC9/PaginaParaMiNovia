@@ -1139,28 +1139,25 @@ body.frases-page {
   color: #fff;
 }
 
-/* ====================================================
-   FRASE DESBLOQUEADA — borde mariquita solo
-   Hover aislado sin tocar borde ni fondo
-==================================================== */
-
-body.frases-page .phrases-grid .frase-card.unlocked {
-  position: relative;
+/* ===================== FRASE DESBLOQUEADA CORREGIDA ===================== */
+.frase-card.unlocked {
+  position: relative;           /* necesario para ::before */
   border-radius: 22px;
   padding: 28px;
   min-height: 260px;
 
-  background: #fff; /* fondo blanco siempre */
+  background: #fff;             /* fondo blanco interno */
   box-shadow: 0 16px 36px rgba(0,0,0,0.3);
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* borde mariquita */
+/* borde mariquita estilo puntos */
 .frase-card.unlocked::before {
   content: "";
   position: absolute;
@@ -1170,37 +1167,33 @@ body.frases-page .phrases-grid .frase-card.unlocked {
   bottom: -6px;
   border-radius: 28px;
 
-  /* ⚡ Borde mariquita solo */
   background:
     radial-gradient(circle, #000 30%, transparent 31%) 0 0 / 22px 22px,
     radial-gradient(circle, #000 30%, transparent 31%) 11px 11px / 22px 22px,
     #ff1f1f; /* rojo de borde */
 
-  z-index: -1;
-
-  /* ⚡ clave: limitar al borde sin tapar el contenido */
+  z-index: -1;                  /* siempre detrás del contenido */
   background-origin: border-box;
   background-clip: padding-box, padding-box, border-box;
 }
 
-
-/* Hover solo movimiento y sombra, sin tocar fondo ni borde */
+/* Hover solo mueve la tarjeta y sombra, no toca fondo ni borde */
 .frase-card.unlocked:hover {
   transform: translateY(-4px);
   box-shadow: 0 18px 40px rgba(0,0,0,0.35);
-  /* ⚡ no tocar background */
 }
 
-
-/* Contenido por encima del ::before */
-body.frases-page .phrases-grid .frase-card.unlocked h3,
-body.frases-page .phrases-grid .frase-card.unlocked p {
+/* Contenido interno sobre ::before */
+.frase-card.unlocked > * {
   position: relative;
   z-index: 1;
+
+  /* ⚡ bloquear solo background interno, no el borde */
+  background-image: none !important;
 }
 
 /* título */
-body.frases-page .phrases-grid .frase-card.unlocked h3 {
+.frase-card.unlocked h3 {
   font-size: 1.7rem;
   font-weight: 900;
   letter-spacing: 1px;
@@ -1210,18 +1203,11 @@ body.frases-page .phrases-grid .frase-card.unlocked h3 {
 }
 
 /* texto */
-body.frases-page .phrases-grid .frase-card.unlocked p {
+.frase-card.unlocked p {
   font-size: 1.05rem;
   line-height: 1.75;
   color: #222;
   text-align: center;
-}
-
-/* ⚡ Bloqueo hover global solo de fondo, sin eliminar el fondo real */
-body.frases-page .phrases-grid .frase-card.unlocked,
-body.frases-page .phrases-grid .frase-card.unlocked * {
-  /* bloquea hover global solo para background y evita cambios de gradiente */
-  background-image: none !important;
 }
 
 
@@ -1239,13 +1225,11 @@ body.frases-page .phrases-grid .frase-card.unlocked * {
   }
 }
 
-/* ====================================================
-   Responsive — Móvil
-==================================================== */
+/* ===================== RESPONSIVE MÓVIL ===================== */
 @media (max-width: 640px) {
   .frase-card.unlocked {
     padding: 22px;
-    background: #fff !important; /* mantener fondo blanco */
+    background: #fff; /* mantener fondo blanco */
   }
 
   .frase-card.unlocked::before {
@@ -1254,13 +1238,15 @@ body.frases-page .phrases-grid .frase-card.unlocked * {
     right: -6px;
     bottom: -6px;
     border-radius: 28px;
+
     background:
       radial-gradient(circle, #000 30%, transparent 31%) 0 0 / 22px 22px,
       radial-gradient(circle, #000 30%, transparent 31%) 11px 11px / 22px 22px,
       #ff1f1f;
+
     z-index: -1;
     background-origin: border-box;
-    background-clip: content-box, content-box, border-box;
+    background-clip: padding-box, padding-box, border-box;
   }
 
   .frase-card.unlocked h3 {
