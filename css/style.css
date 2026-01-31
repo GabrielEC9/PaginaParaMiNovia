@@ -1133,7 +1133,7 @@ body.frases-page {
 ==================================================== */
 .frase-card.unlocked {
   position: relative;
-  background: #fff;
+  background: #fff;      /* fondo blanco */
   border-radius: 22px;
   padding: 28px;
   z-index: 1;
@@ -1146,19 +1146,27 @@ body.frases-page {
   transform: translateY(-4px);
 }
 
-/* 🐞 BORDE MARIQUITA REAL */
+/* 🐞 BORDE MARIQUITA SOLO ALREDEDOR */
 .frase-card.unlocked::before {
   content: "";
   position: absolute;
-  inset: -8px; /* grosor del borde */
+  top: -8px;      /* grosor del borde */
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
   border-radius: 30px;
   z-index: -1;
 
+  /* fondo blanco dentro, borde mariquita alrededor */
   background:
     radial-gradient(circle, #000 30%, transparent 31%) 0 0 / 28px 28px,
     radial-gradient(circle, #000 30%, transparent 31%) 14px 14px / 28px 28px,
     #ff1f1f;
+
+  background-origin: border-box;
+  background-clip: content-box, content-box, border-box;
 }
+
 
 .frase-card.unlocked h3 {
   font-size: 1.7rem;
@@ -1193,20 +1201,33 @@ body.frases-page {
 }
 
 /* ====================================================
-   Responsive
+   Responsive — Móvil
 ==================================================== */
-
 @media (max-width: 640px) {
   .frase-card.unlocked {
     padding: 22px;
+    background: #fff; /* Mantener fondo blanco */
   }
 
   .frase-card.unlocked::before {
-    inset: -6px;
+    content: "";
+    position: absolute;
+    top: -6px;    /* grosor del borde */
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    border-radius: 28px; /* ajusta ligeramente menor al card */
+
+    /* Solo borde mariquita */
     background:
       radial-gradient(circle, #000 30%, transparent 31%) 0 0 / 22px 22px,
       radial-gradient(circle, #000 30%, transparent 31%) 11px 11px / 22px 22px,
       #ff1f1f;
+
+    z-index: -1;
+
+    background-origin: border-box;
+    background-clip: content-box, content-box, border-box;
   }
 
   .frase-card.unlocked h3 {
@@ -1217,4 +1238,3 @@ body.frases-page {
     font-size: 1rem;
   }
 }
-
