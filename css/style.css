@@ -1138,7 +1138,7 @@ body.frases-page {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* borde punteado estilo mariquita */
+/* ===== CARTA DESBLOQUEADA: fondo punteado solo al hover ===== */
 .frase-card.frase-unlocked::before {
   content: "";
   position: absolute;
@@ -1156,7 +1156,16 @@ body.frases-page {
   z-index: -1;
   background-origin: border-box;
   background-clip: padding-box, padding-box, border-box;
+
+  opacity: 0; /* 🔑 invisible por defecto */
+  transition: opacity 0.3s ease;
 }
+
+/* Cuando pasas el mouse por encima, muestra el fondo punteado */
+.frase-card.frase-unlocked:hover::before {
+  opacity: 1;
+}
+
 
 /* hover solo mueve tarjeta y sombra */
 .frase-card.frase-unlocked:hover {
