@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         <div class="ladybug-lock">
           <span class="lock-icon">🔒</span>
         </div>
-        <button class="btn-ladybug small btn-unlock" data-id="${frase.id}">
+        <button class="btn-unlock" data-id="${frase.id}">
           Desbloquear
         </button>
       `
@@ -106,5 +106,3 @@ document.addEventListener('DOMContentLoaded', async () => {
     `
   })
 })
-
-

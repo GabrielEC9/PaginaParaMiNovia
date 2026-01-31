@@ -1076,26 +1076,26 @@ body.frases-page {
 }
 
 /* ====================================================
-   BOTÓN DESBLOQUEAR — AISLADO DE ESTILOS GLOBALES
+   BOTÓN DESBLOQUEAR (AISLADO, SIN CONFLICTOS)
 ==================================================== */
 
-.frase-card .btn-unlock {
-  all: unset; /* 🔥 resetea TODA la basura global */
-
+.btn-unlock {
   width: 100%;
-  margin-top: 12px;
+  margin-top: 14px;
   padding: 12px 16px;
 
   border-radius: 14px;
-  cursor: pointer;
+  border: none;
 
-  background-color: #ff1f1f;
+  background-color: #ff1f1f; /* rojo fijo */
   color: #fff;
 
-  font-weight: 800;
   font-size: 0.95rem;
+  font-weight: 800;
   letter-spacing: 1px;
   text-transform: uppercase;
+
+  cursor: pointer;
 
   display: flex;
   align-items: center;
@@ -1104,15 +1104,13 @@ body.frases-page {
   box-shadow: 0 6px 14px rgba(0,0,0,0.25);
 
   transition:
-    background 0.3s ease,
     transform 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease,
+    background 0.3s ease;
 }
 
-/* HOVER → MARIQUITA */
-.frase-card .btn-unlock:hover {
-  color: #fff;
-
+/* Hover mariquita SOLO aquí */
+.btn-unlock:hover {
   background:
     radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 30px 30px,
     radial-gradient(circle, #000 28%, transparent 29%) 15px 15px / 30px 30px,
@@ -1122,14 +1120,12 @@ body.frases-page {
   box-shadow: 0 10px 22px rgba(0,0,0,0.35);
 }
 
-/* EVITA DESAPARICIÓN EN FOCUS / ACTIVE */
-.frase-card .btn-unlock:focus,
-.frase-card .btn-unlock:active {
+/* Nunca perder el texto */
+.btn-unlock:hover,
+.btn-unlock:focus,
+.btn-unlock:active {
   color: #fff;
-  background-color: #ff1f1f;
-  outline: none;
 }
-
 
 /* ====================================================
    FRASE DESBLOQUEADA
