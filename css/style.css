@@ -934,11 +934,9 @@ body.frases-page {
   display: block;
   min-height: 100vh;
   overflow-x: hidden;
-  overflow-y: auto; /* <-- permite scroll vertical */
   position: relative;
-  -webkit-overflow-scrolling: touch; /* mejora el scroll en móviles */
+  overflow-y: auto; /* permite scroll vertical */
 }
-
 
 /* ====================================================
    MENÚ GLOBAL (NO SE ROMPE)
@@ -976,6 +974,21 @@ body.frases-page {
   letter-spacing: 2px;
   color: #ff1f1f; /* rojo mariquita */
   margin: 0;
+}
+
+/* Línea separadora tipo mariquita */
+.frases-header::after {
+  content: "";
+  display: block;
+  width: 120px;
+  height: 6px;
+  margin: 12px auto 0;
+  border-radius: 10px;
+
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 24px 24px,
+    radial-gradient(circle, #000 28%, transparent 29%) 12px 12px / 24px 24px,
+    #ff1f1f;
 }
 
 /* ====================================================
@@ -1035,7 +1048,8 @@ body.frases-page {
   transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
-.frase-card:hover {
+/* Hover solo para bloqueadas */
+.frase-card.locked:hover {
   transform: translateY(-6px);
   box-shadow:
     0 18px 38px rgba(0,0,0,0.3),
@@ -1079,18 +1093,16 @@ body.frases-page {
 }
 
 /* ====================================================
-   BOTÓN DESBLOQUEAR — ESTABLE (SIN ANIMACIÓN DE PUNTOS)
+   BOTÓN DESBLOQUEAR
 ==================================================== */
-
 .btn-unlock {
   width: 100%;
   margin-top: 14px;
   padding: 12px 16px;
-
   border-radius: 14px;
   border: none;
 
-  background-color: #ff1f1f; /* rojo fijo */
+  background-color: #ff1f1f;
   color: #fff;
 
   font-size: 0.95rem;
@@ -1106,24 +1118,20 @@ body.frases-page {
 
   box-shadow: 0 6px 14px rgba(0,0,0,0.25);
 
-  /* ❌ NO animar background */
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
 }
 
-/* Hover mariquita SIN movimiento */
 .btn-unlock:hover {
   background:
     radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 30px 30px,
     radial-gradient(circle, #000 28%, transparent 29%) 15px 15px / 30px 30px,
     #ff1f1f;
-
   transform: translateY(-2px);
   box-shadow: 0 10px 22px rgba(0,0,0,0.35);
 }
 
-/* El texto nunca desaparece */
 .btn-unlock,
 .btn-unlock:hover,
 .btn-unlock:focus,
@@ -1131,14 +1139,9 @@ body.frases-page {
   color: #fff;
 }
 
-/* ==============================
+/* ====================================================
    FRASE DESBLOQUEADA — borde mariquita solo
-   Bloquea cualquier hover global
-============================== */
-/* =========================
-   FRASE DESBLOQUEADA — borde mariquita solo
-   NO cambia de color al hover
-========================= */
+==================================================== */
 body.frases-page .frase-card.unlocked {
   position: relative;
   border-radius: 22px;
@@ -1158,7 +1161,7 @@ body.frases-page .frase-card.unlocked {
 body.frases-page .frase-card.unlocked::before {
   content: "";
   position: absolute;
-  top: -6px;    
+  top: -6px;
   left: -6px;
   right: -6px;
   bottom: -6px;
@@ -1179,11 +1182,8 @@ body.frases-page .frase-card.unlocked::before {
 body.frases-page .frase-card.unlocked:hover {
   transform: translateY(-4px);
   box-shadow: 0 18px 40px rgba(0,0,0,0.35);
-
-  /* ⚡ Forzar fondo blanco, sobrescribiendo hover global */
-  background: #fff !important;
+  background: #fff !important; /* sobrescribe hover global */
 }
-
 
 .frase-card.unlocked h3,
 .frase-card.unlocked p {
@@ -1207,21 +1207,6 @@ body.frases-page .frase-card.unlocked:hover {
   text-align: center;
 }
 
-
-/* ====================================================
-   LÍNEA SEPARADORA — ENTRE TÍTULO Y FRASES
-==================================================== */
-.frases-header::after {
-  content: "";
-  display: block;
-  width: 80px;           /* ancho de la línea */
-  height: 4px;           /* grosor */
-  margin: 20px auto 0;   /* centrado y espacio arriba */
-  background-color: #ff1f1f; /* color mariquita */
-  border-radius: 2px;    /* bordes redondeados */
-}
-
-
 /* ====================================================
    ANIMACIÓN DE ENTRADA
 ==================================================== */
@@ -1242,21 +1227,19 @@ body.frases-page .frase-card.unlocked:hover {
 @media (max-width: 640px) {
   .frase-card.unlocked {
     padding: 22px;
-    background: #fff; /* Mantener fondo blanco */
+    background: #fff !important; /* mantener fondo blanco */
   }
 
   .frase-card.unlocked::before {
-    content: "";
-    position: absolute;
-    inset: -5px; /* grosor del borde en móvil */
-    border-radius: 26px; /* ligeramente mayor que la card */
-    
-    /* Solo borde mariquita */
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    border-radius: 28px;
     background:
-      radial-gradient(circle, #000 30%, transparent 31%) 0 0 / 20px 20px,
-      radial-gradient(circle, #000 30%, transparent 31%) 10px 10px / 20px 20px,
+      radial-gradient(circle, #000 30%, transparent 31%) 0 0 / 22px 22px,
+      radial-gradient(circle, #000 30%, transparent 31%) 11px 11px / 22px 22px,
       #ff1f1f;
-
     z-index: -1;
     background-origin: border-box;
     background-clip: content-box, content-box, border-box;
