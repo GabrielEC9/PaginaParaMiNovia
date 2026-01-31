@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (desbloqueada) {
       card.classList.add('unlocked')
       card.innerHTML = `
-        <h3>${frase.title || '💌 Frase del día'}</h3>
+        <h3>${frase.title}</h3>
         <p>${frase.text}</p>
       `
     } else {
@@ -97,12 +97,15 @@ document.addEventListener('DOMContentLoaded', async () => {
       return
     }
 
-    // Animación + render sin reload
-    card.classList.remove('locked')
-    card.classList.add('unlocked')
-    card.innerHTML = `
-      <h3>💌 Frase del día</h3>
-      <p>${frases.find(f => f.id == contentId).text}</p>
-    `
+// Animación + render sin reload
+const frase = frases.find(f => f.id == contentId)
+
+card.classList.remove('locked')
+card.classList.add('unlocked')
+card.innerHTML = `
+  <h3>${frase.title}</h3>
+  <p>${frase.text}</p>
+`
+
   })
 })
