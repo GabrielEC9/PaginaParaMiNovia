@@ -41,9 +41,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   /* ===============================
      VALIDAR RACHA
   =============================== */
-  let alreadyClaimedToday = lastClaim === todayStr
+  const alreadyClaimedToday = lastClaim === todayStr
 
-  // ❌ si no reclamó ayer y no reclamó hoy → racha rota
+  // 🔥 si no reclamó ayer ni hoy → racha rota
   if (lastClaim && lastClaim !== todayStr && lastClaim !== yesterdayStr) {
     streak = 0
   }
@@ -66,24 +66,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     card.classList.add('reward-card')
 
     /* ========== YA RECLAMADO ========== */
-    if (r.day_number < activeDay || (alreadyClaimedToday && r.day_number === activeDay)) {
+    if (
+      r.day_number < activeDay ||
+      (alreadyClaimedToday && r.day_number === activeDay)
+    ) {
       card.classList.add('claimed')
       card.innerHTML = `
         <div class="reward-day">Día ${r.day_number}</div>
         <div class="reward-bugs">🐞 ${r.reward_bugs}</div>
-        ${
-          alreadyClaimedToday && r.day_number === activeDay
-            ? `<div class="reward-timer"></div>`
-            : ''
-        }
       `
-
-      if (alreadyClaimedToday && r.day_number === activeDay) {
-        startCountdown(card.querySelector('.reward-timer'), lastClaim)
-      }
     }
 
-    /* ========== DESBLOQUEADO ========== */
+    /* ========== DISPONIBLE HOY ========== */
     else if (r.day_number === activeDay && !alreadyClaimedToday) {
       card.classList.add('unlocked', 'clickable')
       card.innerHTML = `
@@ -110,6 +104,15 @@ document.addEventListener('DOMContentLoaded', async () => {
       })
     }
 
+    /* ========== MAÑANA ========== */
+    else if (alreadyClaimedToday && r.day_number === activeDay + 1) {
+      card.classList.add('locked', 'next')
+      card.innerHTML = `
+        <div class="reward-day">Día ${r.day_number}</div>
+        <div class="reward-bugs">Disponible mañana</div>
+      `
+    }
+
     /* ========== BLOQUEADO ========== */
     else {
       card.classList.add('locked')
@@ -122,28 +125,3 @@ document.addEventListener('DOMContentLoaded', async () => {
     rewardsGrid.appendChild(card)
   })
 })
-
-/* ===================================
-   CONTADOR 24 HORAS
-=================================== */
-function startCountdown(container, lastClaimDate) {
-  const base = new Date(lastClaimDate)
-  base.setHours(0, 0, 0, 0)
-  const unlockTime = base.getTime() + 24 * 60 * 60 * 1000
-
-  const interval = setInterval(() => {
-    const diff = unlockTime - Date.now()
-
-    if (diff <= 0) {
-      container.textContent = '✨ Próxima recompensa disponible'
-      clearInterval(interval)
-      return
-    }
-
-    const h = Math.floor(diff / 1000 / 60 / 60)
-    const m = Math.floor((diff / 1000 / 60) % 60)
-    const s = Math.floor((diff / 1000) % 60)
-
-    container.textContent = `⏳ ${h}h ${m}m ${s}s`
-  }, 1000)
-}
