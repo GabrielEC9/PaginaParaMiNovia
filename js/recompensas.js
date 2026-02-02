@@ -1,95 +1,89 @@
 document.addEventListener('DOMContentLoaded', async () => {
-  // Verificar sesión
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) {
-    window.location.href = 'login.html'
+    window.location.href = '/login.html'
     return
   }
 
-  const nombre = document.getElementById('nombre-usuario')
-  const saldoSpan = document.getElementById('saldo-bugs')
-  const rachaSpan = document.getElementById('racha-dias')
-  const botonReclamar = document.getElementById('btn-reclamar')
+  const bugsSpan = document.getElementById('user-bugs')
+  const streakSpan = document.getElementById('user-streak')
+  const claimBtn = document.getElementById('claim-reward-btn')
+  const messageBox = document.getElementById('reward-message')
 
-  // Obtener usuario
-  const { data: usuario } = await supabase
-    .from('usuarios')
-    .select('nombre, bugs')
+  // Obtener perfil
+  const { data: profile, error } = await supabase
+    .from('profiles')
+    .select('bugs, streak_days, last_claim')
     .eq('id', user.id)
-    .maybeSingle()
+    .single()
 
-  nombre.textContent = usuario?.nombre || 'Usuario'
-  let saldo = usuario?.bugs || 0
-  saldoSpan.textContent = saldo
-
-  // Verificar racha actual
-  const { data: racha } = await supabase
-    .from('recompensas')
-    .select('*')
-    .eq('id_usuario', user.id)
-    .order('fecha', { ascending: false })
-    .limit(1)
-    .maybeSingle()
-
-  const hoy = new Date().toISOString().split('T')[0]
-  let diasRacha = 0
-  let ultimaFecha = null
-
-  if (racha) {
-    ultimaFecha = racha.fecha.split('T')[0]
-    diasRacha = racha.racha_dias || 0
+  if (error) {
+    console.error(error)
+    return
   }
 
-  rachaSpan.textContent = diasRacha
+  let bugs = profile.bugs || 0
+  let streak = profile.streak_days || 0
+  let lastClaim = profile.last_claim
 
-  // Verificar si ya reclamó hoy
-  if (ultimaFecha === hoy) {
-    botonReclamar.disabled = true
-    botonReclamar.textContent = 'Ya reclamaste hoy 🐞'
+  bugsSpan.textContent = bugs
+  streakSpan.textContent = streak
+
+  const today = new Date().toISOString().split('T')[0]
+
+  // Ya reclamó hoy
+  if (lastClaim === today) {
+    claimBtn.disabled = true
+    claimBtn.textContent = 'Ya reclamaste hoy 🐞'
+    return
   }
 
-  botonReclamar.addEventListener('click', async () => {
-    if (ultimaFecha === hoy) {
-      alert('Ya reclamaste tu recompensa diaria 🐞')
+  claimBtn.addEventListener('click', async () => {
+    let newStreak = 1
+
+    if (lastClaim) {
+      const yesterday = new Date()
+      yesterday.setDate(yesterday.getDate() - 1)
+      const yesterdayStr = yesterday.toISOString().split('T')[0]
+
+      if (lastClaim === yesterdayStr) {
+        newStreak = streak + 1
+      }
+    }
+
+    // Obtener recompensa según racha
+    const { data: rewardRow } = await supabase
+      .from('daily_rewards')
+      .select('reward_bugs')
+      .eq('day_number', newStreak)
+      .maybeSingle()
+
+    const reward = rewardRow?.reward_bugs || 5
+
+    const { error: updateError } = await supabase
+      .from('profiles')
+      .update({
+        bugs: bugs + reward,
+        streak_days: newStreak,
+        last_claim: today
+      })
+      .eq('id', user.id)
+
+    if (updateError) {
+      console.error(updateError)
+      messageBox.textContent = '❌ Error al reclamar recompensa'
       return
     }
 
-    let nuevaRacha = 1
-    let hoyDate = new Date(hoy)
-    let ayerDate = new Date(hoyDate)
-    ayerDate.setDate(hoyDate.getDate() - 1)
-    const ayerStr = ayerDate.toISOString().split('T')[0]
+    bugs += reward
+    streak = newStreak
 
-    if (ultimaFecha === ayerStr) {
-      nuevaRacha = diasRacha + 1
-    }
+    bugsSpan.textContent = bugs
+    streakSpan.textContent = streak
 
-    let recompensa = 5 // base
-    if (nuevaRacha % 10 === 0) recompensa = 30 // bono cada 10 días
+    claimBtn.disabled = true
+    claimBtn.textContent = 'Ya reclamaste hoy 🐞'
+    messageBox.textContent = `🎉 Ganaste ${reward} bugs`
 
-    // Insertar nueva recompensa
-    const { error } = await supabase.from('recompensas').insert({
-      id_usuario: user.id,
-      fecha: new Date().toISOString(),
-      cantidad: recompensa,
-      racha_dias: nuevaRacha
-    })
-
-    if (error) {
-      console.error(error)
-      alert('Error al reclamar recompensa 🐞')
-      return
-    }
-
-    // Actualizar saldo
-    saldo += recompensa
-    await supabase.from('usuarios').update({ bugs: saldo }).eq('id', user.id)
-
-    saldoSpan.textContent = saldo
-    rachaSpan.textContent = nuevaRacha
-    botonReclamar.disabled = true
-    botonReclamar.textContent = 'Ya reclamaste hoy 🐞'
-
-    alert(`¡Felicidades! Ganaste ${recompensa} bugs 🐞`)
   })
 })
