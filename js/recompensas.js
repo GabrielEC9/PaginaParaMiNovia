@@ -9,11 +9,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const bugsSpan = document.getElementById('user-bugs')
   const streakSpan = document.getElementById('user-streak')
-  const claimBtn = document.getElementById('claim-reward-btn')
   const messageBox = document.getElementById('reward-message')
   const rewardsGrid = document.getElementById('rewards-grid')
 
-  // 🔄 limpiar estado visual del mensaje (importante)
+  // limpiar mensaje
   messageBox.className = 'reward-message'
   messageBox.textContent = ''
 
@@ -60,78 +59,67 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (r.day_number < activeDay) {
       card.classList.add('claimed')
-    } else if (r.day_number === activeDay) {
+      card.innerHTML = `
+        <div class="reward-day">Día ${r.day_number}</div>
+        <div class="reward-bugs">🐞 ${r.reward_bugs}</div>
+        <div class="reward-icon">✔</div>
+      `
+    }
+
+    else if (r.day_number === activeDay) {
       card.classList.add('unlocked')
-    }
 
-    card.innerHTML = `
-      <div class="reward-day">Día ${r.day_number}</div>
-      <div class="reward-bugs">🐞 ${r.reward_bugs}</div>
-      <div class="reward-timer"></div>
-    `
+      card.innerHTML = `
+        <div class="reward-day">Día ${r.day_number}</div>
+        <div class="reward-bugs">🐞 ${r.reward_bugs}</div>
+        <div class="reward-timer"></div>
+      `
 
-    rewardsGrid.appendChild(card)
+      // ⏱️ contador si ya reclamó hoy
+      if (lastClaim) {
+        startCountdown(card.querySelector('.reward-timer'), lastClaim)
+      }
 
-    // ⏱️ contador solo para el día activo
-    if (r.day_number === activeDay && lastClaim) {
-      startCountdown(card.querySelector('.reward-timer'), lastClaim)
-    }
-  })
+      // 👉 CLICK PARA RECLAMAR
+      if (lastClaim !== todayStr) {
+        card.classList.add('clickable')
 
-  // ===============================
-  // YA RECLAMÓ HOY
-  // ===============================
-  if (lastClaim === todayStr) {
-    claimBtn.disabled = true
-    claimBtn.textContent = 'Ya reclamaste hoy 🐞'
-    return
-  }
+        card.addEventListener('click', async () => {
+          const reward = r.reward_bugs
 
-  // ===============================
-  // RECLAMAR
-  // ===============================
-  claimBtn.addEventListener('click', async () => {
-    let newStreak = 1
+          const { error: updateError } = await supabase
+            .from('profiles')
+            .update({
+              bugs: bugs + reward,
+              streak_days: activeDay,
+              last_claim: todayStr
+            })
+            .eq('id', user.id)
 
-    if (lastClaim) {
-      const yesterday = new Date()
-      yesterday.setDate(yesterday.getDate() - 1)
-      const yesterdayStr = yesterday.toISOString().split('T')[0]
+          if (updateError) {
+            console.error(updateError)
+            messageBox.textContent = '❌ Error al reclamar recompensa'
+            return
+          }
 
-      if (lastClaim === yesterdayStr) {
-        newStreak = streak + 1
+          // ✅ MENSAJE ÚNICO
+          messageBox.textContent = `✔ Día ${activeDay} completado`
+          messageBox.className = 'reward-message completed'
+
+          setTimeout(() => location.reload(), 900)
+        })
       }
     }
 
-    if (newStreak > 10) newStreak = 1
-
-    const rewardRow = rewards.find(r => r.day_number === newStreak)
-    const reward = rewardRow ? rewardRow.reward_bugs : 5
-
-    const { error: updateError } = await supabase
-      .from('profiles')
-      .update({
-        bugs: bugs + reward,
-        streak_days: newStreak,
-        last_claim: todayStr
-      })
-      .eq('id', user.id)
-
-    if (updateError) {
-      console.error(updateError)
-      messageBox.textContent = '❌ Error al reclamar recompensa'
-      return
+    else {
+      card.classList.add('locked')
+      card.innerHTML = `
+        <div class="reward-day">Día ${r.day_number}</div>
+        <div class="reward-bugs">🔒</div>
+      `
     }
 
-    // ✅ MENSAJE DE DÍA COMPLETADO
-    messageBox.textContent = `✔ Día ${newStreak} completado`
-    messageBox.classList.add('completed')
-
-    claimBtn.disabled = true
-    claimBtn.textContent = 'Ya reclamaste hoy 🐞'
-
-    // recargar para actualizar grid y racha
-    setTimeout(() => location.reload(), 900)
+    rewardsGrid.appendChild(card)
   })
 })
 
