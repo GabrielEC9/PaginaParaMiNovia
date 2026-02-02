@@ -18,16 +18,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   /* ===============================
      PERFIL
   =============================== */
-  const { data: profile, error } = await supabase
+  const { data: profile } = await supabase
     .from('profiles')
     .select('bugs, streak_days, last_claim')
     .eq('id', user.id)
     .single()
-
-  if (error) {
-    console.error(error)
-    return
-  }
 
   let bugs = profile.bugs ?? 0
   let streak = profile.streak_days ?? 0
@@ -36,12 +31,23 @@ document.addEventListener('DOMContentLoaded', async () => {
   bugsSpan.textContent = bugs
   streakSpan.textContent = streak
 
-  const todayStr = new Date().toISOString().split('T')[0]
-  const alreadyClaimedToday = lastClaim === todayStr
+  const today = new Date()
+  const todayStr = today.toISOString().split('T')[0]
+
+  const yesterday = new Date()
+  yesterday.setDate(yesterday.getDate() - 1)
+  const yesterdayStr = yesterday.toISOString().split('T')[0]
 
   /* ===============================
-     DÍA ACTIVO REAL
+     VALIDAR RACHA
   =============================== */
+  let alreadyClaimedToday = lastClaim === todayStr
+
+  // ❌ si no reclamó ayer y no reclamó hoy → racha rota
+  if (lastClaim && lastClaim !== todayStr && lastClaim !== yesterdayStr) {
+    streak = 0
+  }
+
   let activeDay = alreadyClaimedToday ? streak : streak + 1
   if (activeDay > 10) activeDay = 1
 
@@ -60,10 +66,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     card.classList.add('reward-card')
 
     /* ========== YA RECLAMADO ========== */
-    if (
-      r.day_number < activeDay ||
-      (alreadyClaimedToday && r.day_number === activeDay)
-    ) {
+    if (r.day_number < activeDay || (alreadyClaimedToday && r.day_number === activeDay)) {
       card.classList.add('claimed')
       card.innerHTML = `
         <div class="reward-day">Día ${r.day_number}</div>
@@ -75,10 +78,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       `
 
-      // ⏳ contador SOLO en el día reclamado hoy
       if (alreadyClaimedToday && r.day_number === activeDay) {
-        const timerEl = card.querySelector('.reward-timer')
-        startCountdown(timerEl, lastClaim)
+        startCountdown(card.querySelector('.reward-timer'), lastClaim)
       }
     }
 
@@ -93,7 +94,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       card.addEventListener('click', async () => {
         const reward = r.reward_bugs
 
-        const { error } = await supabase
+        await supabase
           .from('profiles')
           .update({
             bugs: bugs + reward,
@@ -102,13 +103,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           })
           .eq('id', user.id)
 
-        if (error) {
-          console.error(error)
-          messageBox.textContent = '❌ Error al reclamar recompensa'
-          return
-        }
-
-        messageBox.textContent = `✔ Día ${activeDay} reclamado`
+        messageBox.textContent = `✔ Día ${activeDay} completado`
         messageBox.className = 'reward-message completed'
 
         setTimeout(() => location.reload(), 800)
@@ -129,7 +124,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 })
 
 /* ===================================
-   CONTADOR REAL 24 HORAS
+   CONTADOR 24 HORAS
 =================================== */
 function startCountdown(container, lastClaimDate) {
   const base = new Date(lastClaimDate)
@@ -140,7 +135,7 @@ function startCountdown(container, lastClaimDate) {
     const diff = unlockTime - Date.now()
 
     if (diff <= 0) {
-      container.textContent = '✨ Disponible mañana'
+      container.textContent = '✨ Próxima recompensa disponible'
       clearInterval(interval)
       return
     }
