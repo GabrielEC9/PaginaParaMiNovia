@@ -40,24 +40,25 @@
 
   <!-- TÍTULO RECOMPENSAS -->
   <section class="rewards-header">
-    <h1 class="rewards-title">🎁 Recompensas Diarias</h1>
+    <h1 class="rewards-title">Recompensas Diarias</h1>
   </section>
 
   <!-- CONTENIDO RECOMPENSAS -->
-  <main class="rewards-container">
-    <div class="user-stats">
-      <p>Mis bugs: <span id="user-bugs">0</span> 🐞</p>
-      <p>Racha actual: <span id="user-streak">0</span> días 🔥</p>
-    </div>
+<main class="rewards-container">
 
-    <button id="claim-reward-btn" class="btn-ladybug large">
-      Reclamar Recompensa
-    </button>
+  <div class="user-stats">
+    <p>Mis bugs: <span id="user-bugs">0</span> 🐞</p>
+    <p>Racha actual: <span id="user-streak">0</span> días 🔥</p>
+  </div>
 
-    <div class="rewards-grid" id="rewards-grid"></div>
+  <!-- GRID DE RECOMPENSAS -->
+  <section class="rewards-grid" id="rewards-grid">
+    <!-- JS insertará aquí los 10 días -->
+  </section>
 
-    <div id="reward-message" class="reward-message"></div>
-  </main>
+  <div id="reward-message" class="reward-message"></div>
+
+</main>
 
   <!-- JS (MÓDULOS, RUTAS ABSOLUTAS) -->
   <script type="module" src="/js/supabaseClient.js"></script>

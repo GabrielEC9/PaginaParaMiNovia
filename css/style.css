@@ -1221,7 +1221,6 @@ body.frases-page {
 ==================================================== */
 
 body.rewards-page {
-  display: block;
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
@@ -1229,7 +1228,7 @@ body.rewards-page {
 }
 
 /* ====================================================
-   MENÚ GLOBAL (FIJO ARRIBA)
+   MENÚ GLOBAL
 ==================================================== */
 .rewards-page .main-menu {
   position: fixed;
@@ -1241,7 +1240,7 @@ body.rewards-page {
 }
 
 /* ====================================================
-   FONDO DEL CIELO (DECORATIVO)
+   FONDO DECORATIVO
 ==================================================== */
 .rewards-page .sky-background {
   position: fixed;
@@ -1251,10 +1250,10 @@ body.rewards-page {
 }
 
 /* ====================================================
-   HEADER DEL TÍTULO
+   HEADER
 ==================================================== */
 .rewards-header {
-  margin-top: 90px; /* espacio para menú fijo */
+  margin-top: 90px;
   text-align: center;
 }
 
@@ -1266,7 +1265,6 @@ body.rewards-page {
   margin: 0;
 }
 
-/* Línea decorativa tipo mariquita */
 .rewards-header::after {
   content: "";
   display: block;
@@ -1274,7 +1272,6 @@ body.rewards-page {
   height: 6px;
   margin: 12px auto 0;
   border-radius: 10px;
-
   background:
     radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 24px 24px,
     radial-gradient(circle, #000 28%, transparent 29%) 12px 12px / 24px 24px,
@@ -1288,35 +1285,23 @@ body.rewards-page {
   width: 100%;
   padding: 40px 20px 60px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
   animation: fadeInUp 0.6s ease;
 }
 
 /* ====================================================
-   TARJETA DE RECOMPENSAS
+   STATS USUARIO
 ==================================================== */
-.rewards-container > * {
-  max-width: 420px;
-  width: 100%;
-}
-
-.rewards-container {
-  flex-direction: column;
-  align-items: center;
-  gap: 26px;
-}
-
 .user-stats {
   background: #fff;
   padding: 22px;
   border-radius: 20px;
   width: 100%;
+  max-width: 420px;
   text-align: center;
-
-  box-shadow:
-    0 10px 25px rgba(0,0,0,0.2),
-    inset 0 0 0 2px rgba(0,0,0,0.12);
-
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
   font-weight: 800;
 }
 
@@ -1326,37 +1311,160 @@ body.rewards-page {
 }
 
 /* ====================================================
-   BOTÓN RECOMPENSA (MARIQUITA)
+   GRID DE RECOMPENSAS
 ==================================================== */
-.rewards-page .btn-ladybug.large {
+.rewards-grid {
   width: 100%;
-  font-size: 1.05rem;
-  padding: 14px 18px;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+  margin-top: 40px;
 }
 
-body.reward-claimed {
-  animation: heartbeat 0.6s ease;
+/* ====================================================
+   TARJETA BASE — BORDE MARIQUITA
+==================================================== */
+.reward-card {
+  position: relative;
+  min-height: 170px;
+  padding: 22px;
+  border-radius: 22px;
+  text-align: center;
+
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 24px 24px,
+    radial-gradient(circle, #000 28%, transparent 29%) 12px 12px / 24px 24px,
+    #ff1f1f;
+
+  box-shadow: 0 14px 30px rgba(0,0,0,0.35);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+  opacity: 0.35;
 }
 
-@keyframes heartbeat {
+/* Fondo interior blanco */
+.reward-card::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  background: #fff;
+  border-radius: 16px;
+  z-index: 0;
+}
+
+.reward-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ====================================================
+   ESTADOS
+==================================================== */
+
+/* 🔒 BLOQUEADO */
+.reward-card.locked {
+  cursor: not-allowed;
+}
+
+.reward-card.locked::after {
+  content: "🔒";
+  position: absolute;
+  bottom: 10px;
+  right: 14px;
+  font-size: 1.4rem;
+  z-index: 2;
+}
+
+/* ✅ DESBLOQUEADO */
+.reward-card.unlocked {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.reward-card.unlocked:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 18px 36px rgba(0,0,0,0.45);
+}
+
+.reward-card.unlocked:active {
+  transform: scale(0.96);
+}
+
+/* ✔️ RECLAMADO */
+.reward-card.claimed {
+  opacity: 0.7;
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 20px 20px,
+    radial-gradient(circle, #000 28%, transparent 29%) 10px 10px / 20px 20px,
+    #dcdcdc;
+}
+
+.reward-card.claimed::after {
+  content: "✔";
+  position: absolute;
+  bottom: 10px;
+  right: 14px;
+  font-size: 1.6rem;
+  color: #1f8f3a;
+  font-weight: 900;
+  z-index: 2;
+}
+
+/* Animación al reclamar */
+.reward-card.claimed {
+  animation: claim-pop 0.5s ease;
+}
+
+@keyframes claim-pop {
   0% { transform: scale(1); }
-  50% { transform: scale(1.015); }
+  40% { transform: scale(1.12); }
   100% { transform: scale(1); }
 }
 
-
 /* ====================================================
-   MENSAJE
+   TEXTO INTERNO
 ==================================================== */
-.reward-message {
+.reward-day {
   font-weight: 900;
-  font-size: 1.1rem;
   color: #ff1f1f;
-  text-align: center;
+  font-size: 1.1rem;
+}
+
+.reward-bugs {
+  font-size: 1.3rem;
+  margin: 8px 0;
+}
+
+.reward-timer {
+  font-size: 0.85rem;
+  font-weight: bold;
 }
 
 /* ====================================================
-   ANIMACIÓN
+   RESPONSIVE
+==================================================== */
+@media (max-width: 1024px) {
+  .rewards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .rewards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .reward-card {
+    min-height: 145px;
+  }
+
+  .rewards-title {
+    font-size: 1.9rem;
+  }
+}
+
+/* ====================================================
+   ANIMACIONES
 ==================================================== */
 @keyframes fadeInUp {
   from {
@@ -1369,113 +1477,40 @@ body.reward-claimed {
   }
 }
 
-
 /* ====================================================
-   RESPONSIVE — MÓVIL PRIMERO
+   MENSAJE DE DÍA COMPLETADO
 ==================================================== */
 
-/* 📱 Celulares */
-@media (max-width: 640px) {
+.reward-message.completed {
+  margin-top: 14px;
+  padding: 12px 18px;
+  border-radius: 16px;
 
-  .rewards-header {
-    margin-top: 88px;
-    padding: 0 12px;
-  }
-
-  .rewards-title {
-    font-size: 1.9rem;
-    letter-spacing: 1.2px;
-  }
-
-  .rewards-header::after {
-    width: 90px;
-    height: 5px;
-  }
-
-  .rewards-container {
-    padding: 28px 14px 50px;
-    gap: 20px;
-  }
-
-  .user-stats {
-    padding: 18px;
-    border-radius: 18px;
-  }
-
-  .user-stats p {
-    font-size: 1rem;
-  }
-
-  .btn-ladybug.large {
-    font-size: 1rem;
-    padding: 16px;
-    border-radius: 16px;
-  }
-
-  .reward-message {
-    font-size: 1rem;
-  }
-}
-
-/* 📱📲 Pantallas muy pequeñas */
-@media (max-width: 360px) {
-
-  .rewards-title {
-    font-size: 1.6rem;
-  }
-
-  .user-stats p {
-    font-size: 0.95rem;
-  }
-}
-
-/* GRID RECOMPENSAS */
-.rewards-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 20px;
-  margin-top: 40px;
-}
-
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  .rewards-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* TARJETA */
-.reward-card {
-  background: #fff;
-  border-radius: 18px;
-  padding: 18px;
-  text-align: center;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.2);
-  opacity: 0.35;
-}
-
-.reward-card.unlocked {
-  opacity: 1;
-  border: 3px solid #ff1f1f;
-}
-
-.reward-card.claimed {
-  opacity: 0.7;
-  background: #f5f5f5;
-}
-
-.reward-day {
   font-weight: 900;
-  color: #ff1f1f;
+  font-size: 1.05rem;
+  text-align: center;
+  color: #1f8f3a;
+
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 20px 20px,
+    radial-gradient(circle, #000 28%, transparent 29%) 10px 10px / 20px 20px,
+    #eafff1;
+
+  box-shadow: 0 10px 22px rgba(0,0,0,0.25);
+  animation: completed-pop 0.45s ease;
 }
 
-.reward-bugs {
-  font-size: 1.3rem;
-  margin: 8px 0;
-}
-
-.reward-timer {
-  font-size: 0.85rem;
-  font-weight: bold;
-  color: #000;
+/* ✨ animación sutil */
+@keyframes completed-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

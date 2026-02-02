@@ -13,6 +13,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   const messageBox = document.getElementById('reward-message')
   const rewardsGrid = document.getElementById('rewards-grid')
 
+  // 🔄 limpiar estado visual del mensaje (importante)
+  messageBox.className = 'reward-message'
+  messageBox.textContent = ''
+
   // ===============================
   // PERFIL
   // ===============================
@@ -68,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     rewardsGrid.appendChild(card)
 
-    // ⏱️ CONTADOR SOLO PARA EL DÍA ACTIVO
+    // ⏱️ contador solo para el día activo
     if (r.day_number === activeDay && lastClaim) {
       startCountdown(card.querySelector('.reward-timer'), lastClaim)
     }
@@ -119,10 +123,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       return
     }
 
-    messageBox.textContent = `🎉 Ganaste ${reward} bugs`
+    // ✅ MENSAJE DE DÍA COMPLETADO
+    messageBox.textContent = `✔ Día ${newStreak} completado`
+    messageBox.classList.add('completed')
+
     claimBtn.disabled = true
     claimBtn.textContent = 'Ya reclamaste hoy 🐞'
 
+    // recargar para actualizar grid y racha
     setTimeout(() => location.reload(), 900)
   })
 })
