@@ -1316,19 +1316,12 @@ body.rewards-page {
 .rewards-grid {
   width: 100%;
   max-width: 1200px;
+  margin: 40px auto 0;
+
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 24px;
-  margin-top: 40px;
-  justify-content: center; /* 🔥 clave */
 }
-
-.rewards-container > * {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
 
 /* ====================================================
    TARJETA BASE — BORDE MARIQUITA
@@ -1535,4 +1528,18 @@ body.rewards-page {
   100% {
     transform: scale(1);
   }
+}
+
+/* ====================================================
+   CENTRADO
+==================================================== */
+
+.rewards-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-stats {
+  margin: 0 auto;
 }
