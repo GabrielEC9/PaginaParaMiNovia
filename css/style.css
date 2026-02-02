@@ -1427,18 +1427,23 @@ body.rewards-page {
 .reward-day {
   font-weight: 900;
   color: #ff1f1f;
-  font-size: 1.1rem;
+  font-size: 1.35rem; /* ⬆ más visible */
+  letter-spacing: 0.5px;
 }
 
 .reward-bugs {
-  font-size: 1.3rem;
-  margin: 8px 0;
+  font-size: 1.65rem; /* ⬆ protagonista */
+  margin: 12px 0;
+  font-weight: 900;
 }
 
+
 .reward-timer {
-  font-size: 0.85rem;
-  font-weight: bold;
+  font-size: 1rem;
+  font-weight: 800;
+  margin-top: 6px;
 }
+
 
 /* ====================================================
    RESPONSIVE
@@ -1461,6 +1466,15 @@ body.rewards-page {
   .rewards-title {
     font-size: 1.9rem;
   }
+
+  .reward-day {
+  font-size: 1.2rem;
+}
+
+.reward-bugs {
+  font-size: 1.45rem;
+}
+
 }
 
 /* ====================================================
