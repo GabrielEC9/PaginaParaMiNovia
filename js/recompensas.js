@@ -1,3 +1,5 @@
+import { supabase } from './supabaseClient.js'
+
 document.addEventListener('DOMContentLoaded', async () => {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) {
