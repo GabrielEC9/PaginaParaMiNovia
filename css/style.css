@@ -1507,11 +1507,8 @@ body.rewards-page {
   text-align: center;
   color: #1f8f3a;
 
-  background:
-    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 20px 20px,
-    radial-gradient(circle, #000 28%, transparent 29%) 10px 10px / 20px 20px,
-    #ff1f1f; 
-    
+  background: #ffffff; /* ← SOLO BLANCO */
+
   box-shadow: 0 10px 22px rgba(0,0,0,0.25);
   animation: completed-pop 0.45s ease;
 }
