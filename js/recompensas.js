@@ -59,16 +59,30 @@ document.addEventListener('DOMContentLoaded', async () => {
     const card = document.createElement('div')
     card.classList.add('reward-card')
 
-    /* ================= CLAIMED ================= */
-    if (r.day_number < activeDay || (alreadyClaimedToday && r.day_number === activeDay)) {
+    /* ========== YA RECLAMADO ========== */
+    if (
+      r.day_number < activeDay ||
+      (alreadyClaimedToday && r.day_number === activeDay)
+    ) {
       card.classList.add('claimed')
       card.innerHTML = `
         <div class="reward-day">Día ${r.day_number}</div>
         <div class="reward-bugs">🐞 ${r.reward_bugs}</div>
+        ${
+          alreadyClaimedToday && r.day_number === activeDay
+            ? `<div class="reward-timer"></div>`
+            : ''
+        }
       `
+
+      // ⏳ contador SOLO en el día reclamado hoy
+      if (alreadyClaimedToday && r.day_number === activeDay) {
+        const timerEl = card.querySelector('.reward-timer')
+        startCountdown(timerEl, lastClaim)
+      }
     }
 
-    /* ================= UNLOCKED ================= */
+    /* ========== DESBLOQUEADO ========== */
     else if (r.day_number === activeDay && !alreadyClaimedToday) {
       card.classList.add('unlocked', 'clickable')
       card.innerHTML = `
@@ -79,7 +93,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       card.addEventListener('click', async () => {
         const reward = r.reward_bugs
 
-        const { error: updateError } = await supabase
+        const { error } = await supabase
           .from('profiles')
           .update({
             bugs: bugs + reward,
@@ -88,8 +102,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           })
           .eq('id', user.id)
 
-        if (updateError) {
-          console.error(updateError)
+        if (error) {
+          console.error(error)
           messageBox.textContent = '❌ Error al reclamar recompensa'
           return
         }
@@ -97,11 +111,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         messageBox.textContent = `✔ Día ${activeDay} reclamado`
         messageBox.className = 'reward-message completed'
 
-        setTimeout(() => location.reload(), 900)
+        setTimeout(() => location.reload(), 800)
       })
     }
 
-    /* ================= LOCKED ================= */
+    /* ========== BLOQUEADO ========== */
     else {
       card.classList.add('locked')
       card.innerHTML = `
@@ -112,14 +126,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     rewardsGrid.appendChild(card)
   })
-
-  /* ===============================
-     CONTADOR 24H
-  =============================== */
-  if (alreadyClaimedToday) {
-    const timer = document.getElementById('next-reward-timer')
-    if (timer) startCountdown(timer, lastClaim)
-  }
 })
 
 /* ===================================
@@ -134,7 +140,7 @@ function startCountdown(container, lastClaimDate) {
     const diff = unlockTime - Date.now()
 
     if (diff <= 0) {
-      container.textContent = '✨ Disponible para reclamar'
+      container.textContent = '✨ Disponible mañana'
       clearInterval(interval)
       return
     }
