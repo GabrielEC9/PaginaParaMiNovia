@@ -1429,3 +1429,42 @@ body.reward-claimed {
   }
 }
 
+/* Grid de recompensas*/
+
+.rewards-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  margin-top: 30px;
+}
+
+@media (max-width: 600px) {
+  .rewards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.reward-card {
+  padding: 16px;
+  border-radius: 16px;
+  text-align: center;
+  font-weight: bold;
+  background: #111;
+  color: #888;
+  border: 2px solid #333;
+  opacity: 0.6;
+}
+
+.reward-card.unlocked {
+  background: #ff1f1f;
+  color: #fff;
+  border-color: #fff;
+  opacity: 1;
+}
+
+.reward-card.claimed {
+  background: #222;
+  color: #aaa;
+  border-color: #555;
+  opacity: 0.4;
+}

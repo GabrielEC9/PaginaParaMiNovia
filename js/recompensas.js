@@ -11,8 +11,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   const streakSpan = document.getElementById('user-streak')
   const claimBtn = document.getElementById('claim-reward-btn')
   const messageBox = document.getElementById('reward-message')
+  const rewardsGrid = document.getElementById('rewards-grid')
 
-  // Obtener perfil
+  // ===============================
+  // PERFIL
+  // ===============================
   const { data: profile, error } = await supabase
     .from('profiles')
     .select('bugs, streak_days, last_claim')
@@ -33,13 +36,53 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const today = new Date().toISOString().split('T')[0]
 
-  // Ya reclamó hoy
+  // ===============================
+  // RECOMPENSAS (tabla daily_rewards)
+  // ===============================
+  const { data: rewards } = await supabase
+    .from('daily_rewards')
+    .select('*')
+    .order('day_number')
+
+  // Día activo según racha
+  let activeDay = streak + 1
+  if (activeDay > 10) activeDay = 1
+
+  // ===============================
+  // RENDER GRID
+  // ===============================
+  rewardsGrid.innerHTML = ''
+
+  rewards.forEach(r => {
+    const card = document.createElement('div')
+    card.classList.add('reward-card')
+
+    if (r.day_number < activeDay) {
+      card.classList.add('claimed')
+    } else if (r.day_number === activeDay) {
+      card.classList.add('unlocked')
+    }
+
+    card.innerHTML = `
+      <div class="reward-day">Día ${r.day_number}</div>
+      <div class="reward-bugs">🐞 ${r.reward_bugs}</div>
+    `
+
+    rewardsGrid.appendChild(card)
+  })
+
+  // ===============================
+  // YA RECLAMÓ HOY
+  // ===============================
   if (lastClaim === today) {
     claimBtn.disabled = true
     claimBtn.textContent = 'Ya reclamaste hoy 🐞'
     return
   }
 
+  // ===============================
+  // RECLAMAR
+  // ===============================
   claimBtn.addEventListener('click', async () => {
     let newStreak = 1
 
@@ -53,14 +96,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     }
 
-    // Obtener recompensa según racha
-    const { data: rewardRow } = await supabase
-      .from('daily_rewards')
-      .select('reward_bugs')
-      .eq('day_number', newStreak)
-      .maybeSingle()
+    // Reinicio al llegar a 10
+    if (newStreak > 10) newStreak = 1
 
-    const reward = rewardRow?.reward_bugs || 5
+    const rewardRow = rewards.find(r => r.day_number === newStreak)
+    const reward = rewardRow ? rewardRow.reward_bugs : 5
 
     const { error: updateError } = await supabase
       .from('profiles')
@@ -77,15 +117,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       return
     }
 
-    bugs += reward
-    streak = newStreak
-
-    bugsSpan.textContent = bugs
-    streakSpan.textContent = streak
-
+    messageBox.textContent = `🎉 Ganaste ${reward} bugs`
     claimBtn.disabled = true
     claimBtn.textContent = 'Ya reclamaste hoy 🐞'
-    messageBox.textContent = `🎉 Ganaste ${reward} bugs`
 
+    // Recargar para actualizar grid
+    setTimeout(() => location.reload(), 800)
   })
 })
