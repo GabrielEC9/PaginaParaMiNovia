@@ -34,23 +34,20 @@ document.addEventListener('DOMContentLoaded', async () => {
   bugsSpan.textContent = bugs
   streakSpan.textContent = streak
 
-  const today = new Date().toISOString().split('T')[0]
+  const today = new Date()
+  const todayStr = today.toISOString().split('T')[0]
 
   // ===============================
-  // RECOMPENSAS (tabla daily_rewards)
+  // RECOMPENSAS
   // ===============================
   const { data: rewards } = await supabase
     .from('daily_rewards')
     .select('*')
     .order('day_number')
 
-  // Día activo según racha
   let activeDay = streak + 1
   if (activeDay > 10) activeDay = 1
 
-  // ===============================
-  // RENDER GRID
-  // ===============================
   rewardsGrid.innerHTML = ''
 
   rewards.forEach(r => {
@@ -66,15 +63,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     card.innerHTML = `
       <div class="reward-day">Día ${r.day_number}</div>
       <div class="reward-bugs">🐞 ${r.reward_bugs}</div>
+      <div class="reward-timer"></div>
     `
 
     rewardsGrid.appendChild(card)
+
+    // ⏱️ CONTADOR SOLO PARA EL DÍA ACTIVO
+    if (r.day_number === activeDay && lastClaim) {
+      startCountdown(card.querySelector('.reward-timer'), lastClaim)
+    }
   })
 
   // ===============================
   // YA RECLAMÓ HOY
   // ===============================
-  if (lastClaim === today) {
+  if (lastClaim === todayStr) {
     claimBtn.disabled = true
     claimBtn.textContent = 'Ya reclamaste hoy 🐞'
     return
@@ -96,7 +99,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     }
 
-    // Reinicio al llegar a 10
     if (newStreak > 10) newStreak = 1
 
     const rewardRow = rewards.find(r => r.day_number === newStreak)
@@ -107,7 +109,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       .update({
         bugs: bugs + reward,
         streak_days: newStreak,
-        last_claim: today
+        last_claim: todayStr
       })
       .eq('id', user.id)
 
@@ -121,7 +123,32 @@ document.addEventListener('DOMContentLoaded', async () => {
     claimBtn.disabled = true
     claimBtn.textContent = 'Ya reclamaste hoy 🐞'
 
-    // Recargar para actualizar grid
-    setTimeout(() => location.reload(), 800)
+    setTimeout(() => location.reload(), 900)
   })
 })
+
+/* ===================================
+   CONTADOR 24 HORAS
+=================================== */
+function startCountdown(container, lastClaimDate) {
+  const last = new Date(lastClaimDate)
+  last.setHours(0, 0, 0, 0)
+  const unlockTime = last.getTime() + 24 * 60 * 60 * 1000
+
+  const interval = setInterval(() => {
+    const now = Date.now()
+    const diff = unlockTime - now
+
+    if (diff <= 0) {
+      container.textContent = '✨ Disponible para reclamar'
+      clearInterval(interval)
+      return
+    }
+
+    const h = Math.floor(diff / 1000 / 60 / 60)
+    const m = Math.floor((diff / 1000 / 60) % 60)
+    const s = Math.floor((diff / 1000) % 60)
+
+    container.textContent = `⏳ ${h}h ${m}m ${s}s`
+  }, 1000)
+}
