@@ -1543,3 +1543,33 @@ body.rewards-page {
 .user-stats {
   margin: 0 auto;
 }
+
+/* ====================================================
+   FIX HEADER RECOMPENSAS (FORZADO)
+==================================================== */
+
+body.rewards-page .rewards-header {
+  width: 100%;
+  margin-top: 90px;
+
+  display: block !important;
+  text-align: center !important;
+}
+
+body.rewards-page .rewards-title {
+  margin: 0 auto;
+  text-align: center;
+}
+
+body.rewards-page .rewards-header::after {
+  content: "";
+  display: block;
+  width: 120px;
+  height: 6px;
+  margin: 12px auto 0;
+  border-radius: 10px;
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 24px 24px,
+    radial-gradient(circle, #000 28%, transparent 29%) 12px 12px / 24px 24px,
+    #ff1f1f;
+}
