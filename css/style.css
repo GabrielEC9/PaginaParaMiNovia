@@ -1510,8 +1510,8 @@ body.rewards-page {
   background:
     radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 20px 20px,
     radial-gradient(circle, #000 28%, transparent 29%) 10px 10px / 20px 20px,
-    #eafff1;
-
+    #ff1f1f; 
+    
   box-shadow: 0 10px 22px rgba(0,0,0,0.25);
   animation: completed-pop 0.45s ease;
 }

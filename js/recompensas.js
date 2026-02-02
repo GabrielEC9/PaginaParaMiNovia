@@ -16,9 +16,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   messageBox.className = 'reward-message'
   messageBox.textContent = ''
 
-  // ===============================
-  // PERFIL
-  // ===============================
+  /* ===============================
+     PERFIL
+  =============================== */
   const { data: profile, error } = await supabase
     .from('profiles')
     .select('bugs, streak_days, last_claim')
@@ -40,9 +40,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   const today = new Date()
   const todayStr = today.toISOString().split('T')[0]
 
-  // ===============================
-  // RECOMPENSAS
-  // ===============================
+  /* ===============================
+     RECOMPENSAS
+  =============================== */
   const { data: rewards } = await supabase
     .from('daily_rewards')
     .select('*')
@@ -57,15 +57,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     const card = document.createElement('div')
     card.classList.add('reward-card')
 
+    // 🔒 YA RECLAMADO
     if (r.day_number < activeDay) {
       card.classList.add('claimed')
       card.innerHTML = `
         <div class="reward-day">Día ${r.day_number}</div>
         <div class="reward-bugs">🐞 ${r.reward_bugs}</div>
-        <div class="reward-icon">✔</div>
       `
     }
 
+    // ✅ DÍA ACTIVO
     else if (r.day_number === activeDay) {
       card.classList.add('unlocked')
 
@@ -75,9 +76,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         <div class="reward-timer"></div>
       `
 
-      // ⏱️ contador si ya reclamó hoy
-      if (lastClaim) {
-        startCountdown(card.querySelector('.reward-timer'), lastClaim)
+      const timerEl = card.querySelector('.reward-timer')
+
+      // ⏱️ SOLO si ya reclamó hoy
+      if (lastClaim === todayStr) {
+        startCountdown(timerEl, lastClaim)
       }
 
       // 👉 CLICK PARA RECLAMAR
@@ -102,15 +105,29 @@ document.addEventListener('DOMContentLoaded', async () => {
             return
           }
 
-          // ✅ MENSAJE ÚNICO
+          // 🔄 ACTUALIZAR ESTADO LOCAL (CLAVE)
+          bugs += reward
+          streak = activeDay
+          lastClaim = todayStr
+
+          bugsSpan.textContent = bugs
+          streakSpan.textContent = streak
+
+          // mensaje
           messageBox.textContent = `✔ Día ${activeDay} completado`
           messageBox.className = 'reward-message completed'
 
-          setTimeout(() => location.reload(), 900)
+          // bloquear visualmente
+          card.classList.remove('clickable')
+          card.classList.remove('unlocked')
+          card.classList.add('claimed')
+
+          setTimeout(() => location.reload(), 800)
         })
       }
     }
 
+    // 🔐 BLOQUEADO
     else {
       card.classList.add('locked')
       card.innerHTML = `
