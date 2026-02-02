@@ -44,21 +44,30 @@
   </section>
 
   <!-- CONTENIDO RECOMPENSAS -->
-<main class="rewards-container">
+<!-- WRAPPER PRINCIPAL -->
+<div class="rewards-wrapper">
 
-  <div class="user-stats">
-    <p>Mis bugs: <span id="user-bugs">0</span> 🐞</p>
-    <p>Racha actual: <span id="user-streak">0</span> días 🔥</p>
-  </div>
-
-  <!-- GRID DE RECOMPENSAS -->
-  <section class="rewards-grid" id="rewards-grid">
-    <!-- JS insertará aquí los 10 días -->
+  <!-- TÍTULO RECOMPENSAS -->
+  <section class="rewards-header">
+    <h1 class="rewards-title">Recompensas Diarias</h1>
   </section>
 
-  <div id="reward-message" class="reward-message"></div>
+  <!-- CONTENIDO RECOMPENSAS -->
+  <main class="rewards-container">
 
-</main>
+    <div class="user-stats">
+      <p>Mis bugs: <span id="user-bugs">0</span> 🐞</p>
+      <p>Racha actual: <span id="user-streak">0</span> días 🔥</p>
+    </div>
+
+    <section class="rewards-grid" id="rewards-grid"></section>
+
+    <div id="reward-message" class="reward-message"></div>
+
+  </main>
+
+</div>
+
 
   <!-- JS (MÓDULOS, RUTAS ABSOLUTAS) -->
   <script type="module" src="/js/supabaseClient.js"></script>
