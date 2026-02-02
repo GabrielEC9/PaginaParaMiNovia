@@ -1334,6 +1334,17 @@ body.rewards-page {
   padding: 14px 18px;
 }
 
+body.reward-claimed {
+  animation: heartbeat 0.6s ease;
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.015); }
+  100% { transform: scale(1); }
+}
+
+
 /* ====================================================
    MENSAJE
 ==================================================== */
@@ -1417,3 +1428,4 @@ body.rewards-page {
     font-size: 0.95rem;
   }
 }
+
