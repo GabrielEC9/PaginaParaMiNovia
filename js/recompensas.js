@@ -39,12 +39,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   /* ========== VALIDAR RACHA ========== */
   let alreadyClaimedToday = lastClaim === todayStr
 
-  // Si no reclamó ayer ni hoy → racha rota
-  if (lastClaim && lastClaim !== todayStr && lastClaim !== yesterdayStr) {
-    streak = 0
-  }
+  // ❌ si no reclamó ayer ni hoy → racha rota
+  let streakBroken = lastClaim && lastClaim !== todayStr && lastClaim !== yesterdayStr
+  if (streakBroken) streak = 0
 
-  const nextDay = streak < 10 ? streak + 1 : 1
+  // Día activo hoy o mañana
+  const nextDay = streakBroken ? 1 : (alreadyClaimedToday ? streak + 1 : streak + 1)
+  if (nextDay > 10) nextDay = 1
 
   /* ================= RECOMPENSAS ================= */
   const { data: rewards } = await supabase
@@ -58,8 +59,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const card = document.createElement('div')
     card.classList.add('reward-card')
 
-    /* ===== YA RECLAMADO HOY O DIAS ANTERIORES ===== */
-    if (r.day_number <= streak) {
+    /* ===== YA RECLAMADO ===== */
+    if (r.day_number <= streak && !streakBroken) {
       card.classList.add('claimed')
       card.innerHTML = `
         <div class="reward-day">Día ${r.day_number}</div>
@@ -67,8 +68,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       `
     }
 
-    /* ===== DESBLOQUEADO HOY ===== */
-    else if (r.day_number === nextDay && !alreadyClaimedToday) {
+    /* ===== HOY DISPONIBLE ===== */
+    else if (r.day_number === nextDay && !alreadyClaimedToday && !streakBroken) {
       card.classList.add('unlocked', 'clickable')
       card.innerHTML = `
         <div class="reward-day">Día ${r.day_number}</div>
@@ -95,12 +96,39 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     /* ===== MAÑANA ===== */
-    else if (alreadyClaimedToday && r.day_number === nextDay) {
+    else if (alreadyClaimedToday && r.day_number === nextDay && !streakBroken) {
       card.classList.add('locked', 'next')
       card.innerHTML = `
         <div class="reward-day">Día ${r.day_number}</div>
         <div class="reward-bugs">Disponible mañana</div>
       `
+    }
+
+    /* ===== PRIMER DIA SI SE ROMPE LA RACHA ===== */
+    else if (streakBroken && r.day_number === 1) {
+      card.classList.add('unlocked', 'clickable')
+      card.innerHTML = `
+        <div class="reward-day">Día 1</div>
+        <div class="reward-bugs">🐞 ${r.reward_bugs}</div>
+      `
+
+      card.addEventListener('click', async () => {
+        const reward = r.reward_bugs
+
+        await supabase
+          .from('profiles')
+          .update({
+            bugs: bugs + reward,
+            streak_days: 1,
+            last_claim: todayStr
+          })
+          .eq('id', user.id)
+
+        messageBox.textContent = `✔ Día 1 completado`
+        messageBox.className = 'reward-message completed'
+
+        setTimeout(() => location.reload(), 800)
+      })
     }
 
     /* ===== BLOQUEADO ===== */
