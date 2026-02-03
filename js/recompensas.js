@@ -79,8 +79,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     card.classList.add('reward-card')
 
     /* ===== YA RECLAMADO ===== */
-    // TODOS los días menores al activo se marcan como reclamados
-    if (r.day_number < activeDay) {
+    if (r.day_number < activeDay || (r.day_number === activeDay && alreadyClaimedToday)) {
       card.classList.add('claimed')
       card.innerHTML = `
         <div class="reward-day">Día ${r.day_number}</div>
