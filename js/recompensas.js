@@ -108,4 +108,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       card.classList.add('locked')
       card.innerHTML = `
         <div class="reward-day">Día ${r.day_number}</div>
-        <div class="
+        <div class="reward-bugs">🔒</div>
+      `
+    }
+
+    rewardsGrid.appendChild(card)
+  })
+})
