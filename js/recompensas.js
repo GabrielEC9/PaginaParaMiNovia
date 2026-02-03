@@ -24,40 +24,38 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   let bugs = profile.bugs ?? 0
   let streak = profile.streak_days ?? 0
-  let lastClaim = profile.last_claim
+  let lastClaim = profile.last_claim ? new Date(profile.last_claim) : null
 
   bugsSpan.textContent = bugs
   streakSpan.textContent = streak
 
-  const today = new Date()
-  const todayStr = today.toISOString().split('T')[0]
+  const now = new Date()
+  const todayStr = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+  const yesterdayStr = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1)
 
-  /* ================= NORMALIZAR FECHAS ================= */
-  const lastClaimDate = lastClaim ? new Date(lastClaim) : null
-  const lastClaimOnlyDateStr = lastClaimDate
-    ? new Date(lastClaimDate.getFullYear(), lastClaimDate.getMonth(), lastClaimDate.getDate())
-        .toISOString().split('T')[0]
-    : null
-
-  const alreadyClaimedToday = lastClaimOnlyDateStr === todayStr
-
-  // Día anterior para comprobar racha
-  const yesterday = new Date()
-  yesterday.setDate(today.getDate() - 1)
-  const yesterdayStr = yesterday.toISOString().split('T')[0]
-
-  // Racha rota si no reclamó ayer ni hoy
+  /* ========== VALIDAR RACHA ========== */
+  let alreadyClaimedToday = false
   let streakBroken = false
-  if (!lastClaim || (!alreadyClaimedToday && lastClaimOnlyDateStr !== yesterdayStr)) {
+
+  if (lastClaim) {
+    const lastClaimDate = new Date(lastClaim.getFullYear(), lastClaim.getMonth(), lastClaim.getDate())
+    alreadyClaimedToday = lastClaimDate.getTime() === todayStr.getTime()
+
+    // Racha rota si no reclamó ayer ni hoy
+    if (lastClaimDate.getTime() !== todayStr.getTime() && lastClaimDate.getTime() !== yesterdayStr.getTime()) {
+      streakBroken = true
+      streak = 0
+    }
+  } else {
     streakBroken = true
     streak = 0
   }
 
-  // Día activo para desbloqueo hoy
+  // Día activo hoy
   const activeDay = streakBroken ? 1 : (!alreadyClaimedToday ? streak + 1 : streak)
 
   // Día que estará "Disponible mañana"
-  let nextDayForTomorrow = alreadyClaimedToday && !streakBroken ? activeDay + 1 : null
+  let nextDayForTomorrow = (!streakBroken && alreadyClaimedToday) ? activeDay + 1 : null
   if (nextDayForTomorrow && nextDayForTomorrow > 10) nextDayForTomorrow = 1
 
   /* ================= RECOMPENSAS ================= */
@@ -95,7 +93,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           .update({
             bugs: bugs + reward,
             streak_days: activeDay,
-            last_claim: today.toISOString()
+            last_claim: todayStr.toISOString()
           })
           .eq('id', user.id)
 
@@ -105,7 +103,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       })
     }
 
-    /* ===== PRÓXIMO DÍA (Disponible mañana) ===== */
+    /* ===== DISPONIBLE MAÑANA ===== */
     else if (!streakBroken && alreadyClaimedToday && r.day_number === nextDayForTomorrow) {
       card.classList.add('locked', 'next')
       card.innerHTML = `
@@ -128,7 +126,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           .update({
             bugs: bugs + reward,
             streak_days: 1,
-            last_claim: today.toISOString()
+            last_claim: todayStr.toISOString()
           })
           .eq('id', user.id)
 
