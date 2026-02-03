@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   streakSpan.textContent = streak
 
   /* ================= FUNCIONES DE FECHAS ================= */
-  // Devuelve "YYYY-MM-DD" según la hora local
   function getLocalDateString(date = new Date()) {
     const y = date.getFullYear()
     const m = String(date.getMonth() + 1).padStart(2, '0')
@@ -65,7 +64,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // Día activo hoy
-  const activeDay = streakBroken ? 1 : (!alreadyClaimedToday ? streak + 1 : streak)
+  const activeDay = !alreadyClaimedToday
+    ? (streakBroken ? 1 : streak + 1)
+    : streak // si ya reclamó hoy, activeDay = streak actual
 
   // Día que estará "Disponible mañana"
   let nextDayForTomorrow = (!streakBroken && alreadyClaimedToday && !canClaimNow) ? activeDay + 1 : null
@@ -106,7 +107,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           .update({
             bugs: bugs + reward,
             streak_days: activeDay,
-            last_claim: todayStr // Guardamos solo la fecha, consistente en hora local
+            last_claim: todayStr
           })
           .eq('id', user.id)
 
@@ -126,7 +127,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     /* ===== PRIMER DÍA SI SE ROMPE LA RACHA ===== */
-    else if (streakBroken && r.day_number === 1) {
+    // ❌ CAMBIO CLAVE: agregamos !alreadyClaimedToday para no permitir reclamar de nuevo hoy
+    else if (streakBroken && r.day_number === 1 && !alreadyClaimedToday) {
       card.classList.add('unlocked', 'clickable')
       card.innerHTML = `
         <div class="reward-day">Día 1</div>
@@ -139,7 +141,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           .update({
             bugs: bugs + reward,
             streak_days: 1,
-            last_claim: todayStr // Guardamos solo la fecha
+            last_claim: todayStr
           })
           .eq('id', user.id)
 
