@@ -40,18 +40,21 @@ document.addEventListener('DOMContentLoaded', async () => {
   let canClaimNow = false
 
   if (lastClaim) {
-    // Fecha sin hora para comparación de racha
-    const lastClaimDateOnly = new Date(lastClaim.getFullYear(), lastClaim.getMonth(), lastClaim.getDate())
-    alreadyClaimedToday = lastClaimDateOnly.getTime() === todayStart.getTime()
+    // COMPARACIÓN SOLO POR FECHA (ignora hora)
+    const lastClaimStr = lastClaim.toDateString()
+    const todayStr = todayStart.toDateString()
+    const yesterdayStr = yesterdayStart.toDateString()
+
+    alreadyClaimedToday = lastClaimStr === todayStr
 
     // Racha rota si no reclamó ayer ni hoy
-    if (lastClaimDateOnly.getTime() !== todayStart.getTime() && lastClaimDateOnly.getTime() !== yesterdayStart.getTime()) {
+    if (lastClaimStr !== todayStr && lastClaimStr !== yesterdayStr) {
       streakBroken = true
       streak = 0
     }
 
-    // CORRECCIÓN: Se puede reclamar si ya pasó el siguiente día calendario
-    canClaimNow = lastClaimDateOnly.getTime() < todayStart.getTime()
+    // Se puede reclamar solo si la fecha del último reclamo es menor a hoy
+    canClaimNow = lastClaimStr < todayStr
   } else {
     streakBroken = true
     streak = 0
