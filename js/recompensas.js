@@ -29,10 +29,19 @@ document.addEventListener('DOMContentLoaded', async () => {
   bugsSpan.textContent = bugs
   streakSpan.textContent = streak
 
-  /* ================= FECHAS ================= */
-  const todayStr = new Date().toISOString().slice(0, 10) // "YYYY-MM-DD"
-  const yesterdayStr = new Date(Date.now() - 864e5).toISOString().slice(0, 10) // 864e5 = 24h en ms
+  /* ================= FUNCIONES DE FECHAS ================= */
+  // Devuelve "YYYY-MM-DD" según la hora local
+  function getLocalDateString(date = new Date()) {
+    const y = date.getFullYear()
+    const m = String(date.getMonth() + 1).padStart(2, '0')
+    const d = String(date.getDate()).padStart(2, '0')
+    return `${y}-${m}-${d}`
+  }
 
+  const todayStr = getLocalDateString()
+  const yesterdayStr = getLocalDateString(new Date(Date.now() - 864e5)) // 24h en ms
+
+  /* ================= LÓGICA DE RACHAS ================= */
   let alreadyClaimedToday = false
   let streakBroken = false
   let canClaimNow = false
@@ -47,7 +56,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       streak = 0
     }
 
-    // Se puede reclamar solo si lastClaim es anterior a hoy
+    // Solo se puede reclamar si last_claim es anterior a hoy
     canClaimNow = lastClaimStr < todayStr
   } else {
     streakBroken = true
@@ -97,7 +106,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           .update({
             bugs: bugs + reward,
             streak_days: activeDay,
-            last_claim: todayStr // GUARDA SOLO LA FECHA
+            last_claim: todayStr // Guardamos solo la fecha, consistente en hora local
           })
           .eq('id', user.id)
 
@@ -130,7 +139,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           .update({
             bugs: bugs + reward,
             streak_days: 1,
-            last_claim: todayStr // SOLO FECHA
+            last_claim: todayStr // Guardamos solo la fecha
           })
           .eq('id', user.id)
 
