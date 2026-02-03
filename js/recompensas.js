@@ -30,32 +30,40 @@ document.addEventListener('DOMContentLoaded', async () => {
   streakSpan.textContent = streak
 
   const now = new Date()
-  const todayStr = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-  const yesterdayStr = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1)
+  const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+  const yesterdayStart = new Date(todayStart)
+  yesterdayStart.setDate(yesterdayStart.getDate() - 1)
 
-  /* ========== VALIDAR RACHA ========== */
+  /* ========== VALIDAR RACHA Y TIEMPO DE ESPERA ========== */
   let alreadyClaimedToday = false
   let streakBroken = false
+  let canClaimNow = false
 
   if (lastClaim) {
-    const lastClaimDate = new Date(lastClaim.getFullYear(), lastClaim.getMonth(), lastClaim.getDate())
-    alreadyClaimedToday = lastClaimDate.getTime() === todayStr.getTime()
+    // Fecha sin hora para comparación de racha
+    const lastClaimDateOnly = new Date(lastClaim.getFullYear(), lastClaim.getMonth(), lastClaim.getDate())
+    alreadyClaimedToday = lastClaimDateOnly.getTime() === todayStart.getTime()
 
     // Racha rota si no reclamó ayer ni hoy
-    if (lastClaimDate.getTime() !== todayStr.getTime() && lastClaimDate.getTime() !== yesterdayStr.getTime()) {
+    if (lastClaimDateOnly.getTime() !== todayStart.getTime() && lastClaimDateOnly.getTime() !== yesterdayStart.getTime()) {
       streakBroken = true
       streak = 0
     }
+
+    // Se puede reclamar si pasaron 24 horas exactas
+    const hoursSinceLast = now.getTime() - lastClaim.getTime()
+    canClaimNow = hoursSinceLast >= 24 * 60 * 60 * 1000
   } else {
     streakBroken = true
     streak = 0
+    canClaimNow = true
   }
 
   // Día activo hoy
   const activeDay = streakBroken ? 1 : (!alreadyClaimedToday ? streak + 1 : streak)
 
   // Día que estará "Disponible mañana"
-  let nextDayForTomorrow = (!streakBroken && alreadyClaimedToday) ? activeDay + 1 : null
+  let nextDayForTomorrow = (!streakBroken && alreadyClaimedToday && !canClaimNow) ? activeDay + 1 : null
   if (nextDayForTomorrow && nextDayForTomorrow > 10) nextDayForTomorrow = 1
 
   /* ================= RECOMPENSAS ================= */
@@ -80,7 +88,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     /* ===== HOY DISPONIBLE ===== */
-    else if (!streakBroken && r.day_number === activeDay && !alreadyClaimedToday) {
+    else if (!streakBroken && r.day_number === activeDay && (!alreadyClaimedToday || canClaimNow)) {
       card.classList.add('unlocked', 'clickable')
       card.innerHTML = `
         <div class="reward-day">Día ${r.day_number}</div>
@@ -93,7 +101,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           .update({
             bugs: bugs + reward,
             streak_days: activeDay,
-            last_claim: todayStr.toISOString()
+            last_claim: now.toISOString()
           })
           .eq('id', user.id)
 
@@ -104,7 +112,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     /* ===== DISPONIBLE MAÑANA ===== */
-    else if (!streakBroken && alreadyClaimedToday && r.day_number === nextDayForTomorrow) {
+    else if (!streakBroken && alreadyClaimedToday && !canClaimNow && r.day_number === nextDayForTomorrow) {
       card.classList.add('locked', 'next')
       card.innerHTML = `
         <div class="reward-day">Día ${r.day_number}</div>
@@ -126,7 +134,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           .update({
             bugs: bugs + reward,
             streak_days: 1,
-            last_claim: todayStr.toISOString()
+            last_claim: now.toISOString()
           })
           .eq('id', user.id)
 
