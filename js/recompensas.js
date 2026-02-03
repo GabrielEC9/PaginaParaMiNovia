@@ -41,21 +41,17 @@ document.addEventListener('DOMContentLoaded', async () => {
   const yesterdayStr = getLocalDateString(new Date(Date.now() - 864e5)) // 24h en ms
 
   /* ================= LÓGICA DE RACHAS ================= */
-  let alreadyClaimedToday = false
+  let alreadyClaimedToday = lastClaimStr === todayStr
+  let claimedYesterday = lastClaimStr === yesterdayStr
   let streakBroken = false
   let canClaimNow = false
 
   if (lastClaimStr) {
-    alreadyClaimedToday = lastClaimStr === todayStr
-    const claimedYesterday = lastClaimStr === yesterdayStr
-
     // Racha rota si no reclamó ayer ni hoy
     if (!alreadyClaimedToday && !claimedYesterday) {
       streakBroken = true
       streak = 0
     }
-
-    // Solo se puede reclamar si last_claim es anterior a hoy
     canClaimNow = lastClaimStr < todayStr
   } else {
     streakBroken = true
@@ -64,9 +60,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // Día activo hoy
-  const activeDay = !alreadyClaimedToday
-    ? (streakBroken ? 1 : streak + 1)
-    : streak // si ya reclamó hoy, activeDay = streak actual
+  const activeDay = streakBroken ? 1 : (!alreadyClaimedToday ? streak + 1 : streak)
 
   // Día que estará "Disponible mañana"
   let nextDayForTomorrow = (!streakBroken && alreadyClaimedToday && !canClaimNow) ? activeDay + 1 : null
@@ -85,7 +79,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     card.classList.add('reward-card')
 
     /* ===== YA RECLAMADO ===== */
-    if (!streakBroken && r.day_number < activeDay) {
+    // TODOS los días menores al activo se marcan como reclamados
+    if (r.day_number < activeDay) {
       card.classList.add('claimed')
       card.innerHTML = `
         <div class="reward-day">Día ${r.day_number}</div>
@@ -126,9 +121,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       `
     }
 
-    /* ===== PRIMER DÍA SI SE ROMPE LA RACHA ===== */
-    // ❌ CAMBIO CLAVE: agregamos !alreadyClaimedToday para no permitir reclamar de nuevo hoy
-    else if (streakBroken && r.day_number === 1 && !alreadyClaimedToday) {
+    /* ===== PRIMER DÍA SI SE ROMPE LA RACHA Y NO SE HA RECLAMADO ===== */
+    else if (streakBroken && r.day_number === 1 && !lastClaimStr) {
       card.classList.add('unlocked', 'clickable')
       card.innerHTML = `
         <div class="reward-day">Día 1</div>
