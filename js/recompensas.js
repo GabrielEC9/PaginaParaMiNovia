@@ -50,9 +50,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       streak = 0
     }
 
-    // Se puede reclamar si pasaron 24 horas exactas
-    const hoursSinceLast = now.getTime() - lastClaim.getTime()
-    canClaimNow = hoursSinceLast >= 24 * 60 * 60 * 1000
+    // CORRECCIÓN: Se puede reclamar si ya pasó el siguiente día calendario
+    canClaimNow = lastClaimDateOnly.getTime() < todayStart.getTime()
   } else {
     streakBroken = true
     streak = 0
