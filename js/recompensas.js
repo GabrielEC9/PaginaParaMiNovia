@@ -29,32 +29,37 @@ document.addEventListener('DOMContentLoaded', async () => {
   bugsSpan.textContent = bugs
   streakSpan.textContent = streak
 
+  /* ================= FECHAS LOCALES ================= */
   const now = new Date()
-  const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-  const yesterdayStart = new Date(todayStart)
-  yesterdayStart.setDate(yesterdayStart.getDate() - 1)
+  const todayLocal = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+  const yesterdayLocal = new Date(todayLocal)
+  yesterdayLocal.setDate(yesterdayLocal.getDate() - 1)
 
-  /* ========== VALIDAR RACHA Y TIEMPO DE ESPERA ========== */
   let alreadyClaimedToday = false
   let streakBroken = false
   let canClaimNow = false
 
   if (lastClaim) {
-    // COMPARACIÓN SOLO POR FECHA (ignora hora)
-    const lastClaimStr = lastClaim.toDateString()
-    const todayStr = todayStart.toDateString()
-    const yesterdayStr = yesterdayStart.toDateString()
+    // Convierte lastClaim a hora local
+    const lastClaimLocal = new Date(lastClaim)
+    const lastClaimDate = new Date(
+      lastClaimLocal.getFullYear(),
+      lastClaimLocal.getMonth(),
+      lastClaimLocal.getDate()
+    )
 
-    alreadyClaimedToday = lastClaimStr === todayStr
+    // Comparaciones locales
+    alreadyClaimedToday = lastClaimDate.getTime() === todayLocal.getTime()
 
     // Racha rota si no reclamó ayer ni hoy
-    if (lastClaimStr !== todayStr && lastClaimStr !== yesterdayStr) {
+    const claimedYesterday = lastClaimDate.getTime() === yesterdayLocal.getTime()
+    if (!alreadyClaimedToday && !claimedYesterday) {
       streakBroken = true
       streak = 0
     }
 
-    // Se puede reclamar solo si la fecha del último reclamo es menor a hoy
-    canClaimNow = lastClaimStr < todayStr
+    // Se puede reclamar solo si lastClaim es anterior a hoy (hora local)
+    canClaimNow = lastClaimDate.getTime() < todayLocal.getTime()
   } else {
     streakBroken = true
     streak = 0
