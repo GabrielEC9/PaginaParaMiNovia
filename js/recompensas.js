@@ -46,13 +46,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     streak = 0
   }
 
-  // Día activo para desbloquear hoy
-  const activeDay = streakBroken ? 1 : (alreadyClaimedToday ? streak : streak + 1)
-
-  // Día que estará "Disponible mañana"
-  let nextDayForTomorrow = alreadyClaimedToday ? streak + 1 : null
-  if (nextDayForTomorrow > 10) nextDayForTomorrow = 1
-
+  // Día activo hoy (para desbloqueo)
+  const activeDay = streakBroken ? 1 : (!alreadyClaimedToday ? streak + 1 : streak)
+  
   /* ================= RECOMPENSAS ================= */
   const { data: rewards } = await supabase
     .from('daily_rewards')
@@ -98,8 +94,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       })
     }
 
-    /* ===== MAÑANA ===== */
-    else if (!streakBroken && alreadyClaimedToday && r.day_number === nextDayForTomorrow) {
+    /* ===== PRÓXIMO DÍA (Mañana) ===== */
+    else if (!streakBroken && alreadyClaimedToday && r.day_number === activeDay + 1) {
       card.classList.add('locked', 'next')
       card.innerHTML = `
         <div class="reward-day">Día ${r.day_number}</div>
