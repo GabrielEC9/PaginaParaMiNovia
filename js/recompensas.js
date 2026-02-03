@@ -30,11 +30,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   streakSpan.textContent = streak
 
   /* ================= FECHAS ================= */
-  const today = new Date()
-  const todayStr = today.toISOString().slice(0, 10) // "YYYY-MM-DD"
-  const yesterday = new Date(today)
-  yesterday.setDate(yesterday.getDate() - 1)
-  const yesterdayStr = yesterday.toISOString().slice(0, 10)
+  const todayStr = new Date().toISOString().slice(0, 10) // "YYYY-MM-DD"
+  const yesterdayStr = new Date(Date.now() - 864e5).toISOString().slice(0, 10) // 864e5 = 24h en ms
 
   let alreadyClaimedToday = false
   let streakBroken = false
@@ -100,7 +97,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           .update({
             bugs: bugs + reward,
             streak_days: activeDay,
-            last_claim: todayStr // Guardamos solo la fecha, no la hora
+            last_claim: todayStr // GUARDA SOLO LA FECHA
           })
           .eq('id', user.id)
 
@@ -133,7 +130,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           .update({
             bugs: bugs + reward,
             streak_days: 1,
-            last_claim: todayStr // Guardamos solo la fecha
+            last_claim: todayStr // SOLO FECHA
           })
           .eq('id', user.id)
 
