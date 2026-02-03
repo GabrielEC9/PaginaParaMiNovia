@@ -24,42 +24,34 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   let bugs = profile.bugs ?? 0
   let streak = profile.streak_days ?? 0
-  let lastClaim = profile.last_claim ? new Date(profile.last_claim) : null
+  const lastClaimStr = profile.last_claim ?? null // "YYYY-MM-DD"
 
   bugsSpan.textContent = bugs
   streakSpan.textContent = streak
 
-  /* ================= FECHAS LOCALES ================= */
-  const now = new Date()
-  const todayLocal = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-  const yesterdayLocal = new Date(todayLocal)
-  yesterdayLocal.setDate(yesterdayLocal.getDate() - 1)
+  /* ================= FECHAS ================= */
+  const today = new Date()
+  const todayStr = today.toISOString().slice(0, 10) // "YYYY-MM-DD"
+  const yesterday = new Date(today)
+  yesterday.setDate(yesterday.getDate() - 1)
+  const yesterdayStr = yesterday.toISOString().slice(0, 10)
 
   let alreadyClaimedToday = false
   let streakBroken = false
   let canClaimNow = false
 
-  if (lastClaim) {
-    // Convierte lastClaim a hora local
-    const lastClaimLocal = new Date(lastClaim)
-    const lastClaimDate = new Date(
-      lastClaimLocal.getFullYear(),
-      lastClaimLocal.getMonth(),
-      lastClaimLocal.getDate()
-    )
-
-    // Comparaciones locales
-    alreadyClaimedToday = lastClaimDate.getTime() === todayLocal.getTime()
+  if (lastClaimStr) {
+    alreadyClaimedToday = lastClaimStr === todayStr
+    const claimedYesterday = lastClaimStr === yesterdayStr
 
     // Racha rota si no reclamó ayer ni hoy
-    const claimedYesterday = lastClaimDate.getTime() === yesterdayLocal.getTime()
     if (!alreadyClaimedToday && !claimedYesterday) {
       streakBroken = true
       streak = 0
     }
 
-    // Se puede reclamar solo si lastClaim es anterior a hoy (hora local)
-    canClaimNow = lastClaimDate.getTime() < todayLocal.getTime()
+    // Se puede reclamar solo si lastClaim es anterior a hoy
+    canClaimNow = lastClaimStr < todayStr
   } else {
     streakBroken = true
     streak = 0
@@ -108,7 +100,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           .update({
             bugs: bugs + reward,
             streak_days: activeDay,
-            last_claim: now.toISOString()
+            last_claim: todayStr // Guardamos solo la fecha, no la hora
           })
           .eq('id', user.id)
 
@@ -141,7 +133,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           .update({
             bugs: bugs + reward,
             streak_days: 1,
-            last_claim: now.toISOString()
+            last_claim: todayStr // Guardamos solo la fecha
           })
           .eq('id', user.id)
 
