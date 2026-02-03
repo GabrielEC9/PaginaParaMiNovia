@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   yesterday.setDate(yesterday.getDate() - 1)
   const yesterdayStr = yesterday.toISOString().split('T')[0]
 
-  /* ========== VALIDAR RACHA ========== */
   const alreadyClaimedToday = lastClaim === todayStr
   let streakBroken = false
 
@@ -46,9 +45,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     streak = 0
   }
 
-  // Día activo hoy (para desbloqueo)
+  // Calcular la fecha real del siguiente día
+  let nextClaimDate = lastClaim ? new Date(lastClaim) : today
+  nextClaimDate.setDate(nextClaimDate.getDate() + 1)
+  const nextClaimStr = nextClaimDate.toISOString().split('T')[0]
+
+  // Día activo para desbloqueo
   const activeDay = streakBroken ? 1 : (!alreadyClaimedToday ? streak + 1 : streak)
-  
+
   /* ================= RECOMPENSAS ================= */
   const { data: rewards } = await supabase
     .from('daily_rewards')
@@ -94,12 +98,18 @@ document.addEventListener('DOMContentLoaded', async () => {
       })
     }
 
-    /* ===== PRÓXIMO DÍA (Mañana) ===== */
+    /* ===== PRÓXIMO DÍA ===== */
     else if (!streakBroken && alreadyClaimedToday && r.day_number === activeDay + 1) {
       card.classList.add('locked', 'next')
       card.innerHTML = `
         <div class="reward-day">Día ${r.day_number}</div>
-        <div class="reward-bugs">Disponible mañana</div>
+        <div class="reward-bugs">
+          ${
+            todayStr < nextClaimStr
+              ? 'Disponible mañana'
+              : '¡Disponible para reclamar!'
+          }
+        </div>
       `
     }
 
