@@ -1782,9 +1782,7 @@ body.store-page {
   pointer-events: none;
 }
 
-/* ====================================================
-   PANEL CARRITO (DESKTOP)
-==================================================== */
+/* ===================== PANEL CARRITO ===================== */
 .cart-panel {
   position: fixed;
   top: 90px;
@@ -1794,7 +1792,7 @@ body.store-page {
   background: #fff;
   border-radius: 0 22px 22px 0;
   box-shadow: 6px 0 20px rgba(0,0,0,0.25);
-  padding: 18px;
+  padding: 18px 18px 80px; /* 👈 espacio abajo */
   z-index: 999;
   transition: left 0.35s ease;
   display: flex;
@@ -1803,12 +1801,6 @@ body.store-page {
 
 .cart-panel.open {
   left: 0;
-}
-
-.cart-panel h3 {
-  text-align: center;
-  color: #ff1f1f;
-  margin-bottom: 10px;
 }
 
 .cart-items {
@@ -1823,11 +1815,14 @@ body.store-page {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: rgba(255, 31, 31, 0.08);
+  padding: 10px;
+  border-radius: 10px;
   font-size: 0.85rem;
   font-weight: 700;
 }
 
-.cart-row button {
+.cart-row .remove {
   background: none;
   border: none;
   color: #ff1f1f;
@@ -1835,22 +1830,23 @@ body.store-page {
   cursor: pointer;
 }
 
-.cart-total {
-  text-align: center;
-  font-weight: 900;
-  margin: 10px 0;
+/* footer fijo dentro del panel */
+.cart-footer {
+  position: sticky;
+  bottom: 0;
+  background: #fff;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
 }
 
-/* ====================================================
-   BOTÓN FLOTANTE CARRITO
-==================================================== */
+/* ===================== BOTÓN FLOTANTE ===================== */
 .cart-toggle {
   position: fixed;
   top: 120px;
-  left: 12px;
-  z-index: 1000;
-  width: 44px;
-  height: 44px;
+  left: 16px;
+  z-index: 1100;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   border: none;
   cursor: pointer;
@@ -1861,38 +1857,84 @@ body.store-page {
     #ff1f1f;
 
   color: #fff;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   box-shadow: 0 6px 15px rgba(0,0,0,0.3);
 }
+
 
 /* ====================================================
    RESPONSIVE
 ==================================================== */
+
+/* ---------- TABLET ---------- */
 @media (max-width: 900px) {
+
   .store-page .rewards-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-}
 
-@media (max-width: 600px) {
-
-  .store-page .rewards-grid {
-    grid-template-columns: 1fr;
+  .store-page .store-card {
+    padding: 12px;
   }
 
   .store-page .store-img {
-    height: auto;
-    max-height: 70vh;
+    height: 200px;
   }
 
-  /* carrito en móvil como panel inferior */
+}
+
+/* ---------- MÓVIL ---------- */
+@media (max-width: 600px) {
+
+  /* GRID */
+  .store-page .rewards-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* CARD */
+  .store-page .store-card {
+    max-width: 100%;
+    padding: 14px;
+  }
+
+  /* IMAGEN */
+  .store-page .store-img {
+    height: auto;
+    max-height: 65vh;
+  }
+
+  /* TEXTO */
+  .store-page .store-card h3 {
+    font-size: 1rem;
+  }
+
+  .store-page .store-card p {
+    font-size: 0.85rem;
+  }
+
+  /* CONTROLES CANTIDAD */
+  .qty-controls {
+    gap: 14px;
+  }
+
+  .qty-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 1.2rem;
+  }
+
+  /* =====================
+     CARRITO → PANEL INFERIOR
+  ===================== */
   .cart-panel {
     top: auto;
     bottom: -100%;
     left: 0;
     width: 100%;
-    height: 70vh;
+    height: 75vh;
     border-radius: 22px 22px 0 0;
+    padding-bottom: 90px; /* 👈 espacio para botón */
     transition: bottom 0.35s ease;
   }
 
@@ -1900,9 +1942,11 @@ body.store-page {
     bottom: 0;
   }
 
+  /* BOTÓN FLOTANTE */
   .cart-toggle {
     top: auto;
     bottom: 16px;
     left: 16px;
   }
+
 }

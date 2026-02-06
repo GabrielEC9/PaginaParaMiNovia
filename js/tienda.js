@@ -14,22 +14,22 @@ document.addEventListener('DOMContentLoaded', async () => {
   /* ===============================
      ELEMENTOS
   =============================== */
-  const storeGrid = document.getElementById('store-items')
-  const bugsSpan = document.getElementById('user-bugs')
-  const messageBox = document.getElementById('store-message')
+  const storeGrid     = document.getElementById('store-items')
+  const bugsSpan      = document.getElementById('user-bugs')
+  const messageBox    = document.getElementById('store-message')
 
-  const cartPanel = document.getElementById('cart-panel')
-  const cartItemsBox = document.getElementById('cart-items')
+  const cartPanel     = document.getElementById('cart-panel')
+  const cartItemsBox  = document.getElementById('cart-items')
   const cartTotalSpan = document.getElementById('cart-total')
-  const cartBuyBtn = document.getElementById('buy-btn')
-  const cartToggle = document.getElementById('cart-toggle')
+  const cartBuyBtn    = document.getElementById('buy-btn')
+  const cartToggle    = document.getElementById('cart-toggle')
 
   cartToggle.onclick = () => {
     cartPanel.classList.toggle('open')
   }
 
   let userBugs = 0
-  const cart = new Map()
+  const cart = new Map() // itemId -> { item, quantity }
 
   /* ===============================
      PERFIL
@@ -73,15 +73,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         <button class="qty-btn plus">+</button>
       </div>
 
-      <button class="btn-ladybug small">
-        <span>Agregar</span>
-      </button>
+      <button class="btn-ladybug small"><span>Agregar</span></button>
     `
 
     const qtyValue = card.querySelector('.qty-value')
     const minusBtn = card.querySelector('.minus')
-    const plusBtn = card.querySelector('.plus')
-    const addBtn = card.querySelector('.btn-ladybug')
+    const plusBtn  = card.querySelector('.plus')
+    const addBtn   = card.querySelector('.btn-ladybug')
 
     plusBtn.onclick = () => {
       if (quantity < 9) {
@@ -105,6 +103,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       cart.set(item.id, { item, quantity })
       renderCart()
+
+      card.classList.add('selected')
       cartPanel.classList.add('open')
     }
 
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const row = document.createElement('div')
       row.className = 'cart-row'
       row.innerHTML = `
-        <span>${item.name} x${quantity}</span>
+        <span>${item.name} × ${quantity}</span>
         <span>🐞 ${cost}</span>
         <button class="remove">✕</button>
       `
@@ -158,7 +158,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       return
     }
 
-    await supabase.from('profiles')
+    await supabase
+      .from('profiles')
       .update({ bugs: userBugs - total })
       .eq('id', user.id)
 
@@ -167,6 +168,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     cart.clear()
     renderCart()
+
+    document.querySelectorAll('.store-card').forEach(c => {
+      c.classList.remove('selected')
+      c.querySelector('.qty-value').textContent = '0'
+    })
+
     showMessage('¡Compra registrada! 🛍️🐞')
   }
 
