@@ -219,7 +219,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       c.querySelector('.qty-value').textContent = '0'
     })
 
-    showMessage('💌 Pedido recibido con amor. Pronto será entregado 🛍️🐞')
+    cartPanel.classList.remove('open')
+
+  showMessage('Pedido recibido')
+
   }
 
   /* ===============================
