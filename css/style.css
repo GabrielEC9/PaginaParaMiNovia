@@ -1541,7 +1541,9 @@ body.rewards-page {
 
 
 
-/* ==================================================== TIENDA.HTML ==================================================== */
+/* ====================================================
+   TIENDA.HTML
+==================================================== */
 
 body.store-page {
   min-height: 100vh;
@@ -1643,7 +1645,7 @@ body.store-page {
 }
 
 /* ====================================================
-   CARD DE PRODUCTO (ESTILO ÁLBUM)
+   CARD DE PRODUCTO
 ==================================================== */
 .store-page .store-card {
   display: flex;
@@ -1664,7 +1666,6 @@ body.store-page {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* capa blanca interna */
 .store-page .store-card::before {
   content: "";
   position: absolute;
@@ -1674,7 +1675,6 @@ body.store-page {
   z-index: 0;
 }
 
-/* contenido arriba */
 .store-page .store-card > * {
   position: relative;
   z-index: 1;
@@ -1683,6 +1683,11 @@ body.store-page {
 .store-page .store-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 14px 32px rgba(0,0,0,0.25);
+}
+
+.store-page .store-card.selected {
+  outline: 3px solid #ff1f1f;
+  transform: scale(1.03);
 }
 
 /* ====================================================
@@ -1713,7 +1718,6 @@ body.store-page {
   color: #444;
 }
 
-/* precio */
 .store-page .store-card .precio {
   margin-top: 8px;
   font-size: 0.9rem;
@@ -1725,15 +1729,43 @@ body.store-page {
 }
 
 /* ====================================================
-   SELECCIONADO
+   CONTROLES DE CANTIDAD
 ==================================================== */
-.store-page .store-card.selected {
-  outline: 3px solid #ff1f1f;
-  transform: scale(1.03);
+.qty-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 0 6px;
+}
+
+.qty-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid #ff1f1f;
+  background: #fff;
+  color: #ff1f1f;
+  font-weight: 900;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.qty-btn:hover {
+  background: #ff1f1f;
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.qty-value {
+  min-width: 22px;
+  text-align: center;
+  font-weight: 900;
 }
 
 /* ====================================================
-   BOTÓN COMPRAR
+   BOTONES
 ==================================================== */
 .store-page .btn-ladybug.small {
   margin-top: 12px;
@@ -1752,51 +1784,33 @@ body.store-page {
   pointer-events: none;
 }
 
-
 /* ====================================================
-   RESPONSIVE (IGUAL AL ÁLBUM)
+   PANEL CARRITO (DESKTOP)
 ==================================================== */
-@media (max-width: 900px) {
-  .store-page .rewards-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .store-page .rewards-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .store-page .store-img {
-    height: auto;
-    max-height: 80vh;
-  }
-
-  .store-page .store-card {
-    max-width: 100%;
-  }
-}
-
-/* ===================== PANEL CARRITO ===================== */
 .cart-panel {
   position: fixed;
   top: 90px;
-  right: 0;
+  left: -320px;
   width: 300px;
-  height: calc(100vh - 90px);
+  height: calc(100vh - 120px);
   background: #fff;
-  border-left: 4px solid #ff1f1f;
-  box-shadow: -10px 0 25px rgba(0,0,0,0.25);
-  padding: 16px;
-  z-index: 900;
+  border-radius: 0 22px 22px 0;
+  box-shadow: 6px 0 20px rgba(0,0,0,0.25);
+  padding: 18px;
+  z-index: 999;
+  transition: left 0.35s ease;
   display: flex;
   flex-direction: column;
 }
 
-.cart-panel h2 {
+.cart-panel.open {
+  left: 0;
+}
+
+.cart-panel h3 {
   text-align: center;
-  margin-bottom: 12px;
   color: #ff1f1f;
+  margin-bottom: 10px;
 }
 
 .cart-items {
@@ -1807,38 +1821,90 @@ body.store-page {
   gap: 10px;
 }
 
-.cart-item {
-  background: rgba(255, 31, 31, 0.08);
-  border-radius: 12px;
-  padding: 10px;
-  font-size: 0.85rem;
-}
-
-.cart-item-header {
+.cart-row {
   display: flex;
   justify-content: space-between;
-  font-weight: bold;
+  align-items: center;
+  font-size: 0.85rem;
+  font-weight: 700;
 }
 
-.cart-qty {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 6px;
-}
-
-.cart-qty button {
+.cart-row button {
+  background: none;
   border: none;
-  background: #000;
-  color: #fff;
-  border-radius: 6px;
-  width: 24px;
-  height: 24px;
+  color: #ff1f1f;
+  font-weight: 900;
   cursor: pointer;
 }
 
-.cart-footer {
-  border-top: 2px solid #ff1f1f;
-  padding-top: 10px;
+.cart-total {
   text-align: center;
+  font-weight: 900;
+  margin: 10px 0;
+}
+
+/* ====================================================
+   BOTÓN FLOTANTE CARRITO
+==================================================== */
+.cart-toggle {
+  position: fixed;
+  top: 120px;
+  left: 12px;
+  z-index: 1000;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 16px 16px,
+    radial-gradient(circle, #000 28%, transparent 29%) 8px 8px / 16px 16px,
+    #ff1f1f;
+
+  color: #fff;
+  font-size: 1.3rem;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+/* ====================================================
+   RESPONSIVE
+==================================================== */
+@media (max-width: 900px) {
+  .store-page .rewards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+
+  .store-page .rewards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .store-page .store-img {
+    height: auto;
+    max-height: 70vh;
+  }
+
+  /* carrito en móvil como panel inferior */
+  .cart-panel {
+    top: auto;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    height: 70vh;
+    border-radius: 22px 22px 0 0;
+    transition: bottom 0.35s ease;
+  }
+
+  .cart-panel.open {
+    bottom: 0;
+  }
+
+  .cart-toggle {
+    top: auto;
+    bottom: 16px;
+    left: 16px;
+  }
 }
