@@ -1,3 +1,5 @@
+import { supabase } from './supabaseClient.js'
+
 document.addEventListener('DOMContentLoaded', async () => {
   // Verificar sesión
   const { data: { user } } = await supabase.auth.getUser()
