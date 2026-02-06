@@ -1539,8 +1539,9 @@ body.rewards-page {
   align-items: center;
 }
 
-/* ==================================================== TIENDA.HTML ==================================================== */
 
+
+/* ==================================================== TIENDA.HTML ==================================================== */
 
 body.store-page {
   min-height: 100vh;
@@ -1575,12 +1576,11 @@ body.store-page {
    HEADER DE LA TIENDA
 ==================================================== */
 .store-page .rewards-header {
-  margin-top: 90px; /* deja espacio al menú */
+  margin-top: 90px;
   text-align: center;
   width: 100%;
 }
 
-/* reutilizamos título */
 .store-page .rewards-title {
   font-size: clamp(2.2rem, 6vw, 3rem);
   font-weight: 900;
@@ -1589,7 +1589,6 @@ body.store-page {
   margin: 0;
 }
 
-/* línea decorativa tipo mariquita */
 .store-page .rewards-header::after {
   content: "";
   display: block;
@@ -1628,4 +1627,140 @@ body.store-page {
   text-align: center;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
   font-weight: 800;
+}
+
+/* ====================================================
+   GRID DE PRODUCTOS
+==================================================== */
+.store-page .rewards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  justify-items: center;
+}
+
+/* ====================================================
+   CARD DE PRODUCTO (ESTILO ÁLBUM)
+==================================================== */
+.store-page .store-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px;
+  border-radius: 18px;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 40px 40px,
+    radial-gradient(circle, #000 28%, transparent 29%) 20px 20px / 40px 40px,
+    #ff1f1f;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* capa blanca interna */
+.store-page .store-card::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  background: #fff;
+  border-radius: 14px;
+  z-index: 0;
+}
+
+/* contenido arriba */
+.store-page .store-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.store-page .store-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 32px rgba(0,0,0,0.25);
+}
+
+/* ====================================================
+   IMAGEN PRODUCTO
+==================================================== */
+.store-page .store-img {
+  width: 100%;
+  height: 220px;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+/* ====================================================
+   TEXTO PRODUCTO
+==================================================== */
+.store-page .store-card h3 {
+  margin-top: 12px;
+  font-size: 1rem;
+  font-weight: 900;
+  text-align: center;
+  color: #000;
+}
+
+.store-page .store-card p {
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  text-align: center;
+  color: #444;
+}
+
+/* precio */
+.store-page .store-card .precio {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #ff1f1f;
+  background: rgba(255, 31, 31, 0.1);
+  padding: 4px 10px;
+  border-radius: 10px;
+}
+
+/* ====================================================
+   SELECCIONADO
+==================================================== */
+.store-page .store-card.selected {
+  outline: 3px solid #ff1f1f;
+  transform: scale(1.03);
+}
+
+/* ====================================================
+   BOTÓN COMPRAR
+==================================================== */
+.store-page .btn-ladybug.small {
+  margin-top: 12px;
+  font-size: 0.85rem;
+  padding: 8px 14px;
+}
+
+/* ====================================================
+   RESPONSIVE (IGUAL AL ÁLBUM)
+==================================================== */
+@media (max-width: 900px) {
+  .store-page .rewards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .store-page .rewards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .store-page .store-img {
+    height: auto;
+    max-height: 80vh;
+  }
+
+  .store-page .store-card {
+    max-width: 100%;
+  }
 }
