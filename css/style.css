@@ -1866,6 +1866,9 @@ body.store-page {
 /* ==========================
    MENSAJE GRANDE DE TIENDA
 ========================== */
+/* ====================================================
+   MENSAJE DE COMPRA — estilo mariquita
+==================================================== */
 .reward-message {
   position: fixed;
   top: 50%;
@@ -1874,30 +1877,32 @@ body.store-page {
   z-index: 3000;
   isolation: isolate;
 
-  background: #fff;
-  color: #111;
-  padding: 26px 34px;
-  border-radius: 22px;
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 70px 70px,
+    radial-gradient(circle, #000 28%, transparent 29%) 35px 35px / 70px 70px,
+    #ff1f1f;
 
-  font-size: 1.1rem;
-  font-weight: 700;
+  border-radius: 26px;
+  padding: 36px 44px;
+  color: #fff;
+  font-weight: bold;
   text-align: center;
+  font-size: 1.4rem;
+  line-height: 1.4;
 
-  box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+  box-shadow: 0 0 0 4px #000, 0 0 0 8px #ff1f1f,
+              0 18px 40px rgba(0,0,0,0.45);
 
   opacity: 0;
   pointer-events: none;
-
-  transition:
-    opacity 0.35s ease,
-    transform 0.35s ease;
+  transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
-/* visible */
 .reward-message.show {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
 }
+
 
 /* error */
 .reward-message.error {
@@ -1997,4 +2002,12 @@ body.store-page {
     padding-top: 80px;
 
 }
+
+  .reward-message {
+    width: calc(100% - 32px);
+    max-width: 340px;
+    padding: 26px 22px;
+    font-size: 1.1rem;
+    border-radius: 22px;
+  }
 }
