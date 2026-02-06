@@ -18,10 +18,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   const messageBox = document.getElementById('store-message')
 
   let userBugs = 0
-  let cart = new Map() // itemId -> cost
+
+  /**
+   * cart:
+   * itemId -> { item, quantity }
+   */
+  const cart = new Map()
 
   /* ===============================
-     OBTENER PERFIL
+     PERFIL
   =============================== */
   const { data: profile } = await supabase
     .from('profiles')
@@ -29,11 +34,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     .eq('id', user.id)
     .single()
 
-  userBugs = profile.bugs || 0
+  userBugs = profile?.bugs || 0
   bugsSpan.textContent = userBugs
 
   /* ===============================
-     OBTENER PRODUCTOS
+     PRODUCTOS
   =============================== */
   const { data: items } = await supabase
     .from('store_items')
@@ -42,9 +47,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     .order('cost', { ascending: true })
 
   /* ===============================
+     PANEL LATERAL CARRITO
+  =============================== */
+  const cartPanel = document.createElement('aside')
+  cartPanel.className = 'cart-panel'
+  cartPanel.innerHTML = `
+    <h3>🛒 Carrito</h3>
+    <div class="cart-items"></div>
+    <p class="cart-total">Total: <span>0</span> 🐞</p>
+    <button class="btn-ladybug cart-buy">Comprar 🛍️</button>
+  `
+  document.body.appendChild(cartPanel)
+
+  const cartItemsBox = cartPanel.querySelector('.cart-items')
+  const cartTotalSpan = cartPanel.querySelector('.cart-total span')
+  const cartBuyBtn = cartPanel.querySelector('.cart-buy')
+
+  /* ===============================
      RENDER PRODUCTOS
   =============================== */
   items.forEach(item => {
+    let quantity = 0
+
     const card = document.createElement('div')
     card.className = 'frase-card unlocked store-card'
 
@@ -53,50 +77,106 @@ document.addEventListener('DOMContentLoaded', async () => {
       <h3>${item.name}</h3>
       <p>${item.description || ''}</p>
       <p class="precio">🐞 ${item.cost}</p>
-      <button class="btn-ladybug small">Agregar</button>
+
+      <div class="qty-controls">
+        <button class="qty-btn minus">−</button>
+        <span class="qty-value">0</span>
+        <button class="qty-btn plus">+</button>
+      </div>
+
+      <button class="btn-ladybug small">
+        <span>Agregar</span>
+      </button>
     `
 
-    const btn = card.querySelector('button')
+    const qtyValue = card.querySelector('.qty-value')
+    const minusBtn = card.querySelector('.minus')
+    const plusBtn = card.querySelector('.plus')
+    const addBtn = card.querySelector('.btn-ladybug')
 
-    btn.addEventListener('click', () => {
-      if (cart.has(item.id)) {
-        cart.delete(item.id)
-        btn.textContent = 'Agregar'
-        card.classList.remove('selected')
-      } else {
-        cart.set(item.id, item.cost)
-        btn.textContent = 'Quitar'
-        card.classList.add('selected')
+    plusBtn.onclick = () => {
+      if (quantity < 9) {
+        quantity++
+        qtyValue.textContent = quantity
       }
-    })
+    }
+
+    minusBtn.onclick = () => {
+      if (quantity > 0) {
+        quantity--
+        qtyValue.textContent = quantity
+      }
+    }
+
+    addBtn.onclick = () => {
+      if (quantity === 0) {
+        showMessage('Selecciona al menos 1 🐞', true)
+        return
+      }
+
+      cart.set(item.id, {
+        item,
+        quantity
+      })
+
+      card.classList.add('selected')
+      renderCart()
+    }
 
     storeGrid.appendChild(card)
   })
 
   /* ===============================
-     BOTÓN COMPRAR
+     RENDER CARRITO
   =============================== */
-  const buyBtn = document.createElement('button')
-  buyBtn.className = 'btn-ladybug'
-  buyBtn.textContent = 'Comprar 🛍️'
-  storeGrid.after(buyBtn)
+  function renderCart() {
+    cartItemsBox.innerHTML = ''
 
-  buyBtn.addEventListener('click', async () => {
+    let total = 0
+
+    cart.forEach(({ item, quantity }, id) => {
+      const cost = item.cost * quantity
+      total += cost
+
+      const row = document.createElement('div')
+      row.className = 'cart-row'
+      row.innerHTML = `
+        <span>${item.name} x${quantity}</span>
+        <span>🐞 ${cost}</span>
+        <button class="remove">✕</button>
+      `
+
+      row.querySelector('.remove').onclick = () => {
+        cart.delete(id)
+        renderCart()
+        document
+          .querySelectorAll('.store-card')
+          .forEach(c => c.classList.remove('selected'))
+      }
+
+      cartItemsBox.appendChild(row)
+    })
+
+    cartTotalSpan.textContent = total
+  }
+
+  /* ===============================
+     COMPRAR
+  =============================== */
+  cartBuyBtn.onclick = async () => {
     if (cart.size === 0) {
-      showMessage('Selecciona al menos un objeto 🐞', true)
+      showMessage('El carrito está vacío 🛒', true)
       return
     }
 
-    const total = [...cart.values()].reduce((a, b) => a + b, 0)
+    const total = [...cart.values()]
+      .reduce((sum, e) => sum + e.item.cost * e.quantity, 0)
 
     if (total > userBugs) {
       showMessage('No tienes suficientes bugs 🐞', true)
       return
     }
 
-    /* ===============================
-       REGISTRAR COMPRA
-    =============================== */
     const { data: purchase, error } = await supabase
       .from('purchases')
       .insert({
@@ -108,21 +188,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (error) {
       console.error(error)
-      showMessage('Error al procesar la compra 🐞', true)
+      showMessage('Error al comprar 🐞', true)
       return
     }
 
-    const itemsToInsert = [...cart.keys()].map(id => ({
+    const itemsToInsert = [...cart.values()].map(e => ({
       purchase_id: purchase.id,
-      item_id: id,
-      quantity: 1
+      item_id: e.item.id,
+      quantity: e.quantity
     }))
 
     await supabase.from('purchase_items').insert(itemsToInsert)
 
-    /* ===============================
-       ACTUALIZAR BUGS
-    =============================== */
     userBugs -= total
     await supabase
       .from('profiles')
@@ -131,14 +208,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     bugsSpan.textContent = userBugs
     cart.clear()
+    renderCart()
 
     document.querySelectorAll('.store-card').forEach(c => {
       c.classList.remove('selected')
-      c.querySelector('button').textContent = 'Agregar'
+      c.querySelector('.qty-value').textContent = '0'
     })
 
-    showMessage('¡Compra realizada con éxito! 🐞🛍️')
-  })
+    showMessage('¡Compra registrada! 🐞🛍️')
+  }
 
   /* ===============================
      MENSAJES

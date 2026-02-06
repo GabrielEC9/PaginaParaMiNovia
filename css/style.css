@@ -1741,6 +1741,18 @@ body.store-page {
   padding: 8px 14px;
 }
 
+.btn-ladybug {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ladybug span {
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+}
+
+
 /* ====================================================
    RESPONSIVE (IGUAL AL ÁLBUM)
 ==================================================== */
@@ -1763,4 +1775,70 @@ body.store-page {
   .store-page .store-card {
     max-width: 100%;
   }
+}
+
+/* ===================== PANEL CARRITO ===================== */
+.cart-panel {
+  position: fixed;
+  top: 90px;
+  right: 0;
+  width: 300px;
+  height: calc(100vh - 90px);
+  background: #fff;
+  border-left: 4px solid #ff1f1f;
+  box-shadow: -10px 0 25px rgba(0,0,0,0.25);
+  padding: 16px;
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-panel h2 {
+  text-align: center;
+  margin-bottom: 12px;
+  color: #ff1f1f;
+}
+
+.cart-items {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cart-item {
+  background: rgba(255, 31, 31, 0.08);
+  border-radius: 12px;
+  padding: 10px;
+  font-size: 0.85rem;
+}
+
+.cart-item-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+.cart-qty {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.cart-qty button {
+  border: none;
+  background: #000;
+  color: #fff;
+  border-radius: 6px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.cart-footer {
+  border-top: 2px solid #ff1f1f;
+  padding-top: 10px;
+  text-align: center;
 }
