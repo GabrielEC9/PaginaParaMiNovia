@@ -4,26 +4,70 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tienda</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/components.css" />
-</head>
-<body class="ladybug-bg">
-  <nav class="navbar">
-    <h1>🛍️ Tienda</h1>
-    <a href="index.html" class="btn-ladybug small">🏠 Volver</a>
-  </nav>
 
-  <main class="store-container">
-    <div class="user-info">
-      <p>Mis bugs: <span id="user-bugs">0</span> 🐞</p>
+  <!-- CSS GLOBAL -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+
+<body class="ladybug-bg store-page">
+
+  <!-- FONDO DEL CIELO -->
+  <div class="sky-background">
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
+    <div class="cloud cloud4"></div>
+    <div class="cloud cloud5"></div>
+    <div class="cloud cloud6"></div>
+    <div class="cloud cloud7"></div>
+    <div class="cloud cloud8"></div>
+  </div>
+
+  <!-- MENÚ GLOBAL (NO SE TOCA) -->
+  <header class="main-menu">
+    <div class="menu-left">
+      <span class="menu-title">Menu</span>
     </div>
 
-    <section id="store-items" class="store-grid"></section>
-  </main>
+    <div class="menu-right">
+      <button id="menu-toggle" class="menu-toggle">☰</button>
+      <button id="logout-btn" class="btn-logout">Salir</button>
+    </div>
 
-  <script src="js/supabaseClient.js" defer></script>
-  <script src="js/auth.js" defer></script>
-  <script src="js/ui.js" defer></script>
-  <script src="js/tienda.js" defer></script>
+    <nav id="menu-links"></nav>
+  </header>
+
+  <!-- WRAPPER PRINCIPAL -->
+  <div class="rewards-wrapper">
+
+    <!-- TÍTULO TIENDA -->
+    <section class="rewards-header">
+      <h1 class="rewards-title">🛍️ Tienda</h1>
+    </section>
+
+    <!-- CONTENIDO TIENDA -->
+    <main class="rewards-container">
+
+      <div class="user-stats">
+        <p>Mis bugs: <span id="user-bugs">0</span> 🐞</p>
+      </div>
+
+      <section id="store-items" class="rewards-grid"></section>
+
+      <!-- Mensajes de compra / error -->
+      <div id="store-message" class="reward-message"></div>
+
+    </main>
+
+  </div>
+
+  <!-- JS (MÓDULOS, RUTAS ABSOLUTAS) -->
+  <script type="module" src="/js/supabaseClient.js"></script>
+  <script type="module" src="/js/auth.js"></script>
+  <script type="module" src="/js/ui.js"></script>
+  <script type="module" src="/js/tienda.js"></script>
+  <script type="module" src="/js/menu.js"></script>
+
 </body>
 </html>
