@@ -1863,12 +1863,45 @@ body.store-page {
 }
 
 
+/* ==========================
+   MENSAJE GRANDE DE TIENDA
+========================== */
 .reward-message {
   position: fixed;
-  top: 90px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  z-index: 2000;
+  transform: translate(-50%, -50%) scale(0.9);
+  z-index: 3000;
+
+  background: #fff;
+  color: #111;
+  padding: 26px 34px;
+  border-radius: 22px;
+
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-align: center;
+
+  box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
+}
+
+/* visible */
+.reward-message.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* error */
+.reward-message.error {
+  background: #ffeded;
+  color: #b00000;
 }
 
 
