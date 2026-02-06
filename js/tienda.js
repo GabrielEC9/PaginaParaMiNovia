@@ -142,28 +142,73 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   /* ===============================
-     COMPRAR
+     COMPRAR (LÓGICA CORRECTA)
   =============================== */
   cartBuyBtn.onclick = async () => {
+
     if (cart.size === 0) {
       showMessage('El carrito está vacío 🛒', true)
       return
     }
 
-    const total = [...cart.values()]
-      .reduce((s, e) => s + e.item.cost * e.quantity, 0)
+    const itemsArray = [...cart.values()]
+
+    const total = itemsArray.reduce(
+      (sum, e) => sum + e.item.cost * e.quantity,
+      0
+    )
 
     if (total > userBugs) {
       showMessage('No tienes suficientes bugs 🐞', true)
       return
     }
 
-    await supabase
+    /* 1️⃣ REGISTRAR COMPRA */
+    const { data: purchase, error: purchaseError } = await supabase
+      .from('purchases')
+      .insert({
+        user_id: user.id,
+        total_bugs_spent: total
+      })
+      .select()
+      .single()
+
+    if (purchaseError) {
+      showMessage('Error al registrar la compra ❌', true)
+      return
+    }
+
+    /* 2️⃣ REGISTRAR ITEMS */
+    const purchaseItems = itemsArray.map(e => ({
+      purchase_id: purchase.id,
+      item_id: e.item.id,
+      quantity: e.quantity
+    }))
+
+    const { error: itemsError } = await supabase
+      .from('purchase_items')
+      .insert(purchaseItems)
+
+    if (itemsError) {
+      showMessage('Error al guardar los productos ❌', true)
+      return
+    }
+
+    /* 3️⃣ ACTUALIZAR BUGS */
+    const newBugs = userBugs - total
+
+    const { error: bugsError } = await supabase
       .from('profiles')
-      .update({ bugs: userBugs - total })
+      .update({ bugs: newBugs })
       .eq('id', user.id)
 
-    userBugs -= total
+    if (bugsError) {
+      showMessage('Error al actualizar bugs ❌', true)
+      return
+    }
+
+    /* 4️⃣ LIMPIAR UI */
+    userBugs = newBugs
     bugsSpan.textContent = userBugs
 
     cart.clear()
@@ -174,7 +219,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       c.querySelector('.qty-value').textContent = '0'
     })
 
-    showMessage('¡Compra registrada! 🛍️🐞')
+    showMessage('💌 Pedido recibido con amor. Pronto será entregado 🛍️🐞')
   }
 
   /* ===============================
@@ -184,6 +229,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     messageBox.textContent = text
     messageBox.classList.toggle('error', error)
     messageBox.classList.add('show')
-    setTimeout(() => messageBox.classList.remove('show'), 3000)
+    setTimeout(() => messageBox.classList.remove('show'), 3500)
   }
 })
