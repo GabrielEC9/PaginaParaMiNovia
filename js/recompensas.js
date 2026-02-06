@@ -65,6 +65,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     canClaimNow = true
   }
 
+  // 🔄 Si la racha se rompió, sincronizar BD
+if (streakBroken && profile.streak_days !== 0) {
+  await supabase
+    .from('profiles')
+    .update({
+      streak_days: 0
+    })
+    .eq('id', user.id)
+
+  streakSpan.textContent = 0
+}
+
+
   // Día activo hoy
   const activeDay = streakBroken
     ? 1
