@@ -1842,7 +1842,8 @@ body.store-page {
 /* ===================== BOTÓN FLOTANTE ===================== */
 .cart-toggle {
   position: fixed;
-  top: 120px;
+  top: 100px; /* debajo del header */
+  bottom: auto;
   left: 16px;
   z-index: 1100;
   width: 48px;
@@ -1948,5 +1949,8 @@ body.store-page {
     bottom: 16px;
     left: 16px;
   }
+
+    .store-page {
+    padding-top: 80px;
 
 }
