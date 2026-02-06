@@ -1872,6 +1872,7 @@ body.store-page {
   left: 50%;
   transform: translate(-50%, -50%) scale(0.9);
   z-index: 3000;
+  isolation: isolate;
 
   background: #fff;
   color: #111;
