@@ -12,7 +12,7 @@
 
 <body class="ladybug-bg store-page">
 
-  <!-- FONDO DEL CIELO -->
+  <!-- FONDO -->
   <div class="sky-background">
     <div class="cloud cloud1"></div>
     <div class="cloud cloud2"></div>
@@ -24,7 +24,7 @@
     <div class="cloud cloud8"></div>
   </div>
 
-  <!-- MENÚ GLOBAL (NO SE TOCA) -->
+  <!-- MENÚ -->
   <header class="main-menu">
     <div class="menu-left">
       <span class="menu-title">Menu</span>
@@ -38,15 +38,13 @@
     <nav id="menu-links"></nav>
   </header>
 
-  <!-- WRAPPER PRINCIPAL -->
+  <!-- CONTENIDO -->
   <div class="rewards-wrapper">
 
-    <!-- TÍTULO TIENDA -->
     <section class="rewards-header">
       <h1 class="rewards-title">🛍️ Tienda</h1>
     </section>
 
-    <!-- CONTENIDO TIENDA -->
     <main class="rewards-container">
 
       <div class="user-stats">
@@ -55,29 +53,29 @@
 
       <section id="store-items" class="rewards-grid"></section>
 
-      <!-- Mensajes de compra / error -->
       <div id="store-message" class="reward-message"></div>
 
     </main>
-
   </div>
 
   <!-- PANEL CARRITO -->
-<aside id="cart-panel" class="cart-panel">
-  <h2>🛒 Carrito</h2>
+  <aside id="cart-panel" class="cart-panel">
+    <h2>🛒 Carrito</h2>
 
-  <div id="cart-items" class="cart-items"></div>
+    <div id="cart-items" class="cart-items"></div>
 
-  <div class="cart-footer">
-    <p>Total: 🐞 <span id="cart-total">0</span></p>
-    <button id="buy-btn" class="btn-ladybug">
-      <span>Comprar 🛍️</span>
-    </button>
-  </div>
-</aside>
+    <div class="cart-footer">
+      <p>Total: 🐞 <span id="cart-total">0</span></p>
+      <button id="buy-btn" class="btn-ladybug">
+        <span>Comprar 🛍️</span>
+      </button>
+    </div>
+  </aside>
 
+  <!-- BOTÓN FLOTANTE -->
+  <button id="cart-toggle" class="cart-toggle">🛒</button>
 
-  <!-- JS (MÓDULOS, RUTAS ABSOLUTAS) -->
+  <!-- JS -->
   <script type="module" src="/js/supabaseClient.js"></script>
   <script type="module" src="/js/auth.js"></script>
   <script type="module" src="/js/ui.js"></script>

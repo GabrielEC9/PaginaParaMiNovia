@@ -1,6 +1,7 @@
 import { supabase } from './supabaseClient.js'
 
 document.addEventListener('DOMContentLoaded', async () => {
+
   /* ===============================
      AUTH
   =============================== */
@@ -17,12 +18,17 @@ document.addEventListener('DOMContentLoaded', async () => {
   const bugsSpan = document.getElementById('user-bugs')
   const messageBox = document.getElementById('store-message')
 
-  let userBugs = 0
+  const cartPanel = document.getElementById('cart-panel')
+  const cartItemsBox = document.getElementById('cart-items')
+  const cartTotalSpan = document.getElementById('cart-total')
+  const cartBuyBtn = document.getElementById('buy-btn')
+  const cartToggle = document.getElementById('cart-toggle')
 
-  /**
-   * cart:
-   * itemId -> { item, quantity }
-   */
+  cartToggle.onclick = () => {
+    cartPanel.classList.toggle('open')
+  }
+
+  let userBugs = 0
   const cart = new Map()
 
   /* ===============================
@@ -45,23 +51,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     .select('*')
     .eq('available', true)
     .order('cost', { ascending: true })
-
-  /* ===============================
-     PANEL LATERAL CARRITO
-  =============================== */
-  const cartPanel = document.createElement('aside')
-  cartPanel.className = 'cart-panel'
-  cartPanel.innerHTML = `
-    <h3>🛒 Carrito</h3>
-    <div class="cart-items"></div>
-    <p class="cart-total">Total: <span>0</span> 🐞</p>
-    <button class="btn-ladybug cart-buy">Comprar 🛍️</button>
-  `
-  document.body.appendChild(cartPanel)
-
-  const cartItemsBox = cartPanel.querySelector('.cart-items')
-  const cartTotalSpan = cartPanel.querySelector('.cart-total span')
-  const cartBuyBtn = cartPanel.querySelector('.cart-buy')
 
   /* ===============================
      RENDER PRODUCTOS
@@ -114,13 +103,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         return
       }
 
-      cart.set(item.id, {
-        item,
-        quantity
-      })
-
-      card.classList.add('selected')
+      cart.set(item.id, { item, quantity })
       renderCart()
+      cartPanel.classList.add('open')
     }
 
     storeGrid.appendChild(card)
@@ -131,7 +116,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   =============================== */
   function renderCart() {
     cartItemsBox.innerHTML = ''
-
     let total = 0
 
     cart.forEach(({ item, quantity }, id) => {
@@ -149,9 +133,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       row.querySelector('.remove').onclick = () => {
         cart.delete(id)
         renderCart()
-        document
-          .querySelectorAll('.store-card')
-          .forEach(c => c.classList.remove('selected'))
       }
 
       cartItemsBox.appendChild(row)
@@ -170,52 +151,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     const total = [...cart.values()]
-      .reduce((sum, e) => sum + e.item.cost * e.quantity, 0)
+      .reduce((s, e) => s + e.item.cost * e.quantity, 0)
 
     if (total > userBugs) {
       showMessage('No tienes suficientes bugs 🐞', true)
       return
     }
 
-    const { data: purchase, error } = await supabase
-      .from('purchases')
-      .insert({
-        user_id: user.id,
-        total_bugs_spent: total
-      })
-      .select()
-      .single()
-
-    if (error) {
-      console.error(error)
-      showMessage('Error al comprar 🐞', true)
-      return
-    }
-
-    const itemsToInsert = [...cart.values()].map(e => ({
-      purchase_id: purchase.id,
-      item_id: e.item.id,
-      quantity: e.quantity
-    }))
-
-    await supabase.from('purchase_items').insert(itemsToInsert)
-
-    userBugs -= total
-    await supabase
-      .from('profiles')
-      .update({ bugs: userBugs })
+    await supabase.from('profiles')
+      .update({ bugs: userBugs - total })
       .eq('id', user.id)
 
+    userBugs -= total
     bugsSpan.textContent = userBugs
+
     cart.clear()
     renderCart()
-
-    document.querySelectorAll('.store-card').forEach(c => {
-      c.classList.remove('selected')
-      c.querySelector('.qty-value').textContent = '0'
-    })
-
-    showMessage('¡Compra registrada! 🐞🛍️')
+    showMessage('¡Compra registrada! 🛍️🐞')
   }
 
   /* ===============================
@@ -225,9 +177,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     messageBox.textContent = text
     messageBox.classList.toggle('error', error)
     messageBox.classList.add('show')
-
-    setTimeout(() => {
-      messageBox.classList.remove('show')
-    }, 3000)
+    setTimeout(() => messageBox.classList.remove('show'), 3000)
   }
 })
