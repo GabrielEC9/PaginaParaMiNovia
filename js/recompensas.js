@@ -24,12 +24,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   let bugs = profile.bugs ?? 0
   let streak = profile.streak_days ?? 0
-  const lastClaimStr = profile.last_claim ?? null // "YYYY-MM-DD"
+  const lastClaimStr = profile.last_claim ?? null
 
   bugsSpan.textContent = bugs
   streakSpan.textContent = streak
 
-  /* ================= FUNCIONES DE FECHAS ================= */
+  /* ================= FECHAS ================= */
   function getLocalDateString(date = new Date()) {
     const y = date.getFullYear()
     const m = String(date.getMonth() + 1).padStart(2, '0')
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const todayStr = getLocalDateString()
   const yesterdayStr = getLocalDateString(new Date(Date.now() - 864e5))
 
-  /* ================= LÓGICA DE RACHAS (CORREGIDA) ================= */
+  /* ================= LÓGICA DE RACHA ================= */
   const alreadyClaimedToday = lastClaimStr === todayStr
   const claimedYesterday = lastClaimStr === yesterdayStr
 
@@ -48,52 +48,46 @@ document.addEventListener('DOMContentLoaded', async () => {
   let canClaimNow = false
 
   if (!lastClaimStr) {
-    // Nunca ha reclamado
     streakBroken = true
     streak = 0
     canClaimNow = true
   } else if (alreadyClaimedToday) {
-    // Ya reclamó hoy
     canClaimNow = false
   } else if (claimedYesterday) {
-    // Continúa racha
     canClaimNow = true
   } else {
-    // Se rompió la racha
     streakBroken = true
     streak = 0
     canClaimNow = true
   }
 
-  // 🔄 Si la racha se rompió, sincronizar BD
-if (streakBroken && profile.streak_days !== 0) {
-  await supabase
-    .from('profiles')
-    .update({
-      streak_days: 0
-    })
-    .eq('id', user.id)
+  // sincroniza BD si la racha se rompió
+  if (streakBroken && profile.streak_days !== 0) {
+    await supabase
+      .from('profiles')
+      .update({ streak_days: 0 })
+      .eq('id', user.id)
 
-  streakSpan.textContent = 0
-}
+    streakSpan.textContent = 0
+  }
 
+  /* ================= DÍAS ================= */
 
-  // Día activo hoy
+  // día REAL de racha (puede ser 11, 12, 13…)
+  const realDay = alreadyClaimedToday
+    ? streak
+    : streak + 1
+
+  // día VISUAL (1–10)
   const activeDay = streakBroken
     ? 1
-    : alreadyClaimedToday
-      ? streak
-      : streak + 1
+    : ((realDay - 1) % 10) + 1
 
-  // Día que estará "Disponible mañana"
+  // disponible mañana
   let nextDayForTomorrow =
     (!streakBroken && alreadyClaimedToday && !canClaimNow)
-      ? activeDay + 1
+      ? ((activeDay % 10) + 1)
       : null
-
-  if (nextDayForTomorrow && nextDayForTomorrow > 10) {
-    nextDayForTomorrow = 1
-  }
 
   /* ================= RECOMPENSAS ================= */
   const { data: rewards } = await supabase
@@ -125,11 +119,12 @@ if (streakBroken && profile.streak_days !== 0) {
       `
       card.addEventListener('click', async () => {
         const reward = r.reward_bugs
+
         await supabase
           .from('profiles')
           .update({
             bugs: bugs + reward,
-            streak_days: activeDay,
+            streak_days: realDay, // 👈 AQUÍ está la clave
             last_claim: todayStr
           })
           .eq('id', user.id)
@@ -149,7 +144,7 @@ if (streakBroken && profile.streak_days !== 0) {
       `
     }
 
-    /* ===== DÍA 1 CUANDO SE ROMPE LA RACHA ===== */
+    /* ===== DÍA 1 SI SE ROMPIÓ LA RACHA ===== */
     else if (streakBroken && r.day_number === 1 && canClaimNow) {
       card.classList.add('unlocked', 'clickable')
       card.innerHTML = `
