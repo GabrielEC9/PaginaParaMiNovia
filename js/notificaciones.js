@@ -1,43 +1,62 @@
+import { supabase } from './supabaseClient.js'
+
 document.addEventListener('DOMContentLoaded', async () => {
-  // Verificar sesión
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) {
-    window.location.href = 'login.html'
+    window.location.href = '/login.html'
     return
   }
 
-  const contenedor = document.getElementById('notificaciones-container')
+  // Obtener perfil
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('role, username')
+    .eq('id', user.id)
+    .single()
 
-  // Obtener notificaciones del usuario
-  const { data: notificaciones } = await supabase
-    .from('notificaciones_usuario')
-    .select('*')
-    .eq('id_usuario', user.id)
-    .order('fecha', { ascending: false })
-
-  if (!notificaciones || notificaciones.length === 0) {
-    contenedor.innerHTML = '<p>No tienes notificaciones 🐞</p>'
+  if (profile.role !== 'admin') {
+    window.location.href = '/'
     return
   }
 
-  notificaciones.forEach(noti => {
+  const contenedor = document.getElementById('notifications-list')
+  contenedor.innerHTML = ''
+
+  // Obtener compras con detalle
+  const { data: purchases, error } = await supabase
+    .from('purchases')
+    .select(`
+      id,
+      total_bugs_spent,
+      purchase_date,
+      profiles ( username ),
+      purchase_items (
+        quantity,
+        store_items ( name )
+      )
+    `)
+    .order('purchase_date', { ascending: false })
+
+  if (error || !purchases || purchases.length === 0) {
+    contenedor.innerHTML = '<p class="empty-text">No hay compras registradas 🐞</p>'
+    return
+  }
+
+  purchases.forEach(purchase => {
     const card = document.createElement('div')
-    card.classList.add('noti-card')
+    card.className = 'purchase-card'
+
+    const itemsHTML = purchase.purchase_items
+      .map(item => `• ${item.store_items.name} × ${item.quantity}`)
+      .join('<br>')
 
     card.innerHTML = `
-      <p>${noti.mensaje}</p>
-      <small>${new Date(noti.fecha).toLocaleString()}</small>
-      <button class="btn-ladybug" data-id="${noti.id}">Marcar como leída</button>
+      <h3>🛍️ ${purchase.profiles.username}</h3>
+      <p class="items">${itemsHTML}</p>
+      <p class="bugs">🐞 Bugs usados: <strong>${purchase.total_bugs_spent}</strong></p>
+      <small>${new Date(purchase.purchase_date).toLocaleString()}</small>
     `
-    contenedor.appendChild(card)
-  })
 
-  // Marcar como leída
-  contenedor.addEventListener('click', async e => {
-    if (e.target.tagName === 'BUTTON') {
-      const id = e.target.dataset.id
-      await supabase.from('notificaciones_usuario').delete().eq('id', id)
-      e.target.parentElement.remove()
-    }
+    contenedor.appendChild(card)
   })
 })

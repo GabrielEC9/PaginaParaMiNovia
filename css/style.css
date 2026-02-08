@@ -2011,3 +2011,54 @@ body.store-page {
     border-radius: 22px;
   }
 }
+
+/* ============================================================== NOTIFICACIONES.HTML ============================================================== */
+
+/* ====================================================
+   NOTIFICACIONES / HISTORIAL DE COMPRAS
+==================================================== */
+
+.notifications-list {
+  display: grid;
+  gap: 18px;
+}
+
+.purchase-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  animation: fadeIn 0.4s ease;
+}
+
+.purchase-card h3 {
+  margin-bottom: 10px;
+  color: #c70000;
+}
+
+.purchase-card .items {
+  margin: 10px 0;
+  line-height: 1.5;
+}
+
+.purchase-card .bugs {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.empty-text {
+  text-align: center;
+  opacity: 0.7;
+  font-size: 1.1rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
