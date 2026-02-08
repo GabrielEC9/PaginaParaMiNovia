@@ -8,14 +8,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     return
   }
 
-  // Obtener perfil
+  // Obtener perfil del admin
   const { data: profile, error: profileError } = await supabase
     .from('profiles')
-    .select('role, username')
+    .select('role')
     .eq('id', user.id)
     .single()
 
-  if (profileError || !profile || profile.role !== 'admin') {
+  if (profileError || profile.role !== 'admin') {
     window.location.href = '/'
     return
   }
@@ -23,14 +23,21 @@ document.addEventListener('DOMContentLoaded', async () => {
   const contenedor = document.getElementById('notifications-list')
   contenedor.innerHTML = ''
 
-  // Obtener compras con detalle (RELACIÓN CORRECTA)
+  /* ===============================
+     FILTRO: SOLO MES ACTUAL
+  =============================== */
+  const ahora = new Date()
+  const inicioMes = new Date(ahora.getFullYear(), ahora.getMonth(), 1)
+  const inicioMesSiguiente = new Date(ahora.getFullYear(), ahora.getMonth() + 1, 1)
+
+  // Obtener compras con PERFIL OBLIGATORIO
   const { data: purchases, error } = await supabase
     .from('purchases')
     .select(`
       id,
       total_bugs_spent,
       purchase_date,
-      buyer:profiles!purchases_user_id_fkey (
+      buyer:profiles!purchases_user_id_fkey!inner (
         username
       ),
       purchase_items (
@@ -40,10 +47,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         )
       )
     `)
+    .gte('purchase_date', inicioMes.toISOString())
+    .lt('purchase_date', inicioMesSiguiente.toISOString())
     .order('purchase_date', { ascending: false })
 
-  if (error || !purchases || purchases.length === 0) {
-    contenedor.innerHTML = '<p class="empty-text">No hay compras registradas 🐞</p>'
+  if (error) {
+    console.error(error)
+    contenedor.innerHTML = '<p class="empty-text">Error al cargar compras ❌</p>'
+    return
+  }
+
+  if (!purchases || purchases.length === 0) {
+    contenedor.innerHTML = '<p class="empty-text">No hay compras este mes 🐞</p>'
     return
   }
 
@@ -51,14 +66,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const card = document.createElement('div')
     card.className = 'purchase-card'
 
-    const username = purchase.buyer?.username ?? 'Usuario desconocido'
-
     const itemsHTML = purchase.purchase_items
       .map(item => `• ${item.store_items.name} × ${item.quantity}`)
       .join('<br>')
 
     card.innerHTML = `
-      <h3>🛍️ ${username}</h3>
+      <h3>🛍️ ${purchase.buyer.username}</h3>
       <p class="items">${itemsHTML}</p>
       <p class="bugs">🐞 Bugs usados: <strong>${purchase.total_bugs_spent}</strong></p>
       <small>${new Date(purchase.purchase_date).toLocaleString()}</small>
