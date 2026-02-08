@@ -12,7 +12,7 @@
 
 <body class="ladybug-bg admin-upload-page">
 
-  <!-- FONDO -->
+  <!-- FONDO CON NUBES -->
   <div class="sky-background">
     <div class="cloud cloud1"></div>
     <div class="cloud cloud2"></div>
@@ -41,7 +41,6 @@
   <!-- CONTENIDO -->
   <main class="admin-upload-container">
 
-    <!-- HEADER VISUAL -->
     <section class="admin-upload-header">
       <h1>✏️ Subir Contenido</h1>
       <a href="admin-panel.html" class="btn-ladybug small">Volver</a>
@@ -49,24 +48,36 @@
 
     <!-- FORMULARIO -->
     <form id="admin-form" class="form-card">
-      <label for="titulo">Título:</label>
-      <input type="text" id="titulo" name="titulo" required />
 
-      <label for="descripcion">Descripción:</label>
-      <textarea id="descripcion" name="descripcion" required></textarea>
+      <label for="tipo">Tipo de contenido</label>
+      <select id="tipo" required>
+        <option value="">Selecciona uno</option>
+        <option value="frase">Frase</option>
+        <option value="curiosidad">Curiosidad</option>
+      </select>
 
-      <label for="imagen">Imagen (URL):</label>
-      <input type="url" id="imagen" name="imagen" />
+      <label for="titulo">Título</label>
+      <input type="text" id="titulo" placeholder="Título (opcional)">
 
-      <button type="submit" class="btn-ladybug">Subir</button>
+      <label for="descripcion">Descripción</label>
+      <textarea
+        id="descripcion"
+        placeholder="Escribe el contenido aquí..."
+        required
+      ></textarea>
+
+      <button type="submit" class="btn-ladybug">
+        🐞 Subir contenido
+      </button>
     </form>
 
   </main>
 
-  <!-- SCRIPTS -->
-  <script src="js/supabaseClient.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/admin-forms.js"></script>
+  <!-- SCRIPTS (TODOS EN MODULE) -->
+  <script type="module" src="/js/supabaseClient.js"></script>
+  <script type="module" src="/js/auth.js"></script>
+  <script type="module" src="/js/admin-content.js"></script>
   <script type="module" src="/js/menu.js"></script>
+
 </body>
 </html>

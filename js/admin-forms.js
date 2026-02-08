@@ -1,55 +1,54 @@
+import { supabase } from './supabaseClient.js'
+
 document.addEventListener('DOMContentLoaded', async () => {
-  // Verificar sesión
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) {
     window.location.href = 'login.html'
     return
   }
 
-  // Verificar si el rol del usuario es admin
-  const { data: usuario } = await supabase
-    .from('usuarios')
-    .select('rol')
+  const { data: profile, error } = await supabase
+    .from('profiles')
+    .select('role')
     .eq('id', user.id)
-    .maybeSingle()
+    .single()
 
-  if (usuario?.rol !== 'admin') {
+  if (error || profile.role !== 'admin') {
     alert('Acceso restringido 🐞')
     window.location.href = 'index.html'
     return
   }
 
-  const selectTipo = document.getElementById('tipo-publicacion')
-  const inputTexto = document.getElementById('texto-publicacion')
-  const inputFecha = document.getElementById('fecha-publicacion')
-  const botonGuardar = document.getElementById('btn-guardar')
+  const form = document.getElementById('admin-form')
 
-  botonGuardar.addEventListener('click', async () => {
-    const tipo = selectTipo.value
-    const texto = inputTexto.value.trim()
-    const fecha = inputFecha.value
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault()
 
-    if (!tipo || !texto || !fecha) {
-      alert('Por favor completa todos los campos 🐞')
+    const tipo = document.getElementById('tipo').value
+    const titulo = document.getElementById('titulo').value.trim()
+    const texto = document.getElementById('descripcion').value.trim()
+
+    if (!tipo || !texto) {
+      alert('Completa los campos obligatorios 🐞')
       return
     }
 
-    // Insertar en la tabla de publicaciones
-    const { error } = await supabase.from('publicaciones').insert({
-      tipo: tipo,
-      texto: texto,
-      fecha: fecha,
-      id_admin: user.id
-    })
+    const { error } = await supabase
+      .from('content')
+      .insert({
+        admin_id: user.id,
+        content_type: tipo,
+        title: titulo || null,
+        text: texto
+      })
 
     if (error) {
       console.error(error)
-      alert('Error al guardar publicación 🐞')
+      alert('Error al subir contenido 🐞')
       return
     }
 
-    alert('Publicación guardada con éxito 🐞💌')
-    inputTexto.value = ''
-    inputFecha.value = ''
+    alert('Contenido subido correctamente 🐞💖')
+    form.reset()
   })
 })
