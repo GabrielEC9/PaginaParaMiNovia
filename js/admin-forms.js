@@ -1,12 +1,14 @@
 import { supabase } from './supabaseClient.js'
 
 document.addEventListener('DOMContentLoaded', async () => {
+  // Verificar sesión
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) {
     window.location.href = 'login.html'
     return
   }
 
+  // Verificar rol admin
   const { data: profile, error } = await supabase
     .from('profiles')
     .select('role')
@@ -24,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   form.addEventListener('submit', async (e) => {
     e.preventDefault()
 
-    const tipo = document.getElementById('tipo').value
+    const tipo = document.getElementById('tipo').value // minúscula, BD friendly
     const titulo = document.getElementById('titulo').value.trim()
     const texto = document.getElementById('descripcion').value.trim()
 
@@ -37,7 +39,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       .from('content')
       .insert({
         admin_id: user.id,
-        content_type: tipo,
+        content_type: tipo, // "frase" o "curiosidad"
         title: titulo || null,
         text: texto
       })
