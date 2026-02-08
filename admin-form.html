@@ -4,16 +4,50 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Subir Contenido - Ladybug</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/components.css" />
-</head>
-<body class="ladybug-bg">
-  <nav class="navbar">
-    <h1>✏️ Subir Contenido</h1>
-    <a href="admin-panel.html" class="btn-ladybug small">Volver</a>
-  </nav>
 
-  <main class="content">
+  <!-- CSS GLOBAL -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+
+<body class="ladybug-bg admin-upload-page">
+
+  <!-- FONDO -->
+  <div class="sky-background">
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
+    <div class="cloud cloud4"></div>
+    <div class="cloud cloud5"></div>
+    <div class="cloud cloud6"></div>
+    <div class="cloud cloud7"></div>
+    <div class="cloud cloud8"></div>
+  </div>
+
+  <!-- MENÚ GLOBAL -->
+  <header class="main-menu">
+    <div class="menu-left">
+      <span class="menu-title">Menu</span>
+    </div>
+
+    <div class="menu-right">
+      <button id="menu-toggle" class="menu-toggle">☰</button>
+      <button id="logout-btn" class="btn-logout">Salir</button>
+    </div>
+
+    <nav id="menu-links"></nav>
+  </header>
+
+  <!-- CONTENIDO -->
+  <main class="admin-upload-container">
+
+    <!-- HEADER VISUAL -->
+    <section class="admin-upload-header">
+      <h1>✏️ Subir Contenido</h1>
+      <a href="admin-panel.html" class="btn-ladybug small">Volver</a>
+    </section>
+
+    <!-- FORMULARIO -->
     <form id="admin-form" class="form-card">
       <label for="titulo">Título:</label>
       <input type="text" id="titulo" name="titulo" required />
@@ -26,10 +60,13 @@
 
       <button type="submit" class="btn-ladybug">Subir</button>
     </form>
+
   </main>
 
+  <!-- SCRIPTS -->
   <script src="js/supabaseClient.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/admin-forms.js"></script>
+  <script type="module" src="/js/menu.js"></script>
 </body>
 </html>
