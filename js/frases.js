@@ -42,42 +42,43 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const idsDesbloqueadas = desbloqueos.map(d => d.content_id)
 
-  // =========================
-  // 4. Renderizar tarjetas
-  // =========================
-  frases.forEach(frase => {
-    const card = document.createElement('div')
-    card.classList.add('frase-card')
+// =========================
+// 4. Renderizar tarjetas
+// =========================
+frases.forEach(frase => {
+  const card = document.createElement('div')
+  card.classList.add('frase-card')
 
-    const desbloqueada = idsDesbloqueadas.includes(frase.id)
+  const desbloqueada = idsDesbloqueadas.includes(frase.id)
 
-    if (desbloqueada) {
-      card.classList.add('frase-unlocked')
-      const h3 = document.createElement('h3')
-      h3.textContent = frase.title
-      const p = document.createElement('p')
-      p.textContent = frase.text
-      card.appendChild(h3)
-      card.appendChild(p)
-    } else {
-      card.classList.add('frase-locked')
-      const lockDiv = document.createElement('div')
-      lockDiv.classList.add('ladybug-lock')
-      const lockIcon = document.createElement('span')
-      lockIcon.classList.add('lock-icon')
-      lockIcon.textContent = '🔒'
-      lockDiv.appendChild(lockIcon)
-      card.appendChild(lockDiv)
+  if (desbloqueada) {
+    card.classList.add('frase-unlocked')
+    const h3 = document.createElement('h3')
+    h3.textContent = frase.title
+    const p = document.createElement('p')
+    p.textContent = frase.text
+    card.appendChild(h3)
+    card.appendChild(p)
+  } else {
+    card.classList.add('frase-locked')
+    const lockDiv = document.createElement('div')
+    lockDiv.classList.add('ladybug-lock')
+    const lockIcon = document.createElement('span')
+    lockIcon.classList.add('lock-icon')
+    lockIcon.textContent = '🔒'
+    lockDiv.appendChild(lockIcon)
+    card.appendChild(lockDiv)
 
-      const btn = document.createElement('button')
-      btn.classList.add('btn-unlock')
-      btn.dataset.id = frase.id
-      btn.textContent = 'Desbloquear'
-      card.appendChild(btn)
-    }
+    const btn = document.createElement('button')
+    btn.classList.add('btn-unlock')
+    btn.dataset.id = frase.id
+    btn.textContent = 'Desbloquear'
+    card.appendChild(btn)
+  }
 
-    contenedor.appendChild(card)
-  })
+  // 🔹 aquí cambiamos appendChild por prepend
+  contenedor.prepend(card)
+})
 
   // =========================
   // 5. Evento para desbloquear
