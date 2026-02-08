@@ -2218,6 +2218,40 @@ body.notifications-page {
 
 /* ============================================================== CONTENIDO.HTML ============================================================== */
 
+/* ====================================================
+   FIX: MENÚ SUPERIOR SIEMPRE ARRIBA
+==================================================== */
+
+/* Asegura que el body NO sea layout lateral */
+body.admin-upload-page {
+  display: block;
+}
+
+/* MENÚ FIJO ARRIBA */
+.main-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* EMPUJA EL CONTENIDO DEBAJO DEL MENÚ */
+.admin-upload-container {
+  margin-top: 120px; /* ajusta si tu menú es más alto */
+}
+
+/* POR SI EXISTE ALGÚN FLEX GLOBAL */
+.admin-upload-page main {
+  display: block;
+}
+
+/* EVITA QUE ALGO LO PONGA EN DOS COLUMNAS */
+.admin-upload-page {
+  flex-direction: column !important;
+}
+
+
 .admin-upload-container {
   display: flex;
   flex-direction: column;
