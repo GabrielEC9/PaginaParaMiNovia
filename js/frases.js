@@ -76,7 +76,7 @@ frases.forEach(frase => {
     card.appendChild(btn)
   }
 
-  // 🔹 aquí cambiamos appendChild por prepend
+  // ✅ Agregar al inicio en lugar de al final
   contenedor.prepend(card)
 })
 
