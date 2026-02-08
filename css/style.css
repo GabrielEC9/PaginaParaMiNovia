@@ -2014,51 +2014,203 @@ body.store-page {
 
 /* ============================================================== NOTIFICACIONES.HTML ============================================================== */
 
-/* ====================================================
-   NOTIFICACIONES / HISTORIAL DE COMPRAS
-==================================================== */
+body.notifications-page {
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  overflow-y: auto;
+}
 
-.notifications-list {
-  display: grid;
+/* ====================================================
+   MENÚ GLOBAL (FIJO ARRIBA)
+==================================================== */
+.notifications-page .main-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  z-index: 1000;
+}
+
+/* ====================================================
+   FONDO DECORATIVO
+==================================================== */
+.notifications-page .sky-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ====================================================
+   HEADER DE NOTIFICACIONES
+==================================================== */
+.notifications-page .rewards-header {
+  margin-top: 90px;
+  text-align: center;
+  width: 100%;
+}
+
+.notifications-page .rewards-title {
+  font-size: clamp(2rem, 6vw, 2.8rem);
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #ff1f1f;
+  margin: 0;
+}
+
+.notifications-page .rewards-header::after {
+  content: "";
+  display: block;
+  width: 110px;
+  height: 6px;
+  margin: 12px auto 0;
+  border-radius: 10px;
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 22px 22px,
+    radial-gradient(circle, #000 28%, transparent 29%) 11px 11px / 22px 22px,
+    #ff1f1f;
+}
+
+/* ====================================================
+   CONTENEDOR PRINCIPAL
+==================================================== */
+.notifications-page .rewards-container {
+  width: 100%;
+  padding: 40px 20px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+  animation: fadeInUp 0.6s ease;
+}
+
+/* ====================================================
+   LISTA DE NOTIFICACIONES / COMPRAS
+==================================================== */
+.notifications-page .notifications-list {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
   gap: 18px;
 }
 
-.purchase-card {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 18px;
-  padding: 20px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-  animation: fadeIn 0.4s ease;
+/* ====================================================
+   CARD DE COMPRA
+==================================================== */
+.notifications-page .purchase-card {
+  position: relative;
+  border-radius: 22px;
+  padding: 22px;
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 36px 36px,
+    radial-gradient(circle, #000 28%, transparent 29%) 18px 18px / 36px 36px,
+    #ff1f1f;
+
+  box-shadow: 0 12px 28px rgba(0,0,0,0.25);
 }
 
-.purchase-card h3 {
-  margin-bottom: 10px;
+.notifications-page .purchase-card::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  background: #fff;
+  border-radius: 16px;
+  z-index: 0;
+}
+
+.notifications-page .purchase-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ====================================================
+   TEXTO DE LA CARD
+==================================================== */
+.notifications-page .purchase-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+  font-weight: 900;
   color: #c70000;
 }
 
-.purchase-card .items {
-  margin: 10px 0;
+.notifications-page .purchase-card .items {
+  font-size: 0.9rem;
   line-height: 1.5;
+  color: #333;
+  margin-bottom: 10px;
 }
 
-.purchase-card .bugs {
+.notifications-page .purchase-card .bugs {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #ff1f1f;
+  background: rgba(255, 31, 31, 0.12);
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 12px;
+}
+
+.notifications-page .purchase-card small {
+  display: block;
   margin-top: 10px;
-  font-weight: bold;
+  font-size: 0.75rem;
+  opacity: 0.65;
 }
 
-.empty-text {
+/* ====================================================
+   MENSAJE VACÍO
+==================================================== */
+.notifications-page .empty-text,
+.notifications-page .loading-text {
   text-align: center;
-  opacity: 0.7;
   font-size: 1.1rem;
+  opacity: 0.7;
 }
 
-@keyframes fadeIn {
+/* ====================================================
+   ANIMACIÓN
+==================================================== */
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(14px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* ====================================================
+   RESPONSIVE
+==================================================== */
+
+/* ---------- TABLET ---------- */
+@media (max-width: 900px) {
+  .notifications-page .notifications-list {
+    max-width: 100%;
+  }
+}
+
+/* ---------- MÓVIL ---------- */
+@media (max-width: 600px) {
+
+  .notifications-page {
+    padding-top: 80px;
+  }
+
+  .notifications-page .purchase-card {
+    padding: 18px;
+  }
+
+  .notifications-page .purchase-card h3 {
+    font-size: 1rem;
+  }
+
+  .notifications-page .purchase-card .items {
+    font-size: 0.85rem;
   }
 }
