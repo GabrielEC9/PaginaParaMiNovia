@@ -2381,3 +2381,21 @@ body.admin-upload-page {
     inset: 8px;
   }
 }
+
+/* MENSAJE DE SUBIDA */
+.upload-message {
+  margin-top: 10px;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.upload-message.success {
+  color: #2ecc71;
+  opacity: 1;
+}
+
+.upload-message.error {
+  color: #e74c3c;
+  opacity: 1;
+}
