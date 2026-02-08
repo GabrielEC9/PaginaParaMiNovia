@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     .from('content')
     .select('id, title, text, created_at')
     .eq('content_type', 'frase')
-    .order('created_at', { ascending: true })
+    .order('created_at', { ascending: false })
 
   if (frasesError) {
     console.error('Error al cargar frases:', frasesError)
