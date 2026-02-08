@@ -1004,30 +1004,29 @@ body.frases-page {
 .phrases-grid {
   display: grid;
 
-  /* se ajusta automáticamente: mínimo 220px, máximo 1fr */
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  /* 4 tarjetas por fila si caben, mínimo 260px */
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 
   gap: 32px;
   max-width: 1600px;
-  margin: 0 auto;         /* centra todo el grid dentro del contenedor */
+  margin: 0 auto;         /* centra todo el grid */
   justify-items: center;   /* centra cada tarjeta dentro de su celda */
-  padding: 0 10px;         /* margen lateral */
+  padding: 0 10px;
 }
 
-/* Responsive: no necesitas media queries estrictas,
-   auto-fit se adapta solo. Pero si quieres, puedes ajustar gap */
-@media (max-width: 640px) {
+/* Responsive móvil */
+@media (max-width: 1024px) {
   .phrases-grid {
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   }
 }
 
-/* Opcional: limitar ancho de cada tarjeta */
-.frase-card {
-  width: 100%;
-  max-width: 280px;
+@media (max-width: 640px) {
+  .phrases-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
 }
-
 
 /* ====================================================
    TARJETA BASE
@@ -1035,18 +1034,23 @@ body.frases-page {
 .frase-card {
   background: #fff;
   border-radius: 22px;
-  padding: 22px;
-  min-height: 260px;
+  padding: 22px;       /* tamaño original */
+  min-height: 260px;   /* altura grande como antes */
+  width: 100%;
+  max-width: 280px;    /* evita que se estire demasiado */
+  
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
   box-shadow:
     0 10px 25px rgba(0,0,0,0.2),
     inset 0 0 0 2px rgba(0,0,0,0.12);
 
   transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
+
 
 /* ====================================================
    FRASE BLOQUEADA
