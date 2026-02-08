@@ -1002,28 +1002,32 @@ body.frases-page {
    GRID DE FRASES
 ==================================================== */
 .phrases-grid {
-  width: 100%;
-  max-width: 1600px; 
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+
+  /* se ajusta automáticamente: mínimo 220px, máximo 1fr */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+
   gap: 32px;
-  justify-content: center;
-  padding: 0 10px;
+  max-width: 1600px;
+  margin: 0 auto;         /* centra todo el grid dentro del contenedor */
+  justify-items: center;   /* centra cada tarjeta dentro de su celda */
+  padding: 0 10px;         /* margen lateral */
 }
 
-
-/* Responsive */
-@media (max-width: 1024px) {
-  .phrases-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
+/* Responsive: no necesitas media queries estrictas,
+   auto-fit se adapta solo. Pero si quieres, puedes ajustar gap */
 @media (max-width: 640px) {
   .phrases-grid {
-    grid-template-columns: 1fr;
+    gap: 20px;
   }
 }
+
+/* Opcional: limitar ancho de cada tarjeta */
+.frase-card {
+  width: 100%;
+  max-width: 280px;
+}
+
 
 /* ====================================================
    TARJETA BASE
