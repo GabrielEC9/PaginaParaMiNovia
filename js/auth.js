@@ -1,4 +1,4 @@
-// js/auth.js
+
 import { supabase } from './supabaseClient.js'
 
 let authResolved = false

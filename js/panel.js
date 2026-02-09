@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const user = sessionData.session.user
 
-    // Opcional: puedes validar rol si quieres hacer algo diferente para admin/user
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('role')

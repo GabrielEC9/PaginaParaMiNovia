@@ -1,9 +1,7 @@
 import { supabase } from './supabaseClient.js'
 
 document.addEventListener('DOMContentLoaded', async () => {
-  // =========================
   // 1. Verificar usuario
-  // =========================
   const { data: { user }, error: authError } = await supabase.auth.getUser()
   if (authError || !user) {
     window.location.href = 'login.html'
@@ -11,11 +9,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   const contenedor = document.getElementById('phrases-list')
-  contenedor.innerHTML = '' // limpiar contenedor
+  contenedor.innerHTML = '' 
 
-  // =========================
   // 2. Traer frases
-  // =========================
   const { data: frases, error: frasesError } = await supabase
     .from('content')
     .select('id, title, text, created_at')
@@ -26,14 +22,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     return
   }
 
-  // =========================
-  // Ordenar descendente: última frase primero
-  // =========================
+  // Ordenar descendente
   frases.sort((a, b) => Number(b.id) - Number(a.id))
 
-  // =========================
   // 3. Traer desbloqueos del usuario
-  // =========================
   const { data: desbloqueos, error: unlocksError } = await supabase
     .from('unlocks')
     .select('content_id')
@@ -46,9 +38,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const idsDesbloqueadas = desbloqueos.map(d => d.content_id)
 
-  // =========================
+
   // 4. Renderizar tarjetas
-  // =========================
   frases.forEach(frase => {
     const card = document.createElement('div')
     card.classList.add('frase-card')
@@ -80,13 +71,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       card.appendChild(btn)
     }
 
-    // ✅ Agregar al final (ya que el array ya está en orden descendente)
     contenedor.appendChild(card)
   })
 
-  // =========================
+
   // 5. Evento para desbloquear
-  // =========================
   contenedor.addEventListener('click', async (e) => {
     const btn = e.target.closest('.btn-unlock')
     if (!btn) return
@@ -105,9 +94,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       return
     }
 
-    // =========================
     // 6. Renderizar carta desbloqueada
-    // =========================
     const frase = frases.find(f => f.id == contentId)
     card.classList.remove('frase-locked')
     card.classList.add('frase-unlocked')

@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   let userBugs = 0
-  const cart = new Map() // itemId -> { item, quantity }
+  const cart = new Map() 
 
   /* ===============================
      PERFIL
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   /* ===============================
-     COMPRAR (LÓGICA CORRECTA)
+     COMPRAR 
   =============================== */
   cartBuyBtn.onclick = async () => {
 
@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       return
     }
 
-    /* 1️⃣ REGISTRAR COMPRA */
+    /* REGISTRAR COMPRA */
     const { data: purchase, error: purchaseError } = await supabase
       .from('purchases')
       .insert({
@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       return
     }
 
-    /* 2️⃣ REGISTRAR ITEMS */
+    /* REGISTRAR ITEMS */
     const purchaseItems = itemsArray.map(e => ({
       purchase_id: purchase.id,
       item_id: e.item.id,
@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       return
     }
 
-    /* 3️⃣ ACTUALIZAR BUGS */
+    /* ACTUALIZAR BUGS */
     const newBugs = userBugs - total
 
     const { error: bugsError } = await supabase
@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       return
     }
 
-    /* 4️⃣ LIMPIAR UI */
+    /* LIMPIAR UI */
     userBugs = newBugs
     bugsSpan.textContent = userBugs
 

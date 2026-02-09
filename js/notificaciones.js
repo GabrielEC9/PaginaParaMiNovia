@@ -1,18 +1,14 @@
 import { supabase } from './supabaseClient.js'
 
 document.addEventListener('DOMContentLoaded', async () => {
-  // ─────────────────────────────────────────────
-  // 1️⃣ Verificar sesión
-  // ─────────────────────────────────────────────
+  // Verificar sesión
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) {
     window.location.href = '/login.html'
     return
   }
 
-  // ─────────────────────────────────────────────
   // 2️⃣ Verificar que sea admin
-  // ─────────────────────────────────────────────
   const { data: profile, error: profileError } = await supabase
     .from('profiles')
     .select('role')
@@ -32,9 +28,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   contenedor.innerHTML = ''
 
-  // ─────────────────────────────────────────────
-  // 3️⃣ Filtro: mes actual
-  // ─────────────────────────────────────────────
+  // Filtro: mes actual
   const ahora = new Date()
   const inicioMes = new Date(ahora.getFullYear(), ahora.getMonth(), 1)
   const inicioMesSiguiente = new Date(
@@ -43,9 +37,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     1
   )
 
-  // ─────────────────────────────────────────────
-  // 4️⃣ Obtener TODAS las compras del mes
-  // ─────────────────────────────────────────────
+  //  Obtener TODAS las compras del mes
   const { data: purchases, error } = await supabase
     .from('purchases')
     .select(`
@@ -77,9 +69,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     return
   }
 
-  // ─────────────────────────────────────────────
-  // 5️⃣ Render
-  // ─────────────────────────────────────────────
+  //  Render
   purchases.forEach(purchase => {
     const card = document.createElement('div')
     card.className = 'purchase-card'

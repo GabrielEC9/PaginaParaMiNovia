@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     canClaimNow = true
   }
 
-  // sincroniza BD si la racha se rompió
+  // racha rota
   if (streakBroken && profile.streak_days !== 0) {
     await supabase
       .from('profiles')
@@ -73,12 +73,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   /* ================= DÍAS ================= */
 
-  // día REAL de racha (puede ser 11, 12, 13…)
+  // día REAL de racha 
   const realDay = alreadyClaimedToday
     ? streak
     : streak + 1
 
-  // día VISUAL (1–10)
+  // día VISUAL 
   const activeDay = streakBroken
     ? 1
     : ((realDay - 1) % 10) + 1
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           .from('profiles')
           .update({
             bugs: bugs + reward,
-            streak_days: realDay, // 👈 AQUÍ está la clave
+            streak_days: realDay, 
             last_claim: todayStr
           })
           .eq('id', user.id)

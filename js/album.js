@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const albumContainer = document.getElementById('album-grid')
   const message = document.getElementById('upload-message')
 
-  // 📸 Cargar álbum
+  // Cargar álbum
   async function cargarAlbum() {
     const { data: fotos, error } = await supabase
       .from('album')
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const div = document.createElement('div')
       div.classList.add('foto-card')
 
-      // 🗑️ Botón solo si es el dueño
+      //  Botón
       const botonBorrar =
         foto.user_id === user.id
           ? `
@@ -64,14 +64,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     activarBorrado()
   }
 
-  // 🗑️ Borrar foto
+  // Borrar foto
   function activarBorrado() {
     document.querySelectorAll('.btn-delete').forEach(btn => {
       btn.addEventListener('click', async () => {
 
         const ownerId = btn.dataset.owner
 
-        // 🚫 Seguridad extra (por si alguien fuerza el botón)
         if (ownerId !== user.id) {
           alert('❌ No puedes borrar esta foto porque no la subiste tú')
           return
@@ -83,7 +82,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const imageUrl = btn.dataset.url
         const filePath = imageUrl.split('/fotos/')[1]
 
-        // 1️⃣ Storage
+        // Storage
         const { error: storageError } = await supabase
           .storage
           .from('fotos')
@@ -94,7 +93,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           return
         }
 
-        // 2️⃣ Base de datos
+        //  Base de datos
         const { error: dbError } = await supabase
           .from('album')
           .delete()
@@ -105,13 +104,13 @@ document.addEventListener('DOMContentLoaded', async () => {
           return
         }
 
-        // 3️⃣ UI
+        //  UI
         btn.closest('.foto-card').remove()
       })
     })
   }
 
-  // ⬆️ Subir foto
+  //  Subir foto
   uploadForm.addEventListener('submit', async (e) => {
     e.preventDefault()
 

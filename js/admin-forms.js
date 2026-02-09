@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const form = document.getElementById('admin-form')
   
-  // Crear un div para mensajes si no existe
+  // mensajes no existentes
   let messageBox = document.getElementById('upload-message')
   if (!messageBox) {
     messageBox = document.createElement('div')
@@ -63,7 +63,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     messageBox.className = 'upload-message success'
     form.reset()
 
-    // Opcional: desaparece después de 3 segundos
     setTimeout(() => {
       messageBox.className = 'upload-message'
     }, 3000)
