@@ -74,7 +74,7 @@ body {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  overflow: hidden; /* 🔑 importante para que no aparezcan al salir */
+  overflow: hidden; 
 }
 
 
@@ -178,7 +178,7 @@ body {
 
 
 
-/* ===== NUBES (SIN CAMBIOS VISUALES) ===== */
+/* ===== NUBES ===== */
 .cloud::before,
 .cloud::after {
   content: "";
@@ -202,7 +202,7 @@ body {
     radial-gradient(circle, #000 28%, transparent 29%) 37px 37px / 75px 75px,
     #ff1f1f;
 
-  width: min(420px, 92vw); /* 🔁 responsive */
+  width: min(420px, 92vw); 
   padding: clamp(2rem, 5vw, 3rem) clamp(1.8rem, 4vw, 2.5rem);
 
   border-radius: 22px;
@@ -242,7 +242,6 @@ body {
 }
 
 /* ===== BOTÓN ===== */
-/* ===== BOTÓN LADYBUG ===== */
 .btn-ladybug {
   margin-top: 1.2rem;
   padding: clamp(0.6rem, 2.5vw, 0.75rem);
@@ -269,13 +268,12 @@ body {
   background:
     radial-gradient(circle, #000 18%, transparent 19%) 0 0 / 22px 22px,
     radial-gradient(circle, #000 18%, transparent 19%) 11px 11px / 22px 22px,
-    #ff2e2e; /* fondo rojo */
+    #ff2e2e; 
   opacity: 0;
   transition: opacity 0.3s;
   z-index: 0;
 }
 
-/* Hover: muestra puntos y efecto “levitar” */
 .btn-ladybug:hover::before {
   opacity: 1;
 }
@@ -285,7 +283,6 @@ body {
   box-shadow: 0 4px 15px rgba(255, 31, 31, 0.5);
 }
 
-/* Contenido del botón sobre el fondo */
 .btn-ladybug span {
   position: relative;
   z-index: 1;
@@ -319,8 +316,8 @@ body {
 
 .login-container h1,
 .login-container .login-subtitle {
-  position: relative; /* 👈 asegúrate que esté sobre el fondo */
-  z-index: 12;        /* opcional, solo para reforzar */
+  position: relative; 
+  z-index: 12;       
 }
 
 
@@ -435,7 +432,6 @@ body {
 
 @media (max-width: 900px) {
 
-  /* ocultar links en header */
 #menu-links {
   position: fixed;
   top: 70px;
@@ -494,7 +490,6 @@ body {
     order: 3;
   }
 
-  /* ocultar hamburguesa en desktop */
   .menu-toggle {
     display: none;
   }
@@ -503,7 +498,6 @@ body {
 
 /* ======================================================= PANEL.HTML ============================================================ */
 
-/* Quita el centrado global SOLO en panel */
 body.panel-page {
   display: block;
   min-height: 100vh;
@@ -553,7 +547,7 @@ body.panel-page {
   max-width: 900px;
 }
 
-/* ===== SECCIONES (para historia, capítulos, etc) ===== */
+/* ===== SECCIONES ===== */
 .panel-section {
   max-width: 1000px;
 }
@@ -573,11 +567,9 @@ body.panel-page {
   width: 100%;
   max-width: 820px;
 
-  /* Fondo pergamino con textura sutil */
   background: linear-gradient(180deg, #fff8e7 0%, #f4e1c1 100%);
   border-radius: 20px;
 
-  /* Sombra para relieve y profundidad */
   box-shadow:
     0 20px 40px rgba(0,0,0,0.3),
     inset 0 0 0 1px rgba(0,0,0,0.05);
@@ -679,7 +671,7 @@ body.panel-page {
   display: flex;
   flex-direction: column;
   gap: 30px;
-  align-items: center; /* Título y contenedor centrados */
+  align-items: center; 
 }
 
 /* TÍTULO DEL ÁLBUM */
@@ -687,7 +679,7 @@ body.panel-page {
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 20px;
-  text-align: center; /* centra el texto */
+  text-align: center;
   width: 100%;
   color: #ff1f1f;
   letter-spacing: 1px;
@@ -700,9 +692,8 @@ body.panel-page {
   border-radius: 22px;
   max-width: 500px;
   width: 100%;
-  margin: 0 auto; /* centra horizontalmente */
+  margin: 0 auto; 
 
-  /* borde mariquita */
   background:
     radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 75px 75px,
     radial-gradient(circle, #000 28%, transparent 29%) 37px 37px / 75px 75px,
@@ -806,7 +797,7 @@ body.panel-page {
 
 /* ============== GRID DE RECUERDOS =================== */
 .album-view {
-  width: 100%; /* ocupa todo el ancho disponible para el grid */
+  width: 100%; 
 }
 
 .album-view h2 {
@@ -820,7 +811,6 @@ body.panel-page {
   position: relative;
 }
 
-/* Línea decorativa tipo mariquita */
 .album-view h2::after {
   content: "";
   display: block;
@@ -847,7 +837,7 @@ body.panel-page {
 
 .foto-img-box {
   width: 100%;
-  height: 220px;            /* altura uniforme */
+  height: 220px;       
   display: flex;
   align-items: center;
   justify-content: center;
@@ -878,7 +868,6 @@ body.panel-page {
 }
 
 
-/* Capa interna blanca */
 .foto-card::before {
   content: "";
   position: absolute;
@@ -888,7 +877,6 @@ body.panel-page {
   z-index: 0;
 }
 
-/* Contenido por encima */
 .foto-card > * {
   position: relative;
   z-index: 1;
@@ -919,7 +907,7 @@ body.panel-page {
 
 /* =============================== BOTÓN BORRAR =============================== */
 .btn-delete {
-  margin-top: 10px;        /* espacio arriba */
+  margin-top: 10px;        
   padding: 6px 14px;
   background: #000;
   color: #ff1f1f;
@@ -927,10 +915,7 @@ body.panel-page {
   border-radius: 10px;
   cursor: pointer;
   font-size: 0.85rem;
-
   transition: all 0.3s ease;
-
-  /* 👇 centrado horizontal */
   align-self: center;  
 }
 
@@ -986,12 +971,10 @@ body.frases-page {
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
-  overflow-y: auto; /* permite scroll vertical */
+  overflow-y: auto; 
 }
 
-/* ====================================================
-   MENÚ GLOBAL (NO SE ROMPE)
-==================================================== */
+/* ===================== MENÚ GLOBAL ======================== */
 .frases-page .main-menu {
   position: fixed;
   top: 0;
@@ -1001,9 +984,7 @@ body.frases-page {
   z-index: 1000;
 }
 
-/* ====================================================
-   FONDO DEL CIELO (DECORATIVO)
-==================================================== */
+/* ========================= FONDO DEL CIELO ======================== */
 .sky-background {
   position: fixed;
   inset: 0;
@@ -1011,9 +992,7 @@ body.frases-page {
   pointer-events: none;
 }
 
-/* ====================================================
-   HEADER DEL TÍTULO
-==================================================== */
+/* ===================== HEADER DEL TÍTULO ============================ */
 .frases-header {
   margin-top: 90px;
   text-align: center;
@@ -1023,11 +1002,10 @@ body.frases-page {
   font-size: clamp(2.2rem, 6vw, 3rem);
   font-weight: 900;
   letter-spacing: 2px;
-  color: #ff1f1f; /* rojo mariquita */
+  color: #ff1f1f; 
   margin: 0;
 }
 
-/* Línea separadora tipo mariquita */
 .frases-header::after {
   content: "";
   display: block;
@@ -1042,9 +1020,7 @@ body.frases-page {
     #ff1f1f;
 }
 
-/* ====================================================
-   CONTENEDOR GENERAL
-==================================================== */
+/* ============================ CONTENEDOR GENERAL ========================== */
 .frases-container {
   width: 100%;
   padding: 40px 20px 60px;
@@ -1053,19 +1029,15 @@ body.frases-page {
   animation: fadeInUp 0.6s ease;
 }
 
-/* ====================================================
-   GRID DE FRASES
-==================================================== */
+/* ================================ GRID DE FRASES ================================ */
 .phrases-grid {
   display: grid;
-
-  /* 4 tarjetas por fila si caben, mínimo 260px */
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 
   gap: 32px;
   max-width: 1600px;
-  margin: 0 auto;         /* centra todo el grid */
-  justify-items: center;   /* centra cada tarjeta dentro de su celda */
+  margin: 0 auto;        
+  justify-items: center;   
   padding: 0 10px;
 }
 
@@ -1083,16 +1055,14 @@ body.frases-page {
   }
 }
 
-/* ====================================================
-   TARJETA BASE
-==================================================== */
+/* =================== TARJETA BASE ========================== */
 .frase-card {
   background: #fff;
   border-radius: 22px;
-  padding: 22px;       /* tamaño original */
-  min-height: 260px;   /* altura grande como antes */
+  padding: 22px;       
+  min-height: 260px;   
   width: 100%;
-  max-width: 280px;    /* evita que se estire demasiado */
+  max-width: 280px;    
   
   display: flex;
   flex-direction: column;
@@ -1107,9 +1077,7 @@ body.frases-page {
 }
 
 
-/* ====================================================
-   FRASE BLOQUEADA
-==================================================== */
+/* ============================= FRASE BLOQUEADA ====================== */
 .frase-card.frase-locked {
   padding: 0;
 }
@@ -1181,16 +1149,13 @@ body.frases-page {
   box-shadow: 0 10px 22px rgba(0,0,0,0.35);
 }
 
-/* ====================================================
-   FRASE DESBLOQUEADA
-==================================================== */
+/* ================================ FRASE DESBLOQUEADA =========================== */
 .frase-card.frase-unlocked {
   position: relative;
   border-radius: 22px;
   padding: 28px;
   min-height: 260px;
 
-  /* borde tipo mariquita */
   background:
     radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 22px 22px,
     radial-gradient(circle, #000 28%, transparent 29%) 11px 11px / 22px 22px,
@@ -1207,50 +1172,43 @@ body.frases-page {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* capa interna blanca para que solo se vea borde */
 .frase-card.frase-unlocked::before {
   content: "";
   position: absolute;
-  inset: 6px;            /* margen interno: ancho del borde */
-  background: #fff;       /* interior blanco */
-  border-radius: 16px;    /* un poquito más pequeño que la tarjeta */
+  inset: 6px;            
+  background: #fff;       
+  border-radius: 16px;   
   z-index: 0;
 }
 
-/* Contenido encima del ::before */
 .frase-card.frase-unlocked > * {
   position: relative;
   z-index: 1;
 }
 
-/* Hover: solo mueve tarjeta y sombra */
 .frase-card.frase-unlocked:hover {
   transform: translateY(-4px);
   box-shadow: 0 18px 40px rgba(0,0,0,0.35);
 }
 
-/* H1 dentro de la tarjeta */
 .frase-card.frase-unlocked h3 {
   font-size: 2rem;
   font-weight: 900;
-  color: #ff1f1f; /* rojo mariquita */
+  color: #ff1f1f; 
   margin-bottom: 12px;
   letter-spacing: 1.5px;
   text-align: center;
 }
 
-/* P dentro de la tarjeta */
 .frase-card.frase-unlocked p {
   font-size: 1.1rem;
-  color: #000; /* negro */
+  color: #000;
   line-height: 1.6;
   text-align: center;
 }
 
 
-/* ====================================================
-   ANIMACIÓN DE ENTRADA
-==================================================== */
+/* ========================== ANIMACIÓN DE ENTRADA ======================== */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -1279,10 +1237,6 @@ body.frases-page {
 
 /* ==================================================== RECOMPENSAS.HTML ==================================================== */
 
-/* ====================================================
-   REWARDS.HTML — ESTILOS AISLADOS
-==================================================== */
-
 body.rewards-page {
   min-height: 100vh;
   overflow-x: hidden;
@@ -1290,9 +1244,7 @@ body.rewards-page {
   overflow-y: auto;
 }
 
-/* ====================================================
-   MENÚ GLOBAL
-==================================================== */
+/* ======================= MENÚ GLOBAL ================ */
 .rewards-page .main-menu {
   position: fixed;
   top: 0;
@@ -1302,9 +1254,7 @@ body.rewards-page {
   z-index: 1000;
 }
 
-/* ====================================================
-   FONDO DECORATIVO
-==================================================== */
+/* =================== FONDO DECORATIVO =========================== */
 .rewards-page .sky-background {
   position: fixed;
   inset: 0;
@@ -1312,9 +1262,7 @@ body.rewards-page {
   pointer-events: none;
 }
 
-/* ====================================================
-   HEADER
-==================================================== */
+/* ====================== HEADER =========================== */
 .rewards-header {
   margin-top: 90px;
   text-align: center;
@@ -1342,9 +1290,7 @@ body.rewards-page {
     #ff1f1f;
 }
 
-/* ====================================================
-   CONTENEDOR PRINCIPAL
-==================================================== */
+/* ================== CONTENEDOR PRINCIPAL ========================= */
 .rewards-container {
   width: 100%;
   padding: 40px 20px 60px;
@@ -1355,9 +1301,7 @@ body.rewards-page {
   animation: fadeInUp 0.6s ease;
 }
 
-/* ====================================================
-   STATS USUARIO
-==================================================== */
+/* ====================  STATS USUARIO ========================= */
 .user-stats {
   background: #fff;
   padding: 22px;
@@ -1374,9 +1318,7 @@ body.rewards-page {
   font-size: 1.1rem;
 }
 
-/* ====================================================
-   GRID DE RECOMPENSAS
-==================================================== */
+/* ====================== GRID DE RECOMPENSAS ========================== */
 .rewards-grid {
   width: 100%;
   max-width: 1200px;
@@ -1387,9 +1329,7 @@ body.rewards-page {
   gap: 24px;
 }
 
-/* ====================================================
-   TARJETA BASE — BORDE MARIQUITA
-==================================================== */
+/* ============== TARJETA BASE ======================= */
 .reward-card {
   position: relative;
   min-height: 170px;
@@ -1407,7 +1347,6 @@ body.rewards-page {
   opacity: 0.35;
 }
 
-/* Fondo interior blanco */
 .reward-card::before {
   content: "";
   position: absolute;
@@ -1422,11 +1361,9 @@ body.rewards-page {
   z-index: 1;
 }
 
-/* ====================================================
-   ESTADOS
-==================================================== */
+/* =========== ESTADOS ============================ */
 
-/* 🔒 BLOQUEADO */
+/* BLOQUEADO */
 .reward-card.locked {
   cursor: not-allowed;
 }
@@ -1440,7 +1377,7 @@ body.rewards-page {
   z-index: 2;
 }
 
-/* ✅ DESBLOQUEADO */
+/* DESBLOQUEADO */
 .reward-card.unlocked {
   opacity: 1;
   cursor: pointer;
@@ -1455,7 +1392,7 @@ body.rewards-page {
   transform: scale(0.96);
 }
 
-/* ✔️ RECLAMADO */
+/* RECLAMADO */
 .reward-card.claimed {
   opacity: 0.7;
   background:
@@ -1475,7 +1412,6 @@ body.rewards-page {
   z-index: 2;
 }
 
-/* Animación al reclamar */
 .reward-card.claimed {
   animation: claim-pop 0.5s ease;
 }
@@ -1486,18 +1422,16 @@ body.rewards-page {
   100% { transform: scale(1); }
 }
 
-/* ====================================================
-   TEXTO INTERNO
-==================================================== */
+/* ================ TEXTO INTERNO ========================== */
 .reward-day {
   font-weight: 900;
   color: #ff1f1f;
-  font-size: 1.35rem; /* ⬆ más visible */
+  font-size: 1.35rem; 
   letter-spacing: 0.5px;
 }
 
 .reward-bugs {
-  font-size: 1.65rem; /* ⬆ protagonista */
+  font-size: 1.65rem; 
   margin: 12px 0;
   font-weight: 900;
 }
@@ -1510,9 +1444,7 @@ body.rewards-page {
 }
 
 
-/* ====================================================
-   RESPONSIVE
-==================================================== */
+/* ================= RESPONSIVE ================================= */
 @media (max-width: 1024px) {
   .rewards-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -1542,9 +1474,7 @@ body.rewards-page {
 
 }
 
-/* ====================================================
-   ANIMACIONES
-==================================================== */
+/* ====================  ANIMACIONES ============================ */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -1556,9 +1486,7 @@ body.rewards-page {
   }
 }
 
-/* ====================================================
-   MENSAJE DE DÍA COMPLETADO
-==================================================== */
+/* ======================= MENSAJE DE DÍA COMPLETADO ================================== */
 
 .reward-message.completed {
   margin-top: 14px;
@@ -1570,13 +1498,12 @@ body.rewards-page {
   text-align: center;
   color: #1f8f3a;
 
-  background: #ffffff; /* ← SOLO BLANCO */
+  background: #ffffff; 
 
   box-shadow: 0 10px 22px rgba(0,0,0,0.25);
   animation: completed-pop 0.45s ease;
 }
 
-/* ✨ animación sutil */
 @keyframes completed-pop {
   0% {
     opacity: 0;
@@ -1592,9 +1519,7 @@ body.rewards-page {
 }
 
 
-/* ====================================================
-   WRAPPER PRINCIPAL RECOMPENSAS
-==================================================== */
+/* =================== WRAPPER PRINCIPAL RECOMPENSAS ================== */
 .rewards-wrapper {
   width: 100%;
   display: flex;
@@ -1613,9 +1538,7 @@ body.store-page {
   overflow-y: auto;
 }
 
-/* ====================================================
-   MENÚ GLOBAL (FIJO ARRIBA)
-==================================================== */
+/* ================== MENÚ GLOBAL  =================== */
 .store-page .main-menu {
   position: fixed;
   top: 0;
@@ -1625,9 +1548,7 @@ body.store-page {
   z-index: 1000;
 }
 
-/* ====================================================
-   FONDO DECORATIVO
-==================================================== */
+/* =============== FONDO DECORATIVO ====================== */
 .store-page .sky-background {
   position: fixed;
   inset: 0;
@@ -1635,9 +1556,7 @@ body.store-page {
   pointer-events: none;
 }
 
-/* ====================================================
-   HEADER DE LA TIENDA
-==================================================== */
+/* ==================  HEADER DE LA TIENDA ====================== */
 .store-page .rewards-header {
   margin-top: 90px;
   text-align: center;
@@ -1665,9 +1584,7 @@ body.store-page {
     #ff1f1f;
 }
 
-/* ====================================================
-   CONTENEDOR PRINCIPAL
-==================================================== */
+/* ====================  CONTENEDOR PRINCIPAL ==================== */
 .store-page .rewards-container {
   width: 100%;
   padding: 40px 20px 60px;
@@ -1678,9 +1595,7 @@ body.store-page {
   animation: fadeInUp 0.6s ease;
 }
 
-/* ====================================================
-   STATS USUARIO
-==================================================== */
+/* =========== STATS USUARIO ======================= */
 .store-page .user-stats {
   background: #fff;
   padding: 22px;
@@ -1692,9 +1607,7 @@ body.store-page {
   font-weight: 800;
 }
 
-/* ====================================================
-   GRID DE PRODUCTOS
-==================================================== */
+/* =================  GRID DE PRODUCTOS =========================== */
 .store-page .rewards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -1705,9 +1618,7 @@ body.store-page {
   justify-items: center;
 }
 
-/* ====================================================
-   CARD DE PRODUCTO
-==================================================== */
+/* ============= CARD DE PRODUCTO ========================= */
 .store-page .store-card {
   display: flex;
   flex-direction: column;
@@ -1751,9 +1662,7 @@ body.store-page {
   transform: scale(1.03);
 }
 
-/* ====================================================
-   IMAGEN PRODUCTO
-==================================================== */
+/* =================== IMAGEN PRODUCTO ========================= */
 .store-page .store-img {
   width: 100%;
   height: 220px;
@@ -1761,9 +1670,7 @@ body.store-page {
   border-radius: 12px;
 }
 
-/* ====================================================
-   TEXTO PRODUCTO
-==================================================== */
+/* ===================== TEXTO PRODUCTO ==================== */
 .store-page .store-card h3 {
   margin-top: 12px;
   font-size: 1rem;
@@ -1789,9 +1696,7 @@ body.store-page {
   border-radius: 10px;
 }
 
-/* ====================================================
-   CONTROLES DE CANTIDAD
-==================================================== */
+/* ==================== CONTROLES DE CANTIDAD ====================== */
 .qty-controls {
   display: flex;
   align-items: center;
@@ -1825,9 +1730,7 @@ body.store-page {
   font-weight: 900;
 }
 
-/* ====================================================
-   BOTONES
-==================================================== */
+/* ================  BOTONES ======================= */
 .store-page .btn-ladybug.small {
   margin-top: 12px;
   font-size: 0.85rem;
@@ -1855,7 +1758,7 @@ body.store-page {
   background: #fff;
   border-radius: 0 22px 22px 0;
   box-shadow: 6px 0 20px rgba(0,0,0,0.25);
-  padding: 18px 18px 80px; /* 👈 espacio abajo */
+  padding: 18px 18px 80px; 
   z-index: 999;
   transition: left 0.35s ease;
   display: flex;
@@ -1893,7 +1796,6 @@ body.store-page {
   cursor: pointer;
 }
 
-/* footer fijo dentro del panel */
 .cart-footer {
   position: sticky;
   bottom: 0;
@@ -1905,7 +1807,7 @@ body.store-page {
 /* ===================== BOTÓN FLOTANTE ===================== */
 .cart-toggle {
   position: fixed;
-  top: 100px; /* debajo del header */
+  top: 100px; 
   bottom: auto;
   left: 16px;
   z-index: 1100;
@@ -1925,13 +1827,7 @@ body.store-page {
   box-shadow: 0 6px 15px rgba(0,0,0,0.3);
 }
 
-
-/* ==========================
-   MENSAJE GRANDE DE TIENDA
-========================== */
-/* ====================================================
-   MENSAJE DE COMPRA — estilo mariquita
-==================================================== */
+/* ==============  MENSAJE DE COMPRA ================= */
 .reward-message {
   position: fixed;
   top: 50%;
@@ -1966,17 +1862,13 @@ body.store-page {
   transform: translate(-50%, -50%) scale(1);
 }
 
-
-/* error */
 .reward-message.error {
   background: #ffeded;
   color: #b00000;
 }
 
 
-/* ====================================================
-   RESPONSIVE
-==================================================== */
+/* ========= RESPONSIVE =============== */
 
 /* ---------- TABLET ---------- */
 @media (max-width: 900px) {
@@ -2046,7 +1938,7 @@ body.store-page {
     width: 100%;
     height: 75vh;
     border-radius: 22px 22px 0 0;
-    padding-bottom: 90px; /* 👈 espacio para botón */
+    padding-bottom: 90px; 
     transition: bottom 0.35s ease;
   }
 
@@ -2054,7 +1946,6 @@ body.store-page {
     bottom: 0;
   }
 
-  /* BOTÓN FLOTANTE */
   .cart-toggle {
     top: auto;
     bottom: 16px;
@@ -2084,9 +1975,7 @@ body.notifications-page {
   overflow-y: auto;
 }
 
-/* ====================================================
-   MENÚ GLOBAL (FIJO ARRIBA)
-==================================================== */
+/* ===============  MENÚ GLOBAL  =============== */
 .notifications-page .main-menu {
   position: fixed;
   top: 0;
@@ -2096,9 +1985,7 @@ body.notifications-page {
   z-index: 1000;
 }
 
-/* ====================================================
-   FONDO DECORATIVO
-==================================================== */
+/* ==============  FONDO DECORATIVO =================== */
 .notifications-page .sky-background {
   position: fixed;
   inset: 0;
@@ -2106,9 +1993,7 @@ body.notifications-page {
   pointer-events: none;
 }
 
-/* ====================================================
-   HEADER DE NOTIFICACIONES
-==================================================== */
+/* ============== HEADER DE NOTIFICACIONES ================ */
 .notifications-page .rewards-header {
   margin-top: 90px;
   text-align: center;
@@ -2136,9 +2021,7 @@ body.notifications-page {
     #ff1f1f;
 }
 
-/* ====================================================
-   CONTENEDOR PRINCIPAL
-==================================================== */
+/* ===================  CONTENEDOR PRINCIPAL =========================== */
 .notifications-page .rewards-container {
   width: 100%;
   padding: 40px 20px 60px;
@@ -2149,9 +2032,7 @@ body.notifications-page {
   animation: fadeInUp 0.6s ease;
 }
 
-/* ====================================================
-   LISTA DE NOTIFICACIONES / COMPRAS
-==================================================== */
+/* ===========  LISTA DE NOTIFICACIONES / COMPRAS ============== */
 .notifications-page .notifications-list {
   width: 100%;
   max-width: 1100px;
@@ -2161,9 +2042,7 @@ body.notifications-page {
 }
 
 
-/* ====================================================
-   CARD DE COMPRA
-==================================================== */
+/* =============== CARD DE COMPRA ===================== */
 .notifications-page .purchase-card {
   position: relative;
   border-radius: 22px;
@@ -2190,9 +2069,7 @@ body.notifications-page {
   z-index: 1;
 }
 
-/* ====================================================
-   TEXTO DE LA CARD
-==================================================== */
+/* =================== TEXTO DE LA CARD ========================== */
 .notifications-page .purchase-card h3 {
   margin: 0 0 8px;
   font-size: 1.1rem;
@@ -2224,9 +2101,7 @@ body.notifications-page {
   opacity: 0.65;
 }
 
-/* ====================================================
-   MENSAJE VACÍO
-==================================================== */
+/* ================= MENSAJE VACÍO =========================== */
 .notifications-page .empty-text,
 .notifications-page .loading-text {
   text-align: center;
@@ -2234,9 +2109,7 @@ body.notifications-page {
   opacity: 0.7;
 }
 
-/* ====================================================
-   ANIMACIÓN
-==================================================== */
+/* ============== ANIMACIÓN ========================== */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -2248,18 +2121,14 @@ body.notifications-page {
   }
 }
 
-/* ====================================================
-   RESPONSIVE
-==================================================== */
+/* ===============  RESPONSIVE ============================= */
 
-/* ---------- TABLET ---------- */
 @media (max-width: 900px) {
   .notifications-page .notifications-list {
     max-width: 100%;
   }
 }
 
-/* ---------- MÓVIL ---------- */
 @media (max-width: 600px) {
 
   .notifications-page {
@@ -2281,16 +2150,12 @@ body.notifications-page {
 
 /* ============================================================== CONTENIDO.HTML ============================================================== */
 
-/* ====================================================
-   FIX: MENÚ SUPERIOR SIEMPRE ARRIBA
-==================================================== */
+/* ========  MENÚ SUPERIOR  ============== */
 
-/* Asegura que el body NO sea layout lateral */
 body.admin-upload-page {
   display: block;
 }
 
-/* MENÚ FIJO ARRIBA */
 .main-menu {
   position: fixed;
   top: 0;
@@ -2299,17 +2164,15 @@ body.admin-upload-page {
   z-index: 1000;
 }
 
-/* EMPUJA EL CONTENIDO DEBAJO DEL MENÚ */
 .admin-upload-container {
-  margin-top: 120px; /* ajusta si tu menú es más alto */
+  margin-top: 120px; 
 }
 
-/* POR SI EXISTE ALGÚN FLEX GLOBAL */
+
 .admin-upload-page main {
   display: block;
 }
 
-/* EVITA QUE ALGO LO PONGA EN DOS COLUMNAS */
 .admin-upload-page {
   flex-direction: column !important;
 }
@@ -2322,7 +2185,6 @@ body.admin-upload-page {
   gap: 30px;
 }
 
-/* TÍTULO */
 .admin-upload-container h1 {
   font-size: 2rem;
   font-weight: bold;
@@ -2331,7 +2193,7 @@ body.admin-upload-page {
   letter-spacing: 1px;
 }
 
-/* TARJETA FORMULARIO (MISMO CONCEPTO QUE album-upload) */
+
 .form-card {
   position: relative;
   padding: 28px;
@@ -2340,7 +2202,6 @@ body.admin-upload-page {
   width: 100%;
   margin: 0 auto;
 
-  /* borde mariquita */
   background:
     radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 75px 75px,
     radial-gradient(circle, #000 28%, transparent 29%) 37px 37px / 75px 75px,
@@ -2349,7 +2210,6 @@ body.admin-upload-page {
   box-shadow: 0 15px 35px rgba(0,0,0,0.25);
 }
 
-/* CAPA BLANCA INTERNA */
 .form-card::before {
   content: "";
   position: absolute;
@@ -2359,13 +2219,12 @@ body.admin-upload-page {
   z-index: 0;
 }
 
-/* CONTENIDO SOBRE LA CAPA BLANCA */
+
 .form-card > * {
   position: relative;
   z-index: 1;
 }
 
-/* FORMULARIO */
 .form-card {
   display: flex;
   flex-direction: column;
@@ -2378,7 +2237,7 @@ body.admin-upload-page {
   font-size: 0.95rem;
 }
 
-/* INPUTS, SELECT Y TEXTAREA */
+
 .form-card input,
 .form-card textarea,
 .form-card select {
@@ -2402,7 +2261,7 @@ body.admin-upload-page {
   box-shadow: 0 0 8px rgba(255, 31, 31, 0.4);
 }
 
-/* BOTÓN SUBIR (MISMO ESTILO QUE ALBUM) */
+
 .form-card .btn-ladybug {
   margin-top: 12px;
   padding: 12px;
@@ -2469,12 +2328,10 @@ body.curiosidades-page {
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
-  overflow-y: auto; /* permite scroll vertical */
+  overflow-y: auto; 
 }
 
-/* ====================================================
-   MENÚ GLOBAL (NO SE ROMPE)
-==================================================== */
+/* =========== MENÚ GLOBAL ========= */
 .curiosidades-page .main-menu {
   position: fixed;
   top: 0;
@@ -2484,9 +2341,7 @@ body.curiosidades-page {
   z-index: 1000;
 }
 
-/* ====================================================
-   FONDO DEL CIELO (DECORATIVO)
-==================================================== */
+/* =============== FONDO DEL CIELO ============= */
 .sky-background {
   position: fixed;
   inset: 0;
@@ -2494,9 +2349,7 @@ body.curiosidades-page {
   pointer-events: none;
 }
 
-/* ====================================================
-   HEADER DEL TÍTULO
-==================================================== */
+/* ==================  HEADER DEL TÍTULO ==================== */
 .curiosidades-header {
   margin-top: 90px;
   text-align: center;
@@ -2506,11 +2359,10 @@ body.curiosidades-page {
   font-size: clamp(2.2rem, 6vw, 3rem);
   font-weight: 900;
   letter-spacing: 2px;
-  color: #ff1f1f; /* rojo mariquita */
+  color: #ff1f1f; 
   margin: 0;
 }
 
-/* Línea separadora tipo mariquita */
 .curiosidades-header::after {
   content: "";
   display: block;
@@ -2525,9 +2377,7 @@ body.curiosidades-page {
     #ff1f1f;
 }
 
-/* ====================================================
-   CONTENEDOR GENERAL
-==================================================== */
+/* ==================  CONTENEDOR GENERAL ================= */
 .curiosidades-container {
   width: 100%;
   padding: 40px 20px 60px;
@@ -2536,23 +2386,19 @@ body.curiosidades-page {
   animation: fadeInUp 0.6s ease;
 }
 
-/* ====================================================
-   GRID DE CURIOSIDADES
-==================================================== */
+/* ==================== GRID DE CURIOSIDADES ============================ */
 .curiosities-grid {
   display: grid;
-
-  /* 4 tarjetas por fila si caben, mínimo 260px */
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 
   gap: 32px;
   max-width: 1600px;
-  margin: 0 auto;         /* centra todo el grid */
-  justify-items: center;   /* centra cada tarjeta dentro de su celda */
+  margin: 0 auto;         
+  justify-items: center;  
   padding: 0 10px;
 }
 
-/* Responsive móvil */
+/* Responsive  */
 @media (max-width: 1024px) {
   .curiosities-grid {
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -2566,16 +2412,14 @@ body.curiosidades-page {
   }
 }
 
-/* ====================================================
-   TARJETA BASE
-==================================================== */
+/* ============= TARJETA BASE ===================== */
 .curiosidad-card {
   background: #fff;
   border-radius: 22px;
-  padding: 22px;       /* tamaño original */
-  min-height: 260px;   /* altura grande como antes */
+  padding: 22px;     
+  min-height: 260px;   
   width: 100%;
-  max-width: 280px;    /* evita que se estire demasiado */
+  max-width: 280px;    
   
   display: flex;
   flex-direction: column;
@@ -2589,9 +2433,7 @@ body.curiosidades-page {
   transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
-/* ====================================================
-   CURIOSIDAD BLOQUEADA
-==================================================== */
+/* ==================== CURIOSIDAD BLOQUEADA =============== */
 .curiosidad-card.frase-locked {
   padding: 0;
 }
@@ -2663,16 +2505,12 @@ body.curiosidades-page {
   box-shadow: 0 10px 22px rgba(0,0,0,0.35);
 }
 
-/* ====================================================
-   CURIOSIDAD DESBLOQUEADA
-==================================================== */
+/* =======================  CURIOSIDAD DESBLOQUEADA ============== */
 .curiosidad-card.frase-unlocked {
   position: relative;
   border-radius: 22px;
   padding: 28px;
   min-height: 260px;
-
-  /* borde tipo mariquita */
   background:
     radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 22px 22px,
     radial-gradient(circle, #000 28%, transparent 29%) 11px 11px / 22px 22px,
@@ -2689,49 +2527,44 @@ body.curiosidades-page {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* capa interna blanca para que solo se vea borde */
+
 .curiosidad-card.frase-unlocked::before {
   content: "";
   position: absolute;
-  inset: 6px;            /* margen interno: ancho del borde */
-  background: #fff;       /* interior blanco */
-  border-radius: 16px;    /* un poquito más pequeño que la tarjeta */
+  inset: 6px;          
+  background: #fff;      
+  border-radius: 16px;  
   z-index: 0;
 }
 
-/* Contenido encima del ::before */
 .curiosidad-card.frase-unlocked > * {
   position: relative;
   z-index: 1;
 }
 
-/* Hover: solo mueve tarjeta y sombra */
 .curiosidad-card.frase-unlocked:hover {
   transform: translateY(-4px);
   box-shadow: 0 18px 40px rgba(0,0,0,0.35);
 }
 
-/* H1 dentro de la tarjeta */
+
 .curiosidad-card.frase-unlocked h3 {
   font-size: 2rem;
   font-weight: 900;
-  color: #ff1f1f; /* rojo mariquita */
+  color: #ff1f1f; 
   margin-bottom: 12px;
   letter-spacing: 1.5px;
   text-align: center;
 }
 
-/* P dentro de la tarjeta */
 .curiosidad-card.frase-unlocked p {
   font-size: 1.1rem;
-  color: #000; /* negro */
+  color: #000; 
   line-height: 1.6;
   text-align: center;
 }
 
-/* ====================================================
-   ANIMACIÓN DE ENTRADA
-==================================================== */
+/* ====================== ANIMACIÓN DE ENTRADA =================== */
 @keyframes fadeInUp {
   from {
     opacity: 0;
