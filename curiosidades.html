@@ -3,23 +3,57 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Domingo de Curiosidades</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/components.css" />
-</head>
-<body class="ladybug-bg">
-  <nav class="navbar">
-    <h1>🐞 Domingo de Curiosidades</h1>
-    <a href="index.html" class="btn-ladybug small">🏠 Volver</a>
-  </nav>
+  <title>Curiosidades del Día</title>
 
-  <main class="curiosities-container">
-    <section id="curiosities-list" class="curiosities-grid"></section>
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+
+<body class="ladybug-bg curiosidades-page">
+
+  <!-- FONDO DEL CIELO -->
+  <div class="sky-background">
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
+    <div class="cloud cloud4"></div>
+    <div class="cloud cloud5"></div>
+    <div class="cloud cloud6"></div>
+    <div class="cloud cloud7"></div>
+    <div class="cloud cloud8"></div>
+  </div>
+
+  <!-- MENÚ GLOBAL -->
+  <header class="main-menu">
+    <div class="menu-left">
+      <span class="menu-title">Menu</span>
+    </div>
+
+    <div class="menu-right">
+      <button id="menu-toggle" class="menu-toggle">☰</button>
+      <button id="logout-btn" class="btn-logout">Salir</button>
+    </div>
+
+    <nav id="menu-links"></nav>
+  </header>
+
+  <!-- TÍTULO CURIOUSIDADES -->
+  <section class="frases-header">
+    <h1 class="frases-title">Domingo de Curiosidades</h1>
+  </section>
+
+  <!-- CONTENIDO CURIOUSIDADES -->
+  <main class="phrases-container">
+    <section id="phrases-list" class="phrases-grid"></section>
   </main>
 
-  <script src="js/supabaseClient.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/ui.js"></script>
-  <script src="js/curiosidades.js"></script>
+  <!-- JS -->
+  <script type="module" src="/js/supabaseClient.js"></script>
+  <script type="module" src="/js/auth.js"></script>
+  <script type="module" src="/js/ui.js"></script>
+  <script type="module" src="/js/curiosidades.js"></script>
+  <script type="module" src="/js/menu.js"></script>
+
 </body>
 </html>

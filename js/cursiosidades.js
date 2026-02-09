@@ -1,77 +1,126 @@
+import { supabase } from './supabaseClient.js'
+
 document.addEventListener('DOMContentLoaded', async () => {
-  // Verificar sesión
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
+  // =========================
+  // 1. Verificar usuario
+  // =========================
+  const { data: { user }, error: authError } = await supabase.auth.getUser()
+  if (authError || !user) {
     window.location.href = 'login.html'
     return
   }
 
-  const contenedor = document.getElementById('curiosidades-container')
+  const contenedor = document.getElementById('phrases-list')
+  contenedor.innerHTML = '' // limpiar contenedor
 
-  // Obtener todas las curiosidades
-  const { data: curiosidades } = await supabase
-    .from('curiosidades')
-    .select('*')
-    .order('fecha', { ascending: false })
+  // =========================
+  // 2. Traer curiosidades
+  // =========================
+  const { data: curiosidades, error: curiosidadesError } = await supabase
+    .from('content')
+    .select('id, title, text, created_at')
+    .eq('content_type', 'curiosidad')
 
-  // Obtener cuáles el usuario ya leyó o marcó
-  const { data: interacciones } = await supabase
-    .from('curiosidades_usuarios')
-    .select('id_curiosidad, leida, favorita')
-    .eq('id_usuario', user.id)
+  if (curiosidadesError) {
+    console.error('Error al cargar curiosidades:', curiosidadesError)
+    return
+  }
 
-  const leidas = new Set(interacciones?.filter(i => i.leida).map(i => i.id_curiosidad))
-  const favoritas = new Set(interacciones?.filter(i => i.favorita).map(i => i.id_curiosidad))
+  // =========================
+  // Ordenar descendente: última curiosidad primero
+  // =========================
+  curiosidades.sort((a, b) => Number(b.id) - Number(a.id))
 
-  // Mostrar curiosidades
-  curiosidades.forEach(c => {
+  // =========================
+  // 3. Traer desbloqueos del usuario
+  // =========================
+  const { data: desbloqueos, error: unlocksError } = await supabase
+    .from('unlocks')
+    .select('content_id')
+    .eq('user_id', user.id)
+
+  if (unlocksError) {
+    console.error('Error al cargar desbloqueos:', unlocksError)
+    return
+  }
+
+  const idsDesbloqueadas = desbloqueos.map(d => d.content_id)
+
+  // =========================
+  // 4. Renderizar tarjetas
+  // =========================
+  curiosidades.forEach(curiosidad => {
     const card = document.createElement('div')
     card.classList.add('curiosidad-card')
 
-    card.innerHTML = `
-      <h3>${c.titulo}</h3>
-      <p>${c.descripcion}</p>
-      <div class="acciones">
-        <button class="btn-ladybug small leer-btn" data-id="${c.id}">
-          ${leidas.has(c.id) ? '✅ Leída' : '📖 Marcar como leída'}
-        </button>
-        <button class="btn-ladybug small fav-btn" data-id="${c.id}">
-          ${favoritas.has(c.id) ? '💖 Favorita' : '🤍 Favorito'}
-        </button>
-      </div>
-    `
+    const desbloqueada = idsDesbloqueadas.includes(curiosidad.id)
+
+    if (desbloqueada) {
+      card.classList.add('frase-unlocked') // mantiene el estilo de Frases
+      const h3 = document.createElement('h3')
+      h3.textContent = curiosidad.title
+      const p = document.createElement('p')
+      p.textContent = curiosidad.text
+      card.appendChild(h3)
+      card.appendChild(p)
+    } else {
+      card.classList.add('frase-locked')
+      const lockDiv = document.createElement('div')
+      lockDiv.classList.add('ladybug-lock')
+      const lockIcon = document.createElement('span')
+      lockIcon.classList.add('lock-icon')
+      lockIcon.textContent = '🔒'
+      lockDiv.appendChild(lockIcon)
+      card.appendChild(lockDiv)
+
+      const btn = document.createElement('button')
+      btn.classList.add('btn-unlock')
+      btn.dataset.id = curiosidad.id
+      btn.textContent = 'Desbloquear'
+      card.appendChild(btn)
+    }
+
+    // ✅ Agregar al contenedor
     contenedor.appendChild(card)
   })
 
-  // Eventos de botones
+  // =========================
+  // 5. Evento para desbloquear
+  // =========================
   contenedor.addEventListener('click', async (e) => {
-    const idCur = e.target.dataset.id
-    if (!idCur) return
+    const btn = e.target.closest('.btn-unlock')
+    if (!btn) return
 
-    const tipo = e.target.classList.contains('leer-btn') ? 'leida' :
-                 e.target.classList.contains('fav-btn') ? 'favorita' : null
-    if (!tipo) return
+    btn.disabled = true
+    const card = btn.closest('.curiosidad-card')
+    const contentId = btn.dataset.id
 
-    // Ver si ya hay registro
-    const { data: existe } = await supabase
-      .from('curiosidades_usuarios')
-      .select('*')
-      .eq('id_usuario', user.id)
-      .eq('id_curiosidad', idCur)
-      .maybeSingle()
+    const { error } = await supabase
+      .from('unlocks')
+      .insert({ user_id: user.id, content_id: contentId })
 
-    if (existe) {
-      await supabase.from('curiosidades_usuarios')
-        .update({ [tipo]: !existe[tipo] })
-        .eq('id_usuario', user.id)
-        .eq('id_curiosidad', idCur)
-    } else {
-      await supabase.from('curiosidades_usuarios')
-        .insert({ id_usuario: user.id, id_curiosidad: idCur, [tipo]: true })
+    if (error) {
+      console.error('Error al desbloquear:', error)
+      btn.disabled = false
+      return
     }
 
-    alert(`Curiosidad actualizada (${tipo}) 🐞`)
-    contenedor.innerHTML = ''
-    location.reload()
+    // =========================
+    // 6. Renderizar carta desbloqueada
+    // =========================
+    const curiosidad = curiosidades.find(f => f.id == contentId)
+    card.classList.remove('frase-locked')
+    card.classList.add('frase-unlocked')
+
+    // eliminar lock y botón
+    card.querySelector('.ladybug-lock')?.remove()
+    btn.remove()
+
+    const h3 = document.createElement('h3')
+    h3.textContent = curiosidad.title
+    const p = document.createElement('p')
+    p.textContent = curiosidad.text
+    card.appendChild(h3)
+    card.appendChild(p)
   })
 })

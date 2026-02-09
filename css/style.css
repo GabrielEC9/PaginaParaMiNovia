@@ -2407,3 +2407,298 @@ body.admin-upload-page {
   color: #e74c3c;
   opacity: 1;
 }
+
+/* ==================================================== CURIOSIDADES.HTML ==================================================== */
+body.curiosidades-page {
+  display: block;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  overflow-y: auto; /* permite scroll vertical */
+}
+
+/* ====================================================
+   MENÚ GLOBAL (NO SE ROMPE)
+==================================================== */
+.curiosidades-page .main-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  z-index: 1000;
+}
+
+/* ====================================================
+   FONDO DEL CIELO (DECORATIVO)
+==================================================== */
+.sky-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ====================================================
+   HEADER DEL TÍTULO
+==================================================== */
+.curiosidades-header {
+  margin-top: 90px;
+  text-align: center;
+}
+
+.curiosidades-title {
+  font-size: clamp(2.2rem, 6vw, 3rem);
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #ff1f1f; /* rojo mariquita */
+  margin: 0;
+}
+
+/* Línea separadora tipo mariquita */
+.curiosidades-header::after {
+  content: "";
+  display: block;
+  width: 120px;
+  height: 6px;
+  margin: 12px auto 0;
+  border-radius: 10px;
+
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 24px 24px,
+    radial-gradient(circle, #000 28%, transparent 29%) 12px 12px / 24px 24px,
+    #ff1f1f;
+}
+
+/* ====================================================
+   CONTENEDOR GENERAL
+==================================================== */
+.curiosidades-container {
+  width: 100%;
+  padding: 40px 20px 60px;
+  display: flex;
+  justify-content: center;
+  animation: fadeInUp 0.6s ease;
+}
+
+/* ====================================================
+   GRID DE CURIOSIDADES
+==================================================== */
+.curiosities-grid {
+  display: grid;
+
+  /* 4 tarjetas por fila si caben, mínimo 260px */
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+
+  gap: 32px;
+  max-width: 1600px;
+  margin: 0 auto;         /* centra todo el grid */
+  justify-items: center;   /* centra cada tarjeta dentro de su celda */
+  padding: 0 10px;
+}
+
+/* Responsive móvil */
+@media (max-width: 1024px) {
+  .curiosities-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .curiosities-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* ====================================================
+   TARJETA BASE
+==================================================== */
+.curiosidad-card {
+  background: #fff;
+  border-radius: 22px;
+  padding: 22px;       /* tamaño original */
+  min-height: 260px;   /* altura grande como antes */
+  width: 100%;
+  max-width: 280px;    /* evita que se estire demasiado */
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.2),
+    inset 0 0 0 2px rgba(0,0,0,0.12);
+
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* ====================================================
+   CURIOSIDAD BLOQUEADA
+==================================================== */
+.curiosidad-card.frase-locked {
+  padding: 0;
+}
+
+.curiosidad-card.frase-locked .ladybug-lock {
+  width: 100%;
+  height: 100%;
+  border-radius: 22px;
+
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 36px 36px,
+    radial-gradient(circle, #000 28%, transparent 29%) 18px 18px / 36px 36px,
+    #ff1f1f;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 20px;
+  text-align: center;
+}
+
+.lock-icon {
+  font-size: 3rem;
+  transition: transform 0.3s ease;
+  color: #fff;
+}
+
+.curiosidad-card.frase-locked:hover .lock-icon {
+  transform: scale(1.2) rotate(-5deg);
+}
+
+/* BOTÓN DESBLOQUEAR */
+.btn-unlock {
+  width: 100%;
+  margin-top: 14px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: none;
+
+  background-color: #ff1f1f;
+  color: #fff;
+
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.btn-unlock:hover {
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 30px 30px,
+    radial-gradient(circle, #000 28%, transparent 29%) 15px 15px / 30px 30px,
+    #ff1f1f;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.35);
+}
+
+/* ====================================================
+   CURIOSIDAD DESBLOQUEADA
+==================================================== */
+.curiosidad-card.frase-unlocked {
+  position: relative;
+  border-radius: 22px;
+  padding: 28px;
+  min-height: 260px;
+
+  /* borde tipo mariquita */
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 22px 22px,
+    radial-gradient(circle, #000 28%, transparent 29%) 11px 11px / 22px 22px,
+    #ff1f1f;
+
+  box-shadow: 0 16px 36px rgba(0,0,0,0.3);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  overflow: visible;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* capa interna blanca para que solo se vea borde */
+.curiosidad-card.frase-unlocked::before {
+  content: "";
+  position: absolute;
+  inset: 6px;            /* margen interno: ancho del borde */
+  background: #fff;       /* interior blanco */
+  border-radius: 16px;    /* un poquito más pequeño que la tarjeta */
+  z-index: 0;
+}
+
+/* Contenido encima del ::before */
+.curiosidad-card.frase-unlocked > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Hover: solo mueve tarjeta y sombra */
+.curiosidad-card.frase-unlocked:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+}
+
+/* H1 dentro de la tarjeta */
+.curiosidad-card.frase-unlocked h3 {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #ff1f1f; /* rojo mariquita */
+  margin-bottom: 12px;
+  letter-spacing: 1.5px;
+  text-align: center;
+}
+
+/* P dentro de la tarjeta */
+.curiosidad-card.frase-unlocked p {
+  font-size: 1.1rem;
+  color: #000; /* negro */
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* ====================================================
+   ANIMACIÓN DE ENTRADA
+==================================================== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Móvil */
+@media (max-width: 640px) {
+  .curiosidad-card.frase-unlocked {
+    padding: 22px;
+  }
+
+  .curiosidad-card.frase-unlocked h3 {
+    font-size: 1.6rem;
+  }
+
+  .curiosidad-card.frase-unlocked p {
+    font-size: 1rem;
+  }
+}
