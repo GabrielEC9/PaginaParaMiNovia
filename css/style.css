@@ -328,18 +328,18 @@ body {
     min-height: 100svh;
     display: flex;
     justify-content: center;
-    align-items: flex-start; 
-    padding-top: 12vh;     
-    padding-left: 1.2rem;
-    padding-right: 1.2rem;
+    align-items: flex-start;
+    padding-top: 12vh;
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
   }
 
-.login-container {
-  width: 100%;          
-  max-width: 520px;    
-  padding: 2.2rem 1.8rem;
-  border-radius: 22px; 
-}
+  .login-container {
+    width: 100vw !important;  
+    max-width: none !important;
+    padding: 2.4rem 2rem;
+    border-radius: 22px;
+  }
 
   .cloud {
     filter: blur(6px);
