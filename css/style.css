@@ -322,7 +322,7 @@ body {
 
 
 /* ===== AJUSTES MÓVIL ===== */
-@media (max-width: 480px) {
+@media (max-width: 600px) {
 
   body {
     min-height: 100svh;
