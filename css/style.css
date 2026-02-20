@@ -202,8 +202,8 @@ body {
     radial-gradient(circle, #000 28%, transparent 29%) 37px 37px / 75px 75px,
     #ff1f1f;
 
-  width: min(420px, 92vw); 
-  min-height: 60vh;
+  width: min(520px, 92vw); 
+  min-height: 480px;
   padding: clamp(2rem, 5vw, 3rem) clamp(1.8rem, 4vw, 2.5rem);
 
   border-radius: 22px;
