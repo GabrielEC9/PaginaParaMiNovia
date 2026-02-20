@@ -6,10 +6,19 @@ document.addEventListener('DOMContentLoaded', async () => {
   const logoutBtn = document.getElementById('logout-btn')
   const toggleBtn = document.getElementById('menu-toggle')
 
-  /* ===== TOGGLE MENU ===== */
-  toggleBtn?.addEventListener('click', () => {
-    menu.classList.toggle('open')
-  })
+const overlay = document.getElementById('menu-overlay')
+
+/* ===== TOGGLE MENU ===== */
+toggleBtn?.addEventListener('click', () => {
+  const isOpen = menu.classList.toggle('open')
+  overlay.classList.toggle('active', isOpen)
+})
+
+/* ===== CERRAR TOCANDO FUERA ===== */
+overlay?.addEventListener('click', () => {
+  menu.classList.remove('open')
+  overlay.classList.remove('active')
+})
 
   /* ===== LOGOUT ===== */
   logoutBtn?.addEventListener('click', async () => {
@@ -58,9 +67,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     a.textContent = link.text
     a.className = 'menu-btn'
 
-    a.addEventListener('click', () => {
-      menu.classList.remove('open')
-    })
+a.addEventListener('click', () => {
+  menu.classList.remove('open')
+  overlay.classList.remove('active')
+})
 
     menu.appendChild(a)
   })
