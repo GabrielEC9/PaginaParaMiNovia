@@ -321,8 +321,23 @@ body {
 }
 
 
-/* ===== AJUSTES EXTRA SOLO PARA MÓVIL ===== */
+/* ===== AJUSTES MÓVIL ===== */
 @media (max-width: 480px) {
+
+  body {
+    min-height: 100svh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.2rem;
+  }
+
+  .login-container {
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+  }
+
   .cloud {
     filter: blur(6px);
   }
