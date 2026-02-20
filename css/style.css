@@ -1909,7 +1909,7 @@ body.store-page {
 }
 
 /* ---------- MÓVIL ---------- */
-@media (max-width: 600px) {
+@media (max-width: 400px) {
 
   /* GRID */
   .store-page .rewards-grid {
