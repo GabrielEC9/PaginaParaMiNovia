@@ -24,9 +24,17 @@ document.addEventListener('DOMContentLoaded', async () => {
   const cartBuyBtn    = document.getElementById('buy-btn')
   const cartToggle    = document.getElementById('cart-toggle')
 
-  cartToggle.onclick = () => {
-    cartPanel.classList.toggle('open')
-  }
+const cartOverlay = document.getElementById('cart-overlay')
+
+cartToggle.onclick = () => {
+  cartPanel.classList.toggle('open')
+  cartOverlay.classList.toggle('active')
+}
+
+cartOverlay.onclick = () => {
+  cartPanel.classList.remove('open')
+  cartOverlay.classList.remove('active')
+}
 
   let userBugs = 0
   const cart = new Map() 

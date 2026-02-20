@@ -1888,6 +1888,27 @@ body.store-page {
   color: #b00000;
 }
 
+/* ========= OVERLAY CARRITO =============== */
+
+.cart-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 998;
+}
+
+.cart-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.cart-panel {
+  z-index: 999;
+}
 
 /* ========= RESPONSIVE =============== */
 
