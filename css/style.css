@@ -337,7 +337,7 @@ body {
   .login-container {
     width: 100%;
     max-width: 100%;
-    min-height: 90vh; 
+    min-height: 100vh; 
     padding: 2.5rem 1.8rem; 
     border-radius: 22px;
     display: flex;
