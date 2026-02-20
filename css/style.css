@@ -334,12 +334,12 @@ body {
     padding-right: 1.2rem;
   }
 
-  .login-container {
-    width: 96vw;         
-    max-width: none;      
-    padding: 2rem 1.5rem; 
-    border-radius: 18px; 
-  }
+.login-container {
+  width: 100%;          
+  max-width: 520px;    
+  padding: 2.2rem 1.8rem;
+  border-radius: 22px; 
+}
 
   .cloud {
     filter: blur(6px);
