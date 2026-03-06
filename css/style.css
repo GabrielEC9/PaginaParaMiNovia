@@ -2662,49 +2662,107 @@ body.curiosidades-page {
 
 /* ==================================================== CHAMBEANDO.HTML =============================================================== */
 
-/* MENU FIJO ARRIBA */
-.main-menu{
+/* ================= BODY ================= */
+body.chambeando-bg{
+  display: block;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  overflow-y: auto;
+}
+
+/* ================= MENU ================= */
+
+.chambeando-bg .main-menu{
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 60px;
+  height: 70px;
 
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 
   padding: 0 20px;
-
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(6px);
 
   z-index: 1000;
 }
 
-/* CONTENEDOR CENTRADO */
+/* ================= CONTENIDO ================= */
+
 .chambeando-container{
-  height: 100vh;
+
+  width: 100%;
+  min-height: calc(100vh - 70px);
+
+  margin-top: 70px;
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
   text-align: center;
+  padding: 20px;
 }
 
-/* VIDEO */
+/* ================= VIDEO ================= */
+
 .chambeando-video{
-  max-width: 450px;
-  width: 90%;
+  width: 450px;
+  max-width: 90%;
   border-radius: 12px;
 }
 
-/* TEXTO */
+/* ================= TEXTO ================= */
+
 .chambeando-text{
   margin-top: 20px;
   font-size: 28px;
-  color: white;
   font-weight: bold;
+  color: white;
+  text-align: center;
+}
+
+/* ================ RESPONSIVE ============ */
+
+/* TABLETS */
+@media (max-width: 900px){
+
+  .chambeando-video{
+    width: 350px;
+  }
+
+  .chambeando-text{
+    font-size: 24px;
+  }
+
+}
+
+/* CELULARES */
+@media (max-width: 600px){
+
+  .chambeando-container{
+    padding: 15px;
+  }
+
+  .chambeando-video{
+    width: 90%;
+  }
+
+  .chambeando-text{
+    font-size: 20px;
+    line-height: 1.3;
+  }
+
+}
+
+/* CELULARES PEQUEÑOS */
+@media (max-width: 400px){
+
+  .chambeando-text{
+    font-size: 18px;
+  }
+
 }
