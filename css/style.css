@@ -2671,6 +2671,34 @@ body.chambeando-bg{
   overflow-y: auto;
 }
 
+body.chambeando-bg::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+
+  border: 18px solid transparent;
+
+  background:
+    repeating-linear-gradient(
+      45deg,
+      #000,
+      #000 15px,
+      #FFD800 15px,
+      #FFD800 30px
+    );
+
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+
+  pointer-events: none;
+
+  z-index: 10; 
+}
+
 /* ================= MENU ================= */
 
 .chambeando-bg .main-menu{
@@ -2686,7 +2714,7 @@ body.chambeando-bg{
 
   padding: 0 20px;
 
-  z-index: 1000;
+  z-index: 1000; 
 }
 
 /* ================= CONTENIDO ================= */
@@ -2718,11 +2746,41 @@ body.chambeando-bg{
 /* ================= TEXTO ================= */
 
 .chambeando-text{
-  margin-top: 20px;
+  margin-top: 25px;
+
   font-size: 28px;
-  font-weight: bold;
-  color: white;
+  font-weight: 900;
+
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+
+  padding: 14px 28px;
+
+  background-color: #FFD800; 
+
+  border: 6px solid #000;
+  border-radius: 8px;
+
   text-align: center;
+
+  box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+}
+
+.chambeando-text::before,
+.chambeando-text::after{
+  content: "";
+  display: block;
+  height: 8px;
+  margin: 6px -6px;
+
+  background: repeating-linear-gradient(
+    45deg,
+    #000,
+    #000 10px,
+    #FFD800 10px,
+    #FFD800 20px
+  );
 }
 
 /* ================ RESPONSIVE ============ */
@@ -2736,6 +2794,10 @@ body.chambeando-bg{
 
   .chambeando-text{
     font-size: 24px;
+  }
+
+  body.chambeando-bg::before{
+    border: 14px solid transparent;
   }
 
 }
@@ -2756,6 +2818,10 @@ body.chambeando-bg{
     line-height: 1.3;
   }
 
+  body.chambeando-bg::before{
+    border: 10px solid transparent;
+  }
+
 }
 
 /* CELULARES PEQUEÑOS */
@@ -2763,6 +2829,10 @@ body.chambeando-bg{
 
   .chambeando-text{
     font-size: 18px;
+  }
+
+  body.chambeando-bg::before{
+    border: 8px solid transparent;
   }
 
 }
