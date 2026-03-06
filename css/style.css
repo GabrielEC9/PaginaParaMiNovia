@@ -2659,3 +2659,52 @@ body.curiosidades-page {
     font-size: 1rem;
   }
 }
+
+/* ==================================================== CHAMBEANDO.HTML =============================================================== */
+
+/* MENU FIJO ARRIBA */
+.main-menu{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 20px;
+
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+
+  z-index: 1000;
+}
+
+/* CONTENEDOR CENTRADO */
+.chambeando-container{
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+}
+
+/* VIDEO */
+.chambeando-video{
+  max-width: 450px;
+  width: 90%;
+  border-radius: 12px;
+}
+
+/* TEXTO */
+.chambeando-text{
+  margin-top: 20px;
+  font-size: 28px;
+  color: white;
+  font-weight: bold;
+}
