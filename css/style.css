@@ -2839,3 +2839,16 @@ body.chambeando-bg::before{
 
 /* ==================================================== Flores amarillas =============================================================== */
 
+.floresamarillas {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  height: 200px; /* puedes ajustar esto */
+
+  object-fit: cover;
+
+  z-index: 0; /* debajo de todo */
+  pointer-events: none; /* no bloquea clicks */
+}
