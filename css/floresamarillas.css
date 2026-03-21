@@ -21,13 +21,14 @@ body {
 }
 
 .night {
-  position: center;
+  position: fixed;
   left: 50%;
   top: 0;
   transform: translateX(-50%);
   width: 100%;
   height: 100%;
   filter: blur(0.1vmin);
+
 }
 
 .flowers {
@@ -190,6 +191,7 @@ body {
   background-image: linear-gradient(to top, #fce700, #fce700);
   transform-origin: bottom center;
   opacity: 0.9;
+  box-shadow: inset 0 0 2vmin rgba(255, 255, 255, 0.5);
 }
 .flower__leaf--1 {
   transform: translate(-10%, 1%) rotateY(40deg) rotateX(-50deg);
@@ -255,6 +257,7 @@ body {
   width: 1.5vmin;
   background-image: linear-gradient(to left, rgba(0, 0, 0, 0.2), transparent, 
   rgba(255, 255, 255, 0.2)), linear-gradient(to top, transparent 10%, #064600, #064600);
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.5);
   -webkit-animation: grow-flower-tree 4s backwards;
           animation: grow-flower-tree 4s backwards;
 }
@@ -618,6 +621,7 @@ body {
   height: 50vmin;
   transform-origin: bottom center;
   background-image: linear-gradient(to top, transparent 30%, var(--c));
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.5);
   -webkit-clip-path: polygon(35% 0, 65% 1%, 100% 100%, 0% 100%);
           clip-path: polygon(35% 0, 65% 1%, 100% 100%, 0% 100%);
 }
@@ -819,6 +823,7 @@ body {
   width: 10vmin;
   height: 10vmin;
   border-radius: 100% 0% 0% 100%/100% 100% 0% 0%;
+  box-shadow: inset 0 2px 1vmin hsla(184deg, 97%, 58%, 0.2);
   background-image: linear-gradient(to bottom left, transparent, var(--dark-color)), 
   linear-gradient(to bottom right, #00b815 50%, transparent 50%, transparent);
   -webkit-mask-image: linear-gradient(to bottom right, #00b815 50%, transparent 50%, transparent);
@@ -865,6 +870,7 @@ body {
   width: 10vmin;
   height: 10vmin;
   border-radius: 100% 0% 0% 100%/100% 100% 0% 0%;
+  box-shadow: inset 0 2px 1vmin hsla(184deg, 97%, 58%, 0.2);
   background-image: linear-gradient(to bottom left, transparent, var(--dark-color) 98%), 
   linear-gradient(to bottom right, #00b815 45%, transparent 50%, transparent);
   -webkit-mask-image: linear-gradient(135deg, #00b815 40%, transparent 50%, transparent);
