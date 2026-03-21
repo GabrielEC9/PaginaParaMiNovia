@@ -57,6 +57,7 @@ overlay?.addEventListener('click', () => {
   if (role === 'admin') {
     links.push(
       { text: '✏️ Subir contenido', href: 'admin-form.html' },
+      { text: 'Pruebas', href: 'pruebas.html' },
       { text: '🔔 Notificaciones', href: 'notificaciones.html' }
     )
   }
