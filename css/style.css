@@ -2839,85 +2839,94 @@ body.chambeando-bg::before{
 
 /* ==================================================== PRUEBAS.HTML =============================================================== */
 
-/* ===== PASTO BASE ===== */
+/* ===== CAPA DE PASTO ===== */
 .grass-layer {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 120px;
-  background: linear-gradient(to top, #2e7d32, #4caf50);
+  height: 150px;
+  background: linear-gradient(to top, #1b5e20, #4caf50);
   z-index: 1;
   overflow: hidden;
 }
 
-/* ===== EFECTO DE HOJAS DE PASTO ===== */
+/* ===== HOJAS DE PASTO (más realistas) ===== */
 .grass-layer::before {
   content: "";
   position: absolute;
+  bottom: 0;
   width: 200%;
   height: 100%;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    rgba(0, 100, 0, 0.3) 0px,
-    rgba(0, 100, 0, 0.3) 2px,
+
+  background: repeating-linear-gradient(
+    75deg,
+    #2e7d32 0px,
+    #2e7d32 2px,
     transparent 2px,
     transparent 6px
   );
-  animation: moveGrass 6s linear infinite;
+
+  opacity: 0.5;
+  animation: wind 4s ease-in-out infinite alternate;
 }
 
-@keyframes moveGrass {
+@keyframes wind {
   from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  to { transform: translateX(-40px); }
 }
 
-/* ===== FLORES AMARILLAS ===== */
+/* ===== FLORES ===== */
 .flowers {
   position: absolute;
-  width: 100%;
-  height: 100%;
 }
 
-/* flores usando sombras múltiples */
-.flowers::before {
-  content: "";
+/* base flor */
+.flower {
   position: absolute;
   bottom: 20px;
-  width: 8px;
-  height: 8px;
-  background: yellow;
-  border-radius: 50%;
-
-  box-shadow:
-    50px 10px yellow,
-    120px 20px yellow,
-    200px 5px yellow,
-    300px 15px yellow,
-    400px 8px yellow,
-    550px 18px yellow,
-    700px 12px yellow,
-    850px 6px yellow,
-    1000px 14px yellow;
+  width: 20px;
+  height: 20px;
 }
 
-/* tallos */
-.flowers::after {
+/* centro */
+.flower::before {
   content: "";
   position: absolute;
-  bottom: 0;
-  width: 2px;
-  height: 25px;
-  background: green;
-
-  box-shadow:
-    50px 0 green,
-    120px 0 green,
-    200px 0 green,
-    300px 0 green,
-    400px 0 green,
-    550px 0 green,
-    700px 0 green,
-    850px 0 green,
-    1000px 0 green;
+  width: 10px;
+  height: 10px;
+  background: orange;
+  border-radius: 50%;
+  top: 5px;
+  left: 5px;
+  z-index: 2;
 }
+
+/* pétalos */
+.flower::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: yellow;
+  border-radius: 50%;
+  box-shadow:
+    0 -10px yellow,
+    0 10px yellow,
+    10px 0 yellow,
+    -10px 0 yellow;
+}
+
+/* tallo */
+.flower {
+  border-left: 3px solid #2e7d32;
+  height: 40px;
+  width: 0;
+}
+
+/* ===== POSICIONES ===== */
+.f1 { left: 10%; }
+.f2 { left: 25%; }
+.f3 { left: 45%; }
+.f4 { left: 65%; }
+.f5 { left: 85%; }
