@@ -2836,3 +2836,88 @@ body.chambeando-bg::before{
   }
 
 }
+
+/* ==================================================== PRUEBAS.HTML =============================================================== */
+
+/* ===== PASTO BASE ===== */
+.grass-layer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  background: linear-gradient(to top, #2e7d32, #4caf50);
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* ===== EFECTO DE HOJAS DE PASTO ===== */
+.grass-layer::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(0, 100, 0, 0.3) 0px,
+    rgba(0, 100, 0, 0.3) 2px,
+    transparent 2px,
+    transparent 6px
+  );
+  animation: moveGrass 6s linear infinite;
+}
+
+@keyframes moveGrass {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ===== FLORES AMARILLAS ===== */
+.flowers {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+/* flores usando sombras múltiples */
+.flowers::before {
+  content: "";
+  position: absolute;
+  bottom: 20px;
+  width: 8px;
+  height: 8px;
+  background: yellow;
+  border-radius: 50%;
+
+  box-shadow:
+    50px 10px yellow,
+    120px 20px yellow,
+    200px 5px yellow,
+    300px 15px yellow,
+    400px 8px yellow,
+    550px 18px yellow,
+    700px 12px yellow,
+    850px 6px yellow,
+    1000px 14px yellow;
+}
+
+/* tallos */
+.flowers::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 2px;
+  height: 25px;
+  background: green;
+
+  box-shadow:
+    50px 0 green,
+    120px 0 green,
+    200px 0 green,
+    300px 0 green,
+    400px 0 green,
+    550px 0 green,
+    700px 0 green,
+    850px 0 green,
+    1000px 0 green;
+}
