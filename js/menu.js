@@ -50,14 +50,13 @@ overlay?.addEventListener('click', () => {
     { text: '💌 Frases', href: 'frases.html' },
     { text: '❓ Curiosidades', href: 'curiosidades.html' },
     { text: '🛍️ Tienda', href: 'tienda.html' },
-    //{ text: '🎁 Recompensas', href: 'recompensas.html' },
-    { text: '🎁 Recompensas', href: 'chambeando.html' }
+    { text: '🎁 Recompensas', href: 'recompensas.html' },
+    { text: '💎 Cosas que ¿.....?', href: 'chambeando.html' }
   ]
 
   if (role === 'admin') {
     links.push(
       { text: '✏️ Subir contenido', href: 'admin-form.html' },
-      { text: '🎁 Recompensas', href: 'recompensas.html' },
       { text: 'Pruebas', href: 'pruebas.html' },
       { text: '🔔 Notificaciones', href: 'notificaciones.html' }
     )
