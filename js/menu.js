@@ -49,7 +49,7 @@ overlay?.addEventListener('click', () => {
     { text: '📸 Álbum', href: 'album.html' },
     { text: '💌 Frases', href: 'frases.html' },
     { text: '❓ Curiosidades', href: 'curiosidades.html' }, 
-    { text: '💎 Cosas q me Gustan de Ti', href: 'gustan.html' },
+    { text: '💎 Cosas Gustan de Ti', href: 'gustan.html' },
     { text: '🛍️ Tienda', href: 'tienda.html' },
     { text: '🎁 Recompensas', href: 'recompensas.html' },
     { text: '📜 Recuerdos', href: 'chambeando.html' }
