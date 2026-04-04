@@ -48,10 +48,11 @@ overlay?.addEventListener('click', () => {
     { text: '🏠 Inicio', href: 'panel.html' },
     { text: '📸 Álbum', href: 'album.html' },
     { text: '💌 Frases', href: 'frases.html' },
-    { text: '❓ Curiosidades', href: 'curiosidades.html' },
+    { text: '❓ Curiosidades', href: 'curiosidades.html' }, 
+    { text: '💎 Cosas que me Gustan de Ti', href: 'gustan.html' },
     { text: '🛍️ Tienda', href: 'tienda.html' },
     { text: '🎁 Recompensas', href: 'recompensas.html' },
-    { text: '💎 Cosas que ¿.. ...... .. ..?', href: 'chambeando.html' }
+    { text: '📜 Recuerdos', href: 'chambeando.html' }
   ]
 
   if (role === 'admin') {
