@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const btn = document.createElement('button')
       btn.classList.add('btn-unlock')
       btn.dataset.id = item.id
-      btn.textContent = 'Descubrir 💖'
+      btn.textContent = 'Descubrir'
 
       card.appendChild(btn)
     }
