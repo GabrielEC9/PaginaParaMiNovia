@@ -1575,6 +1575,43 @@ body.rewards-page {
   align-items: center;
 }
 
+/* ================= BOTÓN RECUPERAR RACHA ================= */
+.recover-btn {
+  margin-top: 10px;
+  padding: 14px 22px;
+  border-radius: 18px;
+  border: none;
+  cursor: pointer;
+
+  font-weight: 900;
+  font-size: 1.05rem;
+  letter-spacing: 0.5px;
+
+  color: #fff;
+
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 20px 20px,
+    radial-gradient(circle, #000 28%, transparent 29%) 10px 10px / 20px 20px,
+    #ff1f1f;
+
+  box-shadow: 0 12px 25px rgba(0,0,0,0.35);
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.recover-btn:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 16px 32px rgba(0,0,0,0.45);
+}
+
+.recover-btn:active {
+  transform: scale(0.95);
+}
+
+.recover-btn::after {
+  content: "💖";
+  margin-left: 8px;
+}
 
 
 /* ============================================================== TIENDA.HTML ============================================================== */
