@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     profile.streak_lost_at === yesterdayStr &&
     !profile.streak_recovered
 
-  const recoverCost = profile.lost_streak * 10 || 50
+  const recoverCost = profile.lost_streak * 3 || 50
 
   if (canRecover) {
     const recoverBtn = document.createElement('button')
