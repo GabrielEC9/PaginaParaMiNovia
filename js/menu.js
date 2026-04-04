@@ -51,7 +51,7 @@ overlay?.addEventListener('click', () => {
     { text: '❓ Curiosidades', href: 'curiosidades.html' },
     { text: '🛍️ Tienda', href: 'tienda.html' },
     { text: '🎁 Recompensas', href: 'recompensas.html' },
-    { text: '💎 Cosas que ¿.....?', href: 'chambeando.html' }
+    { text: '💎 Cosas que ¿.. ...... .. ..?', href: 'chambeando.html' }
   ]
 
   if (role === 'admin') {
