@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (canRecover) {
     const recoverBtn = document.createElement('button')
-    recoverBtn.textContent = `💖 Recuperar racha (-${recoverCost} 🐞)`
+    recoverBtn.textContent = `Recuperar racha ( - ${recoverCost} )`
     recoverBtn.classList.add('recover-btn')
 
   recoverBtn.addEventListener('click', async () => {
