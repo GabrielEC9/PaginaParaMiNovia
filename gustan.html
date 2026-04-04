@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cosas que me gustan de ti</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+
+<body class="ladybug-bg curiosidades-page">
+
+  <!-- FONDO -->
+  <div class="sky-background">
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
+    <div class="cloud cloud4"></div>
+    <div class="cloud cloud5"></div>
+    <div class="cloud cloud6"></div>
+    <div class="cloud cloud7"></div>
+    <div class="cloud cloud8"></div>
+  </div>
+
+  <!-- MENÚ -->
+  <header class="main-menu">
+    <div class="menu-left">
+      <span class="menu-title">Menu</span>
+    </div>
+
+    <div class="menu-right">
+      <button id="menu-toggle" class="menu-toggle">☰</button>
+      <button id="logout-btn" class="btn-logout">Salir</button>
+    </div>
+
+    <nav id="menu-links"></nav>
+  </header>
+
+  <div id="menu-overlay" class="menu-overlay"></div>
+
+  <!-- TÍTULO -->
+  <section class="frases-header">
+    <h1 class="frases-title">Cosas que me gustan de ti </h1>
+  </section>
+
+  <!-- CONTENIDO -->
+  <main class="phrases-container">
+    <section id="phrases-list" class="phrases-grid"></section>
+  </main>
+
+  <!-- JS -->
+  <script type="module" src="/js/supabaseClient.js"></script>
+  <script type="module" src="/js/auth.js"></script>
+  <script type="module" src="/js/ui.js"></script>
+  <script type="module" src="/js/gustan.js"></script> <!-- IMPORTANTE -->
+  <script type="module" src="/js/menu.js"></script>
+
+</body>
+</html>
