@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   recoverBtn.addEventListener('click', async () => {
     if (bugs < recoverCost) {
-      alert('No tienes suficientes bugs 🐞')
+      alert('No tienes suficientes bugs')
       return
     }
 
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       })
       .eq('id', user.id)
 
-    messageBox.textContent = '💖 ¡Racha recuperada con éxito!'
+    messageBox.textContent = '¡Racha recuperada con éxito!'
     messageBox.className = 'reward-message completed'
 
     setTimeout(() => location.reload(), 1200)
