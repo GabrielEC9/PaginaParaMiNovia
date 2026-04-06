@@ -78,9 +78,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   /* ================= RECUPERAR RACHA ================= */
+  const lostDate = profile.streak_lost_at?.slice(0, 10)
+
   const canRecover =
     profile.lost_streak > 0 &&
-    profile.streak_lost_at === yesterdayStr &&
+    (lostDate === todayStr || lostDate === yesterdayStr) &&
     !profile.streak_recovered
 
   const recoverCost = profile.lost_streak * 3 || 50
