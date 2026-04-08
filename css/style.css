@@ -712,6 +712,117 @@ body.panel-page {
   }
 }
 
+/* ================= MODAL AVISO ================= */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 2000;
+
+  animation: fadeIn 0.4s ease;
+}
+
+.modal-box {
+  width: 90%;
+  max-width: 420px;
+
+  padding: 26px;
+  border-radius: 22px;
+  text-align: center;
+
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 22px 22px,
+    radial-gradient(circle, #000 28%, transparent 29%) 11px 11px / 22px 22px,
+    #ff1f1f;
+
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+
+  animation: popModal 0.5s ease;
+}
+
+.modal-box::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  background: #fff;
+  border-radius: 16px;
+  z-index: 0;
+}
+
+.modal-box > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* TEXTO */
+.modal-box h2 {
+  font-size: 1.6rem;
+  color: #ff1f1f;
+  margin-bottom: 10px;
+}
+
+.modal-box p {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* BOTÓN */
+.modal-btn {
+  padding: 12px 20px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+
+  font-weight: 900;
+  font-size: 1rem;
+
+  color: #fff;
+
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 20px 20px,
+    radial-gradient(circle, #000 28%, transparent 29%) 10px 10px / 20px 20px,
+    #ff1f1f;
+
+  box-shadow: 0 10px 22px rgba(0,0,0,0.3);
+
+  transition: transform 0.2s ease;
+}
+
+.modal-btn:hover {
+  transform: scale(1.05);
+}
+
+.modal-btn:active {
+  transform: scale(0.95);
+}
+
+/* ANIMACIONES */
+@keyframes popModal {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
 
 /* ==================================================== ALBUM.HTML =============================================================== */
 

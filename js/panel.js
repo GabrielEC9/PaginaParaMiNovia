@@ -9,6 +9,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.location.replace('login.html')
   })
 
+  // AVISO MODAL 
+  const modal = document.getElementById('modal-aviso')
+  const btnCerrar = document.getElementById('cerrar-aviso')
+
+  if (modal && btnCerrar) {
+    btnCerrar.addEventListener('click', () => {
+      modal.style.display = 'none'
+    })
+  }
+  
   try {
     // Obtener sesión
     const { data: sessionData, error: sessionError } = await supabase.auth.getSession()
