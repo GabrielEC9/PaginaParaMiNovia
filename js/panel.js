@@ -9,24 +9,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.location.replace('login.html')
   })
 
-  // AVISO MODAL 
-  const modal = document.getElementById('modal-aviso')
-  const btnCerrar = document.getElementById('cerrar-aviso')
+/* ================= AVISO MODAL ================= */
+const modal = document.getElementById('modal-aviso')
+const btnCerrar = document.getElementById('cerrar-aviso')
 
-  if (modal && btnCerrar) {
-    btnCerrar.addEventListener('click', () => {
-      modal.style.display = 'none'
-    })
+if (modal && btnCerrar) {
+  const yaVisto = localStorage.getItem('aviso_visto')
+
+  if (!yaVisto) {
+    modal.style.display = 'flex'
+  } else {
+    modal.style.display = 'none'
   }
-  
-  if (!localStorage.getItem('aviso_visto')) {
-  modal.style.display = 'flex'
-}
 
-btnCerrar.addEventListener('click', () => {
-  modal.style.display = 'none'
-  localStorage.setItem('aviso_visto', 'true')
-})
+  btnCerrar.addEventListener('click', () => {
+    modal.style.display = 'none'
+    localStorage.setItem('aviso_visto', 'true')
+  })
+}
 
   try {
     // Obtener sesión
