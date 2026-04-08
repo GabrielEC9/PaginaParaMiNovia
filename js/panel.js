@@ -19,6 +19,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     })
   }
   
+  if (!localStorage.getItem('aviso_visto')) {
+  modal.style.display = 'flex'
+}
+
+btnCerrar.addEventListener('click', () => {
+  modal.style.display = 'none'
+  localStorage.setItem('aviso_visto', 'true')
+})
+
   try {
     // Obtener sesión
     const { data: sessionData, error: sessionError } = await supabase.auth.getSession()
