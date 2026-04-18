@@ -52,7 +52,7 @@ overlay?.addEventListener('click', () => {
     { text: '💎 Cosas Gustan de Ti', href: 'gustan.html' },
     { text: '🛍️ Tienda', href: 'tienda.html' },
     { text: '🎁 Recompensas', href: 'recompensas.html' },
-    { text: '📜 Recuerdos', href: 'chambeando.html' }
+    { text: '😱😱😱😱', href: 'chambeando.html' }
   ]
 
   if (role === 'admin') {
