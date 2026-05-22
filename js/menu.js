@@ -61,13 +61,13 @@ closeBtn?.addEventListener('click', () => {
     { text: '💎 Cosas Gustan de Ti', href: 'gustan.html' },
     { text: '🛍️ Tienda', href: 'tienda.html' },
     { text: '🎁 Recompensas', href: 'recompensas.html' },
-    { text: '😱😱😱😱', href: 'chambeando.html' }
+    { text: '📜 Recuerdos', href: 'recuerdos.html' }
   ]
 
   if (role === 'admin') {
     links.push(
       { text: '✏️ Subir contenido', href: 'admin-form.html' },
-      { text: 'Pruebas', href: 'recuerdos.html' },
+      //{ text: 'Pruebas', href: 'recuerdos.html' },
       { text: '🔔 Notificaciones', href: 'notificaciones.html' }
     )
   }
