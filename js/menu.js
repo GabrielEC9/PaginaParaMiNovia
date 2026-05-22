@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 const overlay = document.getElementById('menu-overlay')
 const closeBtn = document.getElementById('close-menu')
 const itemsContainer = menu.querySelector('.menu-items')
+const anniversaryEl = document.getElementById('anniversary-countdown')
 
 /* ===== TOGGLE MENU ===== */
 toggleBtn?.addEventListener('click', () => {
@@ -92,4 +93,36 @@ a.addEventListener('click', () => {
       btn.classList.add('active')
     }
   })
+  
+  /* ===== CONTADOR ANIVERSARIO ===== */
+
+function updateAnniversaryCountdown() {
+
+  if (!anniversaryEl) return
+
+  const targetDate = new Date('2027-02-25T00:00:00')
+  const now = new Date()
+
+  let diff = targetDate - now
+
+  // SI YA LLEGÓ
+  if (diff <= 0) {
+    anniversaryEl.textContent = '0 meses, 0 días y 0 horas'
+    return
+  }
+
+  const hours = Math.floor(diff / (1000 * 60 * 60))
+  const days = Math.floor(hours / 24)
+
+  const remainingHours = hours % 24
+  const months = Math.floor(days / 30)
+  const remainingDays = days % 30
+
+  anniversaryEl.textContent =
+    `${months} meses, ${remainingDays} días y ${remainingHours} horas`
+}
+
+updateAnniversaryCountdown()
+
+setInterval(updateAnniversaryCountdown, 1000 * 60)
 })
