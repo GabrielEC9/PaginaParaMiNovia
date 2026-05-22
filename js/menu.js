@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const toggleBtn = document.getElementById('menu-toggle')
 
 const overlay = document.getElementById('menu-overlay')
+const closeBtn = document.getElementById('close-menu')
 
 /* ===== TOGGLE MENU ===== */
 toggleBtn?.addEventListener('click', () => {
@@ -16,6 +17,12 @@ toggleBtn?.addEventListener('click', () => {
 
 /* ===== CERRAR TOCANDO FUERA ===== */
 overlay?.addEventListener('click', () => {
+  menu.classList.remove('open')
+  overlay.classList.remove('active')
+})
+
+/* ===== BOTON CERRAR ===== */
+closeBtn?.addEventListener('click', () => {
   menu.classList.remove('open')
   overlay.classList.remove('active')
 })

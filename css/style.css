@@ -352,18 +352,23 @@ body {
 
 /* ========================================= MENU GLOBAL ========================================= */
 
+/* =========================================
+   HEADER SUPERIOR
+========================================= */
+
 .main-menu {
   position: fixed;
   top: 0;
   left: 0;
+
   width: 100%;
   height: 70px;
 
   display: flex;
   align-items: center;
-  justify-content: space-between;
 
-  padding: 0 16px;
+  padding: 0 18px;
+
   z-index: 1000;
 
   background:
@@ -374,43 +379,146 @@ body {
   box-shadow: 0 6px 20px rgba(0,0,0,0.35);
 }
 
-/* ================= ZONAS ================= */
+/* =========================================
+   ZONA IZQUIERDA
+========================================= */
 
-.menu-left,
-.menu-right {
+.menu-left {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
 }
 
-/* ================= TITULO ================= */
+/* =========================================
+   TITULO
+========================================= */
 
 .menu-title {
-  font-size: 1.3rem;
+  color: white;
+  font-size: 1.2rem;
   font-weight: 900;
-  color: #fff;
-  white-space: nowrap;
 }
 
-/* ================= LINKS DESKTOP ================= */
+/* =========================================
+   BOTON HAMBURGUESA
+========================================= */
+
+.menu-toggle {
+  width: 45px;
+  height: 45px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: #111;
+  color: white;
+
+  font-size: 1.4rem;
+  cursor: pointer;
+
+  transition: 0.25s;
+}
+
+.menu-toggle:hover {
+  transform: scale(1.05);
+}
+
+/* =========================================
+   SIDEBAR
+========================================= */
 
 #menu-links {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 320px;
+  max-width: 85%;
+
+  height: 100vh;
+
+  background: #111;
+
   display: flex;
-  gap: 12px;
-  align-items: center;
+  flex-direction: column;
+
+  padding: 20px;
+
+  z-index: 1002;
+
+  transform: translateX(-100%);
+  transition: 0.35s ease;
+
+  overflow-y: auto;
+
+  box-shadow: 5px 0 25px rgba(0,0,0,0.5);
 }
 
-/* ================= BOTONES ================= */
+/* MENU ABIERTO */
+
+#menu-links.open {
+  transform: translateX(0);
+}
+
+/* =========================================
+   HEADER DEL SIDEBAR
+========================================= */
+
+.menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 30px;
+
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+/* =========================================
+   BOTON CERRAR
+========================================= */
+
+.close-menu {
+  width: 40px;
+  height: 40px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #ff1f1f;
+  color: white;
+
+  font-size: 1.1rem;
+  cursor: pointer;
+
+  transition: 0.25s;
+}
+
+.close-menu:hover {
+  transform: rotate(90deg);
+}
+
+/* =========================================
+   LINKS
+========================================= */
 
 .menu-btn {
   text-decoration: none;
-  font-weight: 600;
-  font-size: 0.9rem;
-  color: #fff;
 
-  padding: 8px 14px;
+  color: white;
+
+  background: #1f1f1f;
+
+  padding: 14px 16px;
+
   border-radius: 14px;
-  background: #111;
+
+  margin-bottom: 12px;
+
+  font-weight: 700;
 
   transition: 0.25s;
 }
@@ -421,46 +529,65 @@ body {
     radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 50px 50px,
     radial-gradient(circle, #000 28%, transparent 29%) 25px 25px / 50px 50px,
     #ff1f1f;
+
+  transform: translateX(5px);
 }
 
-/* ================= LOGOUT ================= */
+/* =========================================
+   FOOTER
+========================================= */
 
-#logout-btn {
-  background: #000;
-  color: #fff;
-  font-weight: 700;
+.menu-footer {
+  margin-top: auto;
+  padding-top: 20px;
+}
 
-  padding: 8px 14px;
+/* =========================================
+   LOGOUT
+========================================= */
+
+.btn-logout {
+  width: 100%;
+
+  border: none;
+
+  padding: 14px;
+
   border-radius: 14px;
-  border: none;
+
+  background: #ff1f1f;
+  color: white;
+
+  font-weight: 800;
+  font-size: 1rem;
+
   cursor: pointer;
+
+  transition: 0.25s;
 }
 
-/* ================= HAMBURGUESA ================= */
-
-.menu-toggle {
-  display: none;
-  background: #000;
-  color: #fff;
-  font-size: 1.5rem;
-  border: none;
-  border-radius: 10px;
-  padding: 6px 12px;
-  cursor: pointer;
+.btn-logout:hover {
+  background: #ff4444;
 }
 
-/* ===============================
-   OVERLAY MENU
-=============================== */
+/* =========================================
+   OVERLAY
+========================================= */
+
 .menu-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.4);
-  backdrop-filter: blur(2px);
+
+  background: rgba(0,0,0,0.5);
+
+  backdrop-filter: blur(3px);
+
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 998;
+
+  transition: 0.3s;
+
+  z-index: 999;
 }
 
 .menu-overlay.active {
@@ -468,79 +595,20 @@ body {
   pointer-events: all;
 }
 
-.main-menu {
-  z-index: 1000;
-}
+/* =========================================
+   RESPONSIVE
+========================================= */
 
-#menu-links {
-  z-index: 1001;
-}
+@media (max-width: 500px) {
 
-/* ================= MOBILE ================= */
-
-@media (max-width: 900px) {
-
-#menu-links {
-  position: fixed;
-  top: 70px;
-  left: 0;
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-
-  padding: 15px;
-  background: #ff1f1f;
-
-  transform: translateY(-100%);
-  opacity: 0;
-  pointer-events: none;
-
-  transition: 0.3s ease;
-}
-
-#menu-links.open {
-  transform: translateY(0);
-  opacity: 1;
-  pointer-events: auto;
-}
-
-
-  .menu-toggle {
-    display: block;
-  }
-
-  .menu-btn {
-    text-align: center;
+  .menu-title {
     font-size: 1rem;
-  }
-}
-
-.menu-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-/* ===== ORDEN DESKTOP ===== */
-@media (min-width: 901px) {
-
-  .menu-left {
-    order: 1;
   }
 
   #menu-links {
-    order: 2;
+    width: 280px;
   }
 
-  .menu-right {
-    order: 3;
-  }
-
-  .menu-toggle {
-    display: none;
-  }
 }
 
 
