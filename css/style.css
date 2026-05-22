@@ -516,21 +516,18 @@ body {
 #anniversary-countdown {
   font-weight: 900;
 
-  background:
-    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 50px 50px,
-    radial-gradient(circle, #000 28%, transparent 29%) 25px 25px / 50px 50px,
-    #ff1f1f;
-
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #ff3b3b;
 
   text-shadow:
-    0 0 10px rgba(255, 31, 31, 0.45);
+    0 0 6px rgba(255, 59, 59, 0.9),
+    0 0 12px rgba(255, 59, 59, 0.7),
+    0 0 18px rgba(255, 59, 59, 0.5);
 
   letter-spacing: 0.8px;
 
   font-size: 1rem;
+
+  opacity: 1;
 }
 
 .anniversary-label {
