@@ -61,7 +61,7 @@ closeBtn?.addEventListener('click', () => {
     { text: '💎 Cosas Gustan de Ti', href: 'gustan.html' },
     { text: '📜 Recuerdos', href: 'recuerdos.html' },
     { text: '🛍️ Tienda', href: 'tienda.html' },
-    { text: '🎁 Recompensas', href: 'recompensas.html' },
+    { text: '🎁 Recompensas', href: 'recompensas.html' }
 
   ]
 
