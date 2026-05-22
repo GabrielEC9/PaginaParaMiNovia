@@ -26,19 +26,45 @@
 <header class="main-menu">
 
   <div class="menu-left">
-    <span class="menu-title">Menu</span>
-  </div>
-
-  <div class="menu-right">
     <button id="menu-toggle" class="menu-toggle">☰</button>
-    <button id="logout-btn" class="btn-logout">Salir</button>
+
+    <span class="menu-title">
+      Bienvenida mi amor
+    </span>
   </div>
 
-  <nav id="menu-links"></nav>
+  <div class="anniversary-container">
+  <span class="anniversary-label">
+    Próximo aniversario:
+  </span>
+
+  <span id="anniversary-countdown">
+    Calculando...
+  </span>
+</div>
 
 </header>
 
-<div id="menu-overlay" class="menu-overlay"></div>
+<!-- SIDEBAR -->
+<nav id="menu-links">
+
+  <div class="menu-header">
+    <span>Menú</span>
+
+    <button id="close-menu" class="close-menu">
+      ✕
+    </button>
+  </div>
+
+  <!-- LINKS DINÁMICOS -->
+  <div class="menu-items"></div>
+  <div class="menu-footer">
+    <button id="logout-btn" class="btn-logout">
+      Cerrar sesión
+    </button>
+  </div>
+
+</nav>
 
 <!-- CONTENIDO DEL PANEL -->
 <div class="panel-container">
