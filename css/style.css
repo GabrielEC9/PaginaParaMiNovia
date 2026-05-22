@@ -3182,7 +3182,8 @@ body.recuerdos-page {
 
   font-weight: 900;
 
-  color: #ff1f1f;
+  background:
+    #ff1f1f;
 
   -webkit-background-clip: text;
   background-clip: text;
