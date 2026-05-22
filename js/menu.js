@@ -59,9 +59,10 @@ closeBtn?.addEventListener('click', () => {
     { text: '💌 Frases', href: 'frases.html' },
     { text: '❓ Curiosidades', href: 'curiosidades.html' }, 
     { text: '💎 Cosas Gustan de Ti', href: 'gustan.html' },
+    { text: '📜 Recuerdos', href: 'recuerdos.html' },
     { text: '🛍️ Tienda', href: 'tienda.html' },
     { text: '🎁 Recompensas', href: 'recompensas.html' },
-    { text: '📜 Recuerdos', href: 'recuerdos.html' }
+
   ]
 
   if (role === 'admin') {
