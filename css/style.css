@@ -3182,9 +3182,7 @@ body.recuerdos-page {
 
   font-weight: 900;
 
-  background:
-    radial-gradient(circle, #000 18%, transparent 19%) 0 0 / 20px 20px,
-    #ff1f1f;
+  color: #ff1f1f;
 
   -webkit-background-clip: text;
   background-clip: text;
