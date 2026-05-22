@@ -93,30 +93,50 @@ a.addEventListener('click', () => {
       btn.classList.add('active')
     }
   })
-  
-  /* ===== CONTADOR ANIVERSARIO ===== */
+
+/* ===== CONTADOR ANIVERSARIO ===== */
 
 function updateAnniversaryCountdown() {
 
   if (!anniversaryEl) return
 
-  const targetDate = new Date('2027-02-25T00:00:00')
   const now = new Date()
-
-  let diff = targetDate - now
+  const targetDate = new Date(2027, 1, 25, 0, 0, 0)
 
   // SI YA LLEGÓ
-  if (diff <= 0) {
+  if (now >= targetDate) {
     anniversaryEl.textContent = '0 meses, 0 días y 0 horas'
     return
   }
 
-  const hours = Math.floor(diff / (1000 * 60 * 60))
-  const days = Math.floor(hours / 24)
+  let tempDate = new Date(now)
 
-  const remainingHours = hours % 24
-  const months = Math.floor(days / 30)
-  const remainingDays = days % 30
+  let months = 0
+
+  // CALCULAR MESES REALES
+  while (true) {
+
+    let nextMonth = new Date(tempDate)
+    nextMonth.setMonth(nextMonth.getMonth() + 1)
+
+    if (nextMonth <= targetDate) {
+      months++
+      tempDate = nextMonth
+    } else {
+      break
+    }
+  }
+
+  // DIFERENCIA RESTANTE
+  const remainingMs = targetDate - tempDate
+
+  const remainingDays = Math.floor(
+    remainingMs / (1000 * 60 * 60 * 24)
+  )
+
+  const remainingHours = Math.floor(
+    (remainingMs / (1000 * 60 * 60)) % 24
+  )
 
   anniversaryEl.textContent =
     `${months} meses, ${remainingDays} días y ${remainingHours} horas`

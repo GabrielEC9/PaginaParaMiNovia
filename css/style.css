@@ -511,6 +511,14 @@ body {
 
 #anniversary-countdown {
   font-weight: 900;
+
+  color: #ff1f1f;
+
+  text-shadow:
+    0 0 5px rgba(255, 31, 31, 0.7),
+    0 0 10px rgba(255, 31, 31, 0.5);
+
+  letter-spacing: 0.5px;
 }
 
 /* =========================================
