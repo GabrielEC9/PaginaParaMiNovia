@@ -101,45 +101,43 @@ function updateAnniversaryCountdown() {
   if (!anniversaryEl) return
 
   const now = new Date()
-  const targetDate = new Date(2027, 1, 25, 0, 0, 0)
+  const target = new Date(2027, 1, 25, 0, 0, 0)
 
   // SI YA LLEGÓ
-  if (now >= targetDate) {
+  if (now >= target) {
     anniversaryEl.textContent = '0 meses, 0 días y 0 horas'
     return
   }
 
-  let tempDate = new Date(now)
+  // CALCULO REAL
+  let months =
+    (target.getFullYear() - now.getFullYear()) * 12 +
+    (target.getMonth() - now.getMonth())
 
-  let months = 0
+  let testDate = new Date(now)
+  testDate.setMonth(testDate.getMonth() + months)
 
-  // CALCULAR MESES REALES
-  while (true) {
+  // SI SE PASÓ
+  if (testDate > target) {
+    months--
 
-    let nextMonth = new Date(tempDate)
-    nextMonth.setMonth(nextMonth.getMonth() + 1)
-
-    if (nextMonth <= targetDate) {
-      months++
-      tempDate = nextMonth
-    } else {
-      break
-    }
+    testDate = new Date(now)
+    testDate.setMonth(testDate.getMonth() + months)
   }
 
-  // DIFERENCIA RESTANTE
-  const remainingMs = targetDate - tempDate
+  // RESTANTE
+  const diffMs = target - testDate
 
-  const remainingDays = Math.floor(
-    remainingMs / (1000 * 60 * 60 * 24)
+  const days = Math.floor(
+    diffMs / (1000 * 60 * 60 * 24)
   )
 
-  const remainingHours = Math.floor(
-    (remainingMs / (1000 * 60 * 60)) % 24
+  const hours = Math.floor(
+    (diffMs / (1000 * 60 * 60)) % 24
   )
 
   anniversaryEl.textContent =
-    `${months} meses, ${remainingDays} días y ${remainingHours} horas`
+    `${months} meses, ${days} días y ${hours} horas`
 }
 
 updateAnniversaryCountdown()
