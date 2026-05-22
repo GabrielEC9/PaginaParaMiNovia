@@ -70,7 +70,7 @@ closeBtn?.addEventListener('click', () => {
     )
   }
 
-  menu.innerHTML = ''
+menu.querySelectorAll('.menu-btn').forEach(btn => btn.remove())
   links.forEach(link => {
     const a = document.createElement('a')
     a.href = link.href
