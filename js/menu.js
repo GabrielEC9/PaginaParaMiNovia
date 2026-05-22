@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 const overlay = document.getElementById('menu-overlay')
 const closeBtn = document.getElementById('close-menu')
+const itemsContainer = menu.querySelector('.menu-items')
 
 /* ===== TOGGLE MENU ===== */
 toggleBtn?.addEventListener('click', () => {
@@ -70,7 +71,7 @@ closeBtn?.addEventListener('click', () => {
     )
   }
 
-menu.querySelectorAll('.menu-btn').forEach(btn => btn.remove())
+itemsContainer.innerHTML = ''
   links.forEach(link => {
     const a = document.createElement('a')
     a.href = link.href
@@ -82,7 +83,7 @@ a.addEventListener('click', () => {
   overlay.classList.remove('active')
 })
 
-    menu.appendChild(a)
+    itemsContainer.appendChild(a)
   })
 
   const currentPage = window.location.pathname.split('/').pop()
