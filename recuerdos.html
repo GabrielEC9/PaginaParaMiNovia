@@ -3,14 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Panel</title>
+
+  <title>Recuerdos</title>
+
   <link rel="stylesheet" href="./css/style.css">
   <link rel="stylesheet" href="./css/components.css">
 </head>
 
-<body class="ladybug-bg panel-page">
+<body class="ladybug-bg recuerdos-page">
 
-
+<!-- FONDO -->
 <div class="sky-background">
   <div class="cloud cloud1"></div>
   <div class="cloud cloud2"></div>
@@ -29,19 +31,19 @@
     <button id="menu-toggle" class="menu-toggle">☰</button>
 
     <span class="menu-title">
-      Bienvenida mi amor
+      Nuestros Recuerdos
     </span>
   </div>
 
   <div class="anniversary-container">
-  <span class="anniversary-label">
-    Próximo aniversario:
-  </span>
+    <span class="anniversary-label">
+      Próximo aniversario:
+    </span>
 
-  <span id="anniversary-countdown">
-    Calculando...
-  </span>
-</div>
+    <span id="anniversary-countdown">
+      Calculando...
+    </span>
+  </div>
 
 </header>
 
@@ -56,8 +58,8 @@
     </button>
   </div>
 
-  <!-- LINKS DINÁMICOS -->
   <div class="menu-items"></div>
+
   <div class="menu-footer">
     <button id="logout-btn" class="btn-logout">
       Cerrar sesión
@@ -66,33 +68,37 @@
 
 </nav>
 
-<!-- CONTENIDO DEL PANEL -->
-<div class="panel-container">
-  <article class="love-letter">
+<!-- OVERLAY -->
+<div id="menu-overlay" class="menu-overlay"></div>
 
-        <h1>Recuerdo de nuestro Pimer Beso</h1>
+<!-- CONTENIDO -->
+<main class="recuerdos-container">
 
-        <p>
-          Un mes después de iniciar mi noviazgo con ella, la cita en el parque Lindavista se convirtió en un hito imborrable. Recuerdo estar nervioso, a pesar de que ella ya era mi novia; siempre sentía una dulce inquietud al salir con ella, y aquel día no fue la excepción. Al llegar a la plaza, nos dirigimos al Starbucks del segundo piso, ubicado estratégicamente en la esquina. Evoco el momento en que le ofrecí mi bebida favorita, un Matcha, para que la probara; recuerdo ordenarlo y, al poco tiempo, nos acomodamos en una de las mesas.
-        </p>
-        
-        <p>
-          Recuerdo lo hermosa que se veía. Su belleza, eterna e inmutable, se grabó en mi memoria mientras platicábamos. Ella era tan tímida, tan nerviosa, tan hermosa como siempre. En aquel instante, mi anhelo de besarla era inmenso, pero el temor me paralizaba. Fue entonces cuando hice un pequeño juego con ella, una tierna travesura que, para mi sorpresa, me siguió. Cada vez que ella me decía que no a algo, yo le daba un beso furtivo en el cachete. Recuerdo la emoción creciente con cada beso, la forma en que mi corazón se aceleraba, acercándome más y más a sus labios, con la esperanza de poder besarla. La celeridad de mi pulso rivalizaba con la del día en que le declaré mi amor.
-        </p>
+  <h1 class="recuerdos-title">
+    Nuestros recuerdos
+  </h1>
 
-        <p>
-          Cuando finalmente tomé la valentía de acercarme a ella y darle un beso, recuerdo ese momento. Sentí algo inusual. Recuerdo terminar de besarla, tocarle su muslo y percibir que estaba temblando, probablemente de nerviosismo. Fue entonces cuando me di cuenta de que, al igual que yo, ella también sentía lo mismo. Durante más minutos, repetiríamos el juego una y otra y otra y otra vez; ambos no queríamos parar de besarnos. Al terminar y volver a nuestra plática, recordaré cada detalle de ese momento, de nuestro primer beso... <span style="color: red;">el primer beso del amor verdadero.</span>
-        </p>
+  <div id="recuerdos-grid" class="recuerdos-grid"></div>
 
-    <p class="signature">
-      Con todo mi cariño,<br>
-      ~Gabriel
-    </p>
+</main>
 
-  </article>
+<!-- MODAL -->
+<div id="recuerdo-modal" class="recuerdo-modal">
+
+  <div class="recuerdo-modal-content">
+
+    <button id="cerrar-recuerdo" class="cerrar-recuerdo">
+      ✕
+    </button>
+
+    <div id="recuerdo-completo"></div>
+
+  </div>
+
 </div>
 
 <script type="module" src="js/menu.js"></script>
-<script type="module" src="js/panel.js"></script>
+<script type="module" src="js/recuerdos.js"></script>
+
 </body>
 </html>
