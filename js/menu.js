@@ -67,7 +67,7 @@ closeBtn?.addEventListener('click', () => {
   if (role === 'admin') {
     links.push(
       { text: '✏️ Subir contenido', href: 'admin-form.html' },
-      { text: 'Pruebas', href: 'gustan.html' },
+      { text: 'Pruebas', href: 'recuerdos.html' },
       { text: '🔔 Notificaciones', href: 'notificaciones.html' }
     )
   }
