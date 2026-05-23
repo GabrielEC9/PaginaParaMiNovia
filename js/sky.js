@@ -2,7 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const body = document.body
 
-  const hour = new Date().getHours()
+  const hour = 18
+  //const hour = new Date().getHours()
 
   body.classList.remove(
     'sky-sunrise',
