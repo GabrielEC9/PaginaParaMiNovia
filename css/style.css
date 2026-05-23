@@ -23,7 +23,7 @@ body {
 
 /* ===== TÍTULO CARGA ===== */
 .loading-title {
-  font-size: clamp(2.4rem, 6vw, 3.4rem); /* 🔁 responsive */
+  font-size: clamp(2.4rem, 6vw, 3.4rem);
   font-weight: 900;
   letter-spacing: clamp(1.5px, 0.6vw, 3px);
 
@@ -40,7 +40,7 @@ body {
 
 /* ===== TEXTO DE CARGA ===== */
 .loading-text {
-  font-size: clamp(1.1rem, 3.5vw, 1.45rem); /* 🔁 responsive */
+  font-size: clamp(1.1rem, 3.5vw, 1.45rem);
   font-weight: 800;
   letter-spacing: clamp(0.8px, 0.4vw, 1.5px);
 
@@ -189,6 +189,117 @@ body {
 
 .cloud::before { width: 50%; height: 140%; top: -60%; left: 15%; }
 .cloud::after  { width: 40%; height: 120%; top: -40%; left: 45%; }
+
+/* =======================================================
+   CICLO DÍA Y NOCHE
+=========================================================== */
+
+body {
+
+  transition:
+    background 5s ease;
+
+  min-height: 100vh;
+}
+
+/* ================= DÍA ================= */
+
+body.sky-day {
+
+  background:
+    linear-gradient(
+      to bottom,
+      #6ec6ff 0%,
+      #8fd3ff 40%,
+      #dff6ff 100%
+    );
+}
+
+/* ================= AMANECER ================= */
+
+body.sky-sunrise {
+
+  background:
+    linear-gradient(
+      to bottom,
+      #ffb56b 0%,
+      #ff8c6b 35%,
+      #ffd6a5 70%,
+      #fff3d6 100%
+    );
+}
+
+/* ================= ATARDECER ================= */
+
+body.sky-sunset {
+
+  background:
+    linear-gradient(
+      to bottom,
+      #ff6b6b 0%,
+      #ff9966 30%,
+      #ffb347 55%,
+      #6a5acd 100%
+    );
+}
+
+/* ================= NOCHE ================= */
+
+body.sky-night {
+
+  background:
+    linear-gradient(
+      to bottom,
+      #06142e 0%,
+      #0b2347 45%,
+      #123c69 100%
+    );
+}
+
+/* =======================================================
+   NUBES SEGÚN MOMENTO
+=========================================================== */
+
+/* ===== DÍA ===== */
+
+body.sky-day .cloud {
+
+  opacity: 0.85;
+}
+
+/* ===== AMANECER ===== */
+
+body.sky-sunrise .cloud {
+
+  opacity: 0.7;
+
+  filter:
+    blur(8px)
+    hue-rotate(-10deg);
+}
+
+/* ===== ATARDECER ===== */
+
+body.sky-sunset .cloud {
+
+  opacity: 0.6;
+
+  filter:
+    blur(8px)
+    hue-rotate(-25deg);
+}
+
+/* ===== NOCHE ===== */
+
+body.sky-night .cloud {
+
+  opacity: 0.18;
+
+  filter:
+    blur(10px)
+    brightness(0.8);
+}
+
 
 /* ======================================================= LOGIN.HTML ============================================================ */
 
