@@ -1645,6 +1645,76 @@ body.frases-page {
   }
 }
 
+/* ================= PAGINACIÓN ================= */
+.pagination {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 30px 0 60px;
+}
+
+.pagination button {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+
+  background: #fff;
+  color: #ff1f1f;
+  font-weight: 800;
+
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+
+  transition: 0.2s;
+}
+
+.pagination button:hover {
+  transform: translateY(-2px);
+}
+
+.pagination button.active {
+  background: #ff1f1f;
+  color: #fff;
+}
+
+/* ================= RESPONSIVE MEJORADO ================= */
+@media (max-width: 640px) {
+
+  .phrases-container {
+    padding: 20px 10px 40px;
+  }
+
+  .phrases-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .frase-card {
+    max-width: 100%;
+    min-height: 220px;
+    padding: 18px;
+  }
+
+  .frase-card.frase-unlocked h3 {
+    font-size: 1.4rem;
+  }
+
+  .frase-card.frase-unlocked p {
+    font-size: 0.95rem;
+  }
+
+  .btn-unlock {
+    font-size: 0.85rem;
+    padding: 10px;
+  }
+
+  .pagination button {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+}
+
 /* ==================================================== RECOMPENSAS.HTML ==================================================== */
 
 body.rewards-page {
