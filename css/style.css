@@ -3408,7 +3408,7 @@ body.recuerdos-page {
 
   border-radius: 18px;
 
-  z-index: 0;
+  z-index: 1;
 }
 
 .recuerdo-card > * {
