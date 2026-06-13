@@ -73,7 +73,19 @@ cartOverlay.onclick = () => {
       <img src="${item.image_url || '/img/default.png'}" class="store-img">
       <h3>${item.name}</h3>
       <p>${item.description || ''}</p>
-      <p class="precio">🐞 ${item.cost}</p>
+        ${
+    item.discount_active
+      ? `
+        <div class="store-offer">
+          <span class="offer-badge">🔥 OFERTA</span>
+          <p class="precio-original">🐞 ${item.original_cost}</p>
+          <p class="precio">🐞 ${item.cost}</p>
+        </div>
+      `
+      : `
+        <p class="precio">🐞 ${item.cost}</p>
+      `
+  }
 
       <div class="qty-controls">
         <button class="qty-btn minus">−</button>
