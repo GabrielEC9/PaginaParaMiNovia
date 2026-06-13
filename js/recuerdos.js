@@ -191,7 +191,81 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     </article>
   `
-}
+},
+
+{
+  title: 'Nuestra Primera Salida 🌳💖',
+
+  preview:
+    'Después de declararme, la semana siguiente viviríamos nuestra primera salida oficialmente como novios en el Ecoparque Acoatl...',
+
+  content: `
+    <article class="love-letter">
+
+      <h1>Nuestra Primera Salida 🌳💖</h1>
+
+      <p>
+        Después de declararme, la semana siguiente viviríamos nuestra primera salida oficialmente como novios. Recuerdo aquel día en el Ecoparque Acoatl como uno de los recuerdos más tranquilos y hermosos de nuestra historia.
+      </p>
+
+      <p>
+        No existía un plan elaborado ni una lista de lugares por recorrer; bastaba simplemente con caminar junto a ella, explorar cada rincón del parque y disfrutar la extraña felicidad de poder tomar su mano sabiendo que ahora éramos novios.
+      </p>
+
+      <p>
+        Recuerdo recorrer con ella cada sendero, mirar los árboles, el lago y las estructuras del lugar mientras hablábamos de cualquier cosa. Todo parecía distinto aquel día, como si el mundo entero hubiera adquirido una calma especial únicamente por estar a su lado.
+      </p>
+
+      <p>
+        Nuestra visita nos llevó también al museo, aquel lugar de arquitectura tan peculiar y elegante que parecía sacado de otro sitio.
+      </p>
+
+      <p>
+        Después caminaríamos hacia las enormes canchas, inmensas a nuestros ojos, mientras seguíamos avanzando sin prisa alguna.
+      </p>
+
+      <p>
+        Más tarde llegaríamos al reloj solar, aquella gigantesca estructura que se elevaba sobre nosotros y que, por unos instantes, nos hizo detenernos simplemente para admirarla.
+      </p>
+
+      <p>
+        Recuerdo verla caminar junto a mí, tan tímida, tan tranquila, tan hermosa como siempre. Aquel día no necesitábamos nada más; ni planes extravagantes, ni conversaciones extraordinarias. Bastaba únicamente con estar juntos.
+      </p>
+
+      <p>
+        Pero el momento que más permanece grabado en mi memoria llegaría después.
+      </p>
+
+      <p>
+        Cerca del lago, bajo la sombra de un árbol que nos protegía del sol, nos recostaríamos sobre el césped. Recuerdo el instante exacto en que ella apoyó su cabeza sobre mi pecho.
+      </p>
+
+      <p>
+        Mi corazón latía con fuerza, tan rápido como el día en que le confesé mis sentimientos, mientras yo acariciaba lentamente su cabello.
+      </p>
+
+      <p>
+        Recuerdo el suave aroma de su pelo moviéndose con el viento, el sonido relajante de las hojas sobre nosotros y aquella paz indescriptible que sentía al verla descansar sobre mí.
+      </p>
+
+      <p>
+        Poco a poco comenzaría a quedarse dormida, mientras el tiempo parecía detenerse únicamente para nosotros.
+      </p>
+
+      <p>
+        <span style="color: red;">
+          Hasta el día de hoy, recordaré aquel instante como uno de los momentos más hermosos y puros que he vivido a su lado.
+        </span>
+      </p>
+
+      <p class="signature">
+        Con todo mi cariño,<br>
+        ~Gabriel
+      </p>
+
+    </article>
+  `
+},
 
   ]
 
