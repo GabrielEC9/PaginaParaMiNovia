@@ -2520,6 +2520,77 @@ body.store-page {
   z-index: 999;
 }
 
+/* ===================== CUPÓN ===================== */
+.cart-coupon {
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cart-coupon label {
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: #ff1f1f;
+}
+
+.cart-coupon select {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 2px solid #ff1f1f;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #333;
+  background: #fff;
+  cursor: pointer;
+}
+
+.cart-coupon select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.coupon-hint {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #b00000;
+  margin: 0;
+  display: none;
+}
+
+.coupon-hint.show {
+  display: block;
+}
+
+/* ===================== DESGLOSE DE PRECIO ===================== */
+.cart-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin: 4px 0;
+  color: #444;
+}
+
+.discount-line {
+  display: none;
+  color: #1f8f3a;
+  font-weight: 900;
+}
+
+.discount-line.show {
+  display: flex;
+}
+
+.cart-total-line {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #ff1f1f;
+  border-top: 1px dashed #ffb4b4;
+  padding-top: 8px;
+  margin-top: 8px;
+}
+
 /* ========= RESPONSIVE =============== */
 
 /* ---------- TABLET ---------- */
