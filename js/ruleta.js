@@ -540,7 +540,14 @@ await resolveSpin(boleto,premio)
 
         showResult(premio, `¡Ganaste ${premio.valor} bugs! 🐞`)
       } else if (premio.tipo === 'descuento') {
-        const codigo = premio.codigo || generateCode()
+        
+        const codigo = premio.codigo
+
+        if (!codigo) {
+    throw new Error("Este premio no tiene código configurado")
+}
+
+        
 
         const { error: codigoError } = await supabase
           .from('codigos_descuento')
