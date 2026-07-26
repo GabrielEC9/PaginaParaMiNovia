@@ -81,6 +81,7 @@ const RADIUS = OUTER_RADIUS - RING_SIZE
 let currentRotation = -Math.PI / 2
 let wheelOrder = []
 let wheelSegments = []
+let wheelInitialized = false
 
   resultClose.addEventListener('click', () => {
     modal.classList.add('hidden')
@@ -97,7 +98,13 @@ let wheelSegments = []
 
     if (!premios.length) return
 
+    if(!wheelInitialized){
+
     wheelOrder = shuffle(premios)
+
+    wheelInitialized = true
+
+}
     wheelSegments = []
 
     const totalPeso = wheelOrder.reduce(
