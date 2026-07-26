@@ -243,6 +243,14 @@ wheelOrder.forEach((p, i)=>{
 
         })
 
+        console.log(
+ "DIBUJANDO:",
+ premio.id,
+ premio.nombre,
+ startAngle,
+ endAngle
+)
+
         // COLOR DEL SECTOR
         ctx.beginPath()
         ctx.moveTo(CENTER, CENTER)
@@ -321,9 +329,10 @@ wheelOrder.forEach((p, i)=>{
 
     ctx.fill()
 
-    canvas.style.transform =
+canvas.style.transform =
 `rotate(${currentRotation}rad)`
 
+canvas.style.transformOrigin = "center center"
 }
 
   function drawLegend(premios) {
@@ -424,8 +433,9 @@ async function animateWheel(finalRotation){
                 initial+
                 distance*ease
 
-            canvas.style.transform=
-                `rotate(${currentRotation}rad)`
+canvas.style.transform =
+`rotate(${currentRotation}rad)`
+canvas.style.transformOrigin = "center center"
 
             if(t<1){
 
