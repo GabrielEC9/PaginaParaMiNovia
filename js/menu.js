@@ -69,6 +69,7 @@ closeBtn?.addEventListener('click', () => {
     links.push(
       { text: '✏️ Subir contenido', href: 'admin-form.html' },
       { text: '🎰 Ruleta', href: 'ruleta.html' },
+      { text: '🙍 Perfil', href: 'perfil.html' },
       //{ text: 'Pruebas', href: 'recuerdos.html' },
       { text: '🔔 Notificaciones', href: 'notificaciones.html' }
     )
