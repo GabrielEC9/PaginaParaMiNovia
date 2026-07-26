@@ -491,7 +491,7 @@ async function animateWheel(finalRotation){
       return
     }
 
-    const extraTurns = 5400 + Math.random()*1440
+    const extraTurns = ( Math.PI*2*6 ) + Math.random()*(Math.PI*2*4)
     const delta = getRotationDeltaToAngle(targetAngle) + extraTurns
 
 const finalRotation = currentRotation + delta
