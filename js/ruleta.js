@@ -354,26 +354,21 @@ function getTargetAngleForPremio(premio){
 
 function getRotationDeltaToAngle(target){
 
+    const TWO_PI = Math.PI * 2
+
     const current =
-        ((currentRotation % (Math.PI*2)) + Math.PI*2)
-        % (Math.PI*2)
+        ((currentRotation % TWO_PI) + TWO_PI) % TWO_PI
 
 
-let desired =
-    -target - Math.PI/2
+    const desired =
+        ((-target % TWO_PI) + TWO_PI) % TWO_PI
 
 
-    desired =
-        ((desired % (Math.PI*2)) + Math.PI*2)
-        % (Math.PI*2)
-
-
-    let delta =
-        desired - current
+    let delta = desired - current
 
 
     if(delta < 0)
-        delta += Math.PI*2
+        delta += TWO_PI
 
 
     return delta
