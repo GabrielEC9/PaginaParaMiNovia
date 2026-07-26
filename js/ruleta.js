@@ -388,12 +388,18 @@ function getRotationDeltaToAngle(target){
 
     const arrowAngle = -Math.PI / 2
 
-    const desiredRotation = arrowAngle - target
+    const currentNormalized =
+        ((currentRotation % TWO_PI) + TWO_PI) % TWO_PI
 
-    let delta = desiredRotation - currentRotation
+
+    const desired =
+        ((arrowAngle - target) % TWO_PI + TWO_PI) % TWO_PI
 
 
-    while(delta < 0){
+    let delta = desired - currentNormalized
+
+
+    if(delta < 0){
         delta += TWO_PI
     }
 
@@ -448,7 +454,6 @@ canvas.style.transformOrigin = "center center"
   "GRADOS:",
   finalRotation * 180 / Math.PI
 )
-currentRotation = currentRotation % (Math.PI * 2)
 
                 canvas.style.transform=
                 `rotate(${currentRotation}rad)`
