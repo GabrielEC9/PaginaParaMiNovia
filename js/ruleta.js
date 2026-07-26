@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     wheelSegments = []
 
     const total = wheelOrder.reduce((sum, p) => sum + Number(p.peso ?? 1), 0)
-    const separator = 0.8
+    const separator = 0.45
     const usableAngle = 360 - (wheelOrder.length * separator)
 
     let current = 0
