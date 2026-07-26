@@ -81,7 +81,6 @@ const RADIUS = OUTER_RADIUS - RING_SIZE
 let currentRotation = -Math.PI / 2
 let wheelOrder = []
 let wheelSegments = []
-let wheelInitialized = false
 
   resultClose.addEventListener('click', () => {
     modal.classList.add('hidden')
@@ -98,13 +97,10 @@ let wheelInitialized = false
 
     if (!premios.length) return
 
-    if(!wheelInitialized){
+    currentRotation = -Math.PI / 2
+canvas.style.transform = `rotate(${currentRotation}rad)`
 
-    wheelOrder = shuffle(premios)
-
-    wheelInitialized = true
-
-}
+wheelOrder = shuffle(premios)
     wheelSegments = []
 
     const totalPeso = wheelOrder.reduce(
@@ -475,7 +471,7 @@ async function animateWheel(finalRotation){
       premiosActivos = data || []
     }
 
-    drawWheel(premiosActivos)
+    drawWheel([...premiosActivos])
     drawLegend(premiosActivos)
     spinBtn.disabled = boletosDisponibles.length === 0 || premiosActivos.length === 0
   }
