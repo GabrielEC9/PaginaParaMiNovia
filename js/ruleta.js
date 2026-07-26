@@ -1,6 +1,7 @@
 import { supabase } from './supabaseClient.js'
 
 const CODE_PREFIX = 'DESC'
+const WHEEL_SEPARATOR = 0.55
 
 const WHEEL_PALETTE = [
   '#F4C6D7', // rosa suave
@@ -83,55 +84,41 @@ document.addEventListener('DOMContentLoaded', async () => {
     modal.classList.remove('hidden')
   }
 
-function drawWheel(premios) {
-  if (!premios || premios.length === 0) {
-    wheel.style.background = '#dcdcdc'
-    wheel.innerHTML = ''
-    wheelOrder = []
+  function drawWheel(premios) {
+    if (!premios || premios.length === 0) {
+      wheel.style.background = '#dcdcdc'
+      wheelOrder = []
+      wheelSegments = []
+      return
+    }
+
+    wheelOrder = shuffle(premios)
     wheelSegments = []
-    return
-  }
 
-  wheelOrder = shuffle(premios)
-  wheelSegments = []
+    const total = wheelOrder.reduce((sum, p) => sum + Number(p.peso ?? 1), 0)
+    const usableAngle = 360 - (WHEEL_SEPARATOR * wheelOrder.length)
 
-  const total = wheelOrder.reduce((sum, p) => sum + Number(p.peso ?? 1), 0)
-  let current = 0
-  const stops = []
+    let current = 0
+    const stops = []
 
-  wheelOrder.forEach((p) => {
-    const weight = Number(p.peso ?? 1)
-    const size = 360 * (weight / total)
+    wheelOrder.forEach((p) => {
+      const weight = Number(p.peso ?? 1)
+      const size = usableAngle * (weight / total)
 
-    const start = current
-    const end = current + size
+      const start = current
+      const end = current + size
 
-    wheelSegments.push({
-      id: p.id,
-      start,
-      end,
+      wheelSegments.push({ id: p.id, start, end })
+
+      stops.push(`${colorForPremio(p)} ${start}deg ${end}deg`)
+      current = end
+
+      stops.push(`#000 ${current}deg ${current + WHEEL_SEPARATOR}deg`)
+      current += WHEEL_SEPARATOR
     })
 
-    stops.push(`${colorForPremio(p)} ${start}deg ${end}deg`)
-    current = end
-  })
-
-  wheel.style.background = `conic-gradient(from -90deg, ${stops.join(', ')})`
-  renderSeparators()
-}
-
-function renderSeparators() {
-  wheel.querySelectorAll('.wheel-separator').forEach(el => el.remove())
-
-  wheelSegments.forEach((segment, index) => {
-    if (index === wheelSegments.length - 1) return
-
-    const line = document.createElement('span')
-    line.className = 'wheel-separator'
-    line.style.transform = `translate(-50%, -50%) rotate(${segment.end - 90}deg)`
-    wheel.appendChild(line)
-  })
-}
+    wheel.style.background = `conic-gradient(from -90deg, ${stops.join(', ')})`
+  }
 
   function drawLegend(premios) {
     legend.innerHTML = ''
