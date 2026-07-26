@@ -95,7 +95,19 @@
     <div id="cart-items" class="cart-items"></div>
 
     <div class="cart-footer">
-      <p>Total: 🐞 <span id="cart-total">0</span></p>
+
+      <div class="cart-coupon">
+        <label for="coupon-select">Cupón 🎟️</label>
+        <select id="coupon-select">
+          <option value="">Sin cupón</option>
+        </select>
+        <p id="coupon-hint" class="coupon-hint"></p>
+      </div>
+
+      <p class="cart-line">Subtotal: 🐞 <span id="cart-subtotal">0</span></p>
+      <p id="discount-line" class="cart-line discount-line">Descuento: -🐞 <span id="cart-discount">0</span></p>
+      <p class="cart-line cart-total-line">Total: 🐞 <span id="cart-total">0</span></p>
+
       <button id="buy-btn" class="btn-ladybug">
         <span>Comprar 🛍️</span>
       </button>
