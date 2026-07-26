@@ -1,5 +1,8 @@
 import { supabase } from './supabaseClient.js'
 
+const CYCLE_DAYS = 14
+const BOLETO_IMAGE = '/imagenes/boleto/boleto.png' // ajusta si tu archivo se llama distinto
+
 document.addEventListener('DOMContentLoaded', async () => {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) {
@@ -92,31 +95,31 @@ document.addEventListener('DOMContentLoaded', async () => {
     recoverBtn.textContent = `Recuperar racha ( - ${recoverCost} )`
     recoverBtn.classList.add('recover-btn')
 
-  recoverBtn.addEventListener('click', async () => {
-    if (bugs < recoverCost) {
-      alert('No tienes suficientes bugs')
-      return
-    }
+    recoverBtn.addEventListener('click', async () => {
+      if (bugs < recoverCost) {
+        alert('No tienes suficientes bugs')
+        return
+      }
 
-    await supabase
-      .from('profiles')
-      .update({
-        bugs: bugs - recoverCost,
-        streak_days: profile.lost_streak,
-        lost_streak: 0,
-        streak_lost_at: null,
-        streak_recovered: true,
-        last_claim: todayStr
-      })
-      .eq('id', user.id)
+      await supabase
+        .from('profiles')
+        .update({
+          bugs: bugs - recoverCost,
+          streak_days: profile.lost_streak,
+          lost_streak: 0,
+          streak_lost_at: null,
+          streak_recovered: true,
+          last_claim: todayStr
+        })
+        .eq('id', user.id)
 
-    messageBox.textContent = '¡Racha recuperada con éxito!'
-    messageBox.className = 'reward-message completed'
+      messageBox.textContent = '¡Racha recuperada con éxito!'
+      messageBox.className = 'reward-message completed'
 
-    setTimeout(() => location.reload(), 1200)
-  })
-  container.appendChild(recoverBtn)
-}
+      setTimeout(() => location.reload(), 1200)
+    })
+    container.appendChild(recoverBtn)
+  }
 
   /* ================= DÍAS ================= */
 
@@ -124,12 +127,57 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const activeDay = streakBroken
     ? 1
-    : ((realDay - 1) % 10) + 1
+    : ((realDay - 1) % CYCLE_DAYS) + 1
 
   let nextDayForTomorrow =
     (!streakBroken && alreadyClaimedToday && !canClaimNow)
-      ? ((activeDay % 10) + 1)
+      ? ((activeDay % CYCLE_DAYS) + 1)
       : null
+
+  /* ================= HELPER: dar boleto al usuario ================= */
+  async function giveBoleto() {
+    await supabase
+      .from('boletos')
+      .insert({ user_id: user.id, origen: 'racha' })
+  }
+
+  /* ================= HELPER: contenido visual de una tarjeta ================= */
+  function rewardInnerHTML(r, { locked = false, disponibleManana = false } = {}) {
+    if (locked && r.reward_boleto) {
+      return `
+        <div class="reward-day">Día ${r.day_number}</div>
+        <div class="reward-bugs">🎟️ Premio especial</div>
+      `
+    }
+
+    if (disponibleManana) {
+      return `
+        <div class="reward-day">Día ${r.day_number}</div>
+        <div class="reward-bugs">${r.reward_boleto ? '🎟️ Premio especial - ' : ''}Disponible mañana</div>
+      `
+    }
+
+    if (locked) {
+      return `
+        <div class="reward-day">Día ${r.day_number}</div>
+        <div class="reward-bugs">🔒</div>
+      `
+    }
+
+    // desbloqueado o ya reclamado
+    if (r.reward_boleto) {
+      return `
+        <div class="reward-day">Día ${r.day_number}</div>
+        <img class="reward-boleto-img" src="${BOLETO_IMAGE}" alt="Boleto especial" />
+        <div class="reward-bugs">🐞 ${r.reward_bugs} + 🎟️ Boleto</div>
+      `
+    }
+
+    return `
+      <div class="reward-day">Día ${r.day_number}</div>
+      <div class="reward-bugs">🐞 ${r.reward_bugs}</div>
+    `
+  }
 
   /* ================= RECOMPENSAS ================= */
   const { data: rewards } = await supabase
@@ -142,21 +190,16 @@ document.addEventListener('DOMContentLoaded', async () => {
   rewards.forEach(r => {
     const card = document.createElement('div')
     card.classList.add('reward-card')
+    if (r.reward_boleto) card.classList.add('special')
 
     if (r.day_number < activeDay || (r.day_number === activeDay && alreadyClaimedToday)) {
       card.classList.add('claimed')
-      card.innerHTML = `
-        <div class="reward-day">Día ${r.day_number}</div>
-        <div class="reward-bugs">🐞 ${r.reward_bugs}</div>
-      `
+      card.innerHTML = rewardInnerHTML(r)
     }
 
     else if (!streakBroken && r.day_number === activeDay && canClaimNow) {
       card.classList.add('unlocked', 'clickable')
-      card.innerHTML = `
-        <div class="reward-day">Día ${r.day_number}</div>
-        <div class="reward-bugs">🐞 ${r.reward_bugs}</div>
-      `
+      card.innerHTML = rewardInnerHTML(r)
       card.addEventListener('click', async () => {
         const reward = r.reward_bugs
 
@@ -169,7 +212,11 @@ document.addEventListener('DOMContentLoaded', async () => {
           })
           .eq('id', user.id)
 
-        messageBox.textContent = `✔ Día ${activeDay} completado`
+        if (r.reward_boleto) await giveBoleto()
+
+        messageBox.textContent = r.reward_boleto
+          ? `✔ Día ${activeDay} completado - ¡Ganaste un boleto! 🎟️`
+          : `✔ Día ${activeDay} completado`
         messageBox.className = 'reward-message completed'
         setTimeout(() => location.reload(), 800)
       })
@@ -177,18 +224,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     else if (!streakBroken && alreadyClaimedToday && !canClaimNow && r.day_number === nextDayForTomorrow) {
       card.classList.add('locked', 'next')
-      card.innerHTML = `
-        <div class="reward-day">Día ${r.day_number}</div>
-        <div class="reward-bugs">Disponible mañana</div>
-      `
+      card.innerHTML = rewardInnerHTML(r, { disponibleManana: true })
     }
 
     else if (streakBroken && r.day_number === 1 && canClaimNow) {
       card.classList.add('unlocked', 'clickable')
-      card.innerHTML = `
-        <div class="reward-day">Día 1</div>
-        <div class="reward-bugs">🐞 ${r.reward_bugs}</div>
-      `
+      card.innerHTML = rewardInnerHTML(r)
       card.addEventListener('click', async () => {
         const reward = r.reward_bugs
 
@@ -201,7 +242,11 @@ document.addEventListener('DOMContentLoaded', async () => {
           })
           .eq('id', user.id)
 
-        messageBox.textContent = `✔ Día 1 completado`
+        if (r.reward_boleto) await giveBoleto()
+
+        messageBox.textContent = r.reward_boleto
+          ? `✔ Día 1 completado - ¡Ganaste un boleto! 🎟️`
+          : `✔ Día 1 completado`
         messageBox.className = 'reward-message completed'
         setTimeout(() => location.reload(), 800)
       })
@@ -209,10 +254,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     else {
       card.classList.add('locked')
-      card.innerHTML = `
-        <div class="reward-day">Día ${r.day_number}</div>
-        <div class="reward-bugs">🔒</div>
-      `
+      card.innerHTML = rewardInnerHTML(r, { locked: true })
     }
 
     rewardsGrid.appendChild(card)

@@ -1857,6 +1857,11 @@ body.rewards-page {
   z-index: 2;
 }
 
+/* los días especiales bloqueados no llevan candado, ya llevan su propio aviso */
+.reward-card.locked.special::after {
+  content: "";
+}
+
 /* DESBLOQUEADO */
 .reward-card.unlocked {
   opacity: 1;
@@ -1923,6 +1928,56 @@ body.rewards-page {
   margin-top: 6px;
 }
 
+/* ================= TARJETA ESPECIAL (BOLETO) ================= */
+/* Días que dan boleto: borde/glow dorado en vez del rojo normal, sin importar el estado */
+.reward-card.special {
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 24px 24px,
+    radial-gradient(circle, #000 28%, transparent 29%) 12px 12px / 24px 24px,
+    #ffb400;
+  box-shadow: 0 14px 30px rgba(255, 180, 0, 0.45);
+}
+
+.reward-card.special.unlocked {
+  box-shadow: 0 0 0 3px #ffb400, 0 18px 36px rgba(255, 180, 0, 0.55);
+  animation: special-pulse 1.8s ease-in-out infinite;
+}
+
+.reward-card.special.claimed {
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 20px 20px,
+    radial-gradient(circle, #000 28%, transparent 29%) 10px 10px / 20px 20px,
+    #e0c98f;
+}
+
+.reward-card.special .reward-day {
+  color: #cc8b00;
+}
+
+@keyframes special-pulse {
+  0%, 100% { box-shadow: 0 0 0 3px #ffb400, 0 18px 36px rgba(255, 180, 0, 0.55); }
+  50% { box-shadow: 0 0 0 6px #ffd75e, 0 22px 42px rgba(255, 180, 0, 0.7); }
+}
+
+/* imagen del boleto dentro de la tarjeta desbloqueada/reclamable */
+.reward-boleto-img {
+  width: 100%;
+  max-width: 140px;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 10px;
+  margin: 4px auto 8px;
+  display: block;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+  border: 2px solid #ffb400;
+}
+
+/* aviso "premio especial" cuando está bloqueado, con acento dorado */
+.reward-card.locked.special .reward-bugs {
+  color: #cc8b00;
+}
+
 
 /* ================= RESPONSIVE ================================= */
 @media (max-width: 1024px) {
@@ -1950,6 +2005,10 @@ body.rewards-page {
 
 .reward-bugs {
   font-size: 1.45rem;
+}
+
+.reward-boleto-img {
+  max-width: 100px;
 }
 
 }
