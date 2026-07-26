@@ -84,44 +84,55 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   function drawWheel(premios) {
-    if (!premios || premios.length === 0) {
-      wheel.style.background = '#dcdcdc'
-      wheelOrder = []
-      wheelSegments = []
-      return
-    }
-
-    wheelOrder = shuffle(premios)
+  if (!premios || premios.length === 0) {
+    wheel.style.background = '#dcdcdc'
+    wheel.innerHTML = ''
+    wheelOrder = []
     wheelSegments = []
+    return
+  }
 
-    const total = wheelOrder.reduce((sum, p) => sum + Number(p.peso ?? 1), 0)
-    const separator = 0.45
-    const usableAngle = 360 - (wheelOrder.length * separator)
+  wheelOrder = shuffle(premios)
+  wheelSegments = []
 
-    let current = 0
-    const stops = []
+  const total = wheelOrder.reduce((sum, p) => sum + Number(p.peso ?? 1), 0)
 
-    wheelOrder.forEach((p) => {
-      const weight = Number(p.peso ?? 1)
-      const size = usableAngle * (weight / total)
-      const start = current
-      const end = current + size
+  let current = 0
+  const stops = []
 
-      wheelSegments.push({
-        id: p.id,
-        start,
-        end,
-      })
+  wheelOrder.forEach((p) => {
+    const weight = Number(p.peso ?? 1)
+    const size = 360 * (weight / total)
+    const start = current
+    const end = current + size
 
-      stops.push(`${colorForPremio(p)} ${start}deg ${end}deg`)
-
-      current = end
-      stops.push(`#000 ${current}deg ${current + separator}deg`)
-      current += separator
+    wheelSegments.push({
+      id: p.id,
+      start,
+      end,
     })
 
-    wheel.style.background = `conic-gradient(from -90deg, ${stops.join(', ')})`
-  }
+    stops.push(`${colorForPremio(p)} ${start}deg ${end}deg`)
+    current = end
+  })
+
+  wheel.style.background = `conic-gradient(from -90deg, ${stops.join(', ')})`
+
+  renderSeparators()
+}
+
+function renderSeparators() {
+  wheel.querySelectorAll('.wheel-separator').forEach(el => el.remove())
+
+  wheelSegments.forEach((segment, index) => {
+    if (index === wheelSegments.length - 1) return
+
+    const line = document.createElement('span')
+    line.className = 'wheel-separator'
+    line.style.transform = `translateX(-50%) rotate(${segment.end}deg)`
+    wheel.appendChild(line)
+  })
+}
 
   function drawLegend(premios) {
     legend.innerHTML = ''
