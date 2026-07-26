@@ -24,16 +24,30 @@ function generateCode() {
 }
 
 function pickWeighted(premios) {
-  const total = premios.reduce((sum, p) => sum + Number(p.peso ?? 1), 0)
-  if (total <= 0) return premios[premios.length - 1]
 
-  let rand = Math.random() * total
-  for (const p of premios) {
+  const total = premios.reduce(
+    (sum,p)=>sum + Number(p.peso ?? 1),
+    0
+  )
+
+
+  let rand = Math.random()*total
+
+
+  for(const p of premios){
+
     const peso = Number(p.peso ?? 1)
-    if (rand < peso) return p
+
+    if(rand < peso)
+      return p
+
     rand -= peso
+
   }
-  return premios[premios.length - 1]
+
+
+  return premios[premios.length-1]
+
 }
 
 function colorForPremio(p) {
@@ -93,14 +107,11 @@ let wheelSegments = []
     modal.classList.remove('hidden')
   }
 
-  function drawWheel(premios) {
+  function drawWheel() {
 
-    if (!premios.length) return
+    if (!wheelOrder.length) return
 
-    currentRotation = -Math.PI / 2
-canvas.style.transform = `rotate(${currentRotation}rad)`
-
-wheelOrder = shuffle(premios)
+    
     wheelSegments = []
 
     const totalPeso = wheelOrder.reduce(
@@ -469,9 +480,12 @@ async function animateWheel(finalRotation){
       premiosActivos = []
     } else {
       premiosActivos = data || []
+
+wheelOrder = shuffle(premiosActivos)
+
     }
 
-    drawWheel([...premiosActivos])
+    drawWheel() 
     drawLegend(premiosActivos)
     spinBtn.disabled = boletosDisponibles.length === 0 || premiosActivos.length === 0
   }
@@ -482,7 +496,7 @@ async function animateWheel(finalRotation){
     spinBtn.disabled = true
 
     const boleto = boletosDisponibles[0]
-    const premio = pickWeighted(premiosActivos)
+    const premio = pickWeighted(wheelOrder)
 
     const targetAngle = getTargetAngleForPremio(premio)
     if (targetAngle === null) {
