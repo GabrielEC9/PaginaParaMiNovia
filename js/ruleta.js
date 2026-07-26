@@ -362,7 +362,8 @@ function getTargetAngleForPremio(premio){
         (Math.random()-0.5)*
         Math.min(size*0.25,0.10)
 
-    return center+offset
+    console.log("TARGET", premio.nombre, center)
+return center
 
 }
 
@@ -497,6 +498,8 @@ wheelOrder = shuffle(premiosActivos)
 
     const boleto = boletosDisponibles[0]
     const premio = pickWeighted(wheelOrder)
+    console.log("PREMIO ELEGIDO:", premio.nombre, premio.id)
+console.log("SEGMENTO:", wheelSegments.find(s => s.id === premio.id))
 
     const targetAngle = getTargetAngleForPremio(premio)
     if (targetAngle === null) {
@@ -584,6 +587,7 @@ await resolveSpin(boleto,premio)
       }
 
       await loadBoletos()
+      await loadPremios()
     } catch (error) {
       console.error('Error resolviendo el giro:', error)
       messageBox.textContent = 'Ocurrió un error al registrar el giro. Intenta de nuevo.'
