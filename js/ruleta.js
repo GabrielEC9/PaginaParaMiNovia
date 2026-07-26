@@ -203,58 +203,6 @@ ctx.fillStyle = "#ffffff"
 
 ctx.fill()
 
-// ==========================================
-// LUNARES
-// ==========================================
-
-ctx.fillStyle = "#111"
-
-const dots = 24
-
-for(let i=0;i<dots;i++){
-
-    const angle = i * Math.PI * 2 / dots
-
-    const x =
-        CENTER +
-        Math.cos(angle) * (OUTER_RADIUS - 32)
-
-    const y =
-        CENTER +
-        Math.sin(angle) * (OUTER_RADIUS - 32)
-
-
-    ctx.beginPath()
-
-    ctx.arc(
-        x,
-        y,
-        11,
-        0,
-        Math.PI * 2
-    )
-
-
-    ctx.fillStyle="#111"
-
-    ctx.fill()
-
-
-    // pequeño brillo del lunar
-    ctx.beginPath()
-
-    ctx.arc(
-        x-3,
-        y-3,
-        3,
-        0,
-        Math.PI*2
-    )
-
-    ctx.fillStyle="rgba(255,255,255,0.35)"
-
-    ctx.fill()
-}
 
     let startAngle = -Math.PI / 2
 
