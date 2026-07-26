@@ -372,12 +372,13 @@ function getTargetAngleForPremio(premio){
         segment.end-
         segment.start
 
-    const offset=
-        (Math.random()-0.5)*
-        Math.min(size*0.25,0.10)
+const offset =
+    (Math.random()-0.5) *
+    Math.min(size * 0.25, 0.10)
 
-    console.log("TARGET", premio.nombre, center)
-return center
+console.log("TARGET", premio.nombre, center + offset)
+
+return center + offset
 
 }
 
@@ -385,13 +386,21 @@ function getRotationDeltaToAngle(target){
 
     const TWO_PI = Math.PI * 2
 
-    const current = currentRotation % TWO_PI
+    const current =
+        ((currentRotation % TWO_PI) + TWO_PI) % TWO_PI
 
-    let delta = -target - current
 
-    while(delta < 0){
+    const desired =
+        ((-Math.PI / 2 - target) + TWO_PI) % TWO_PI
+
+
+    let delta = desired - current
+
+
+    if(delta < 0){
         delta += TWO_PI
     }
+
 
     return delta
 }
