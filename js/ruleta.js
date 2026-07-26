@@ -63,7 +63,11 @@ const ctx = canvas.getContext('2d')
 
 const SIZE = canvas.width
 const CENTER = SIZE / 2
-const RADIUS = SIZE / 2 - 20
+const OUTER_RADIUS = SIZE/2 - 8
+
+const RING_SIZE = 42
+
+const RADIUS = OUTER_RADIUS - RING_SIZE
   const messageBox = document.getElementById('roulette-message')
   const legend = document.getElementById('premios-legend')
 
@@ -102,6 +106,72 @@ let wheelSegments = []
     )
 
     ctx.clearRect(0, 0, SIZE, SIZE)
+
+    const OUTER_RADIUS = SIZE/2 - 8
+
+const RING_SIZE = 42
+
+const RADIUS = OUTER_RADIUS - RING_SIZE
+
+ctx.beginPath()
+
+ctx.arc(
+
+    CENTER,
+
+    CENTER,
+
+    RADIUS,
+
+    0,
+
+    Math.PI*2
+
+)
+
+ctx.fillStyle="#ffffff"
+
+ctx.fill()
+
+ctx.fillStyle="#111"
+
+const dots=20
+
+for(let i=0;i<dots;i++){
+
+    const angle=i*Math.PI*2/dots
+
+    const x=
+
+        CENTER+
+
+        Math.cos(angle)*(OUTER_RADIUS-20)
+
+    const y=
+
+        CENTER+
+
+        Math.sin(angle)*(OUTER_RADIUS-20)
+
+    ctx.beginPath()
+
+    ctx.arc(
+
+        x,
+
+        y,
+
+        8,
+
+        0,
+
+        Math.PI*2
+
+    )
+
+    ctx.fill()
+
+}
 
     let startAngle = -Math.PI / 2
 
