@@ -59,7 +59,9 @@ closeBtn?.addEventListener('click', () => {
     { text: '💌 Frases', href: 'frases.html' },
     { text: '❓ Curiosidades', href: 'curiosidades.html' }, 
     { text: '💎 Cosas Gustan de Ti', href: 'gustan.html' },
-    { text: '📜 Recuerdos', href: 'recuerdos.html' }
+    { text: '📜 Recuerdos', href: 'recuerdos.html' },
+    { text: '🛍️ Tienda', href: 'tienda.html' },
+    { text: '🎁 Recompensas', href: 'recompensas.html' }
 
   ]
 
@@ -67,9 +69,7 @@ closeBtn?.addEventListener('click', () => {
     links.push(
       { text: '✏️ Subir contenido', href: 'admin-form.html' },
       //{ text: 'Pruebas', href: 'recuerdos.html' },
-      { text: '🔔 Notificaciones', href: 'notificaciones.html' },
-      { text: '🛍️ Tienda', href: 'tienda.html' },
-      { text: '🎁 Recompensas', href: 'recompensas.html' }
+      { text: '🔔 Notificaciones', href: 'notificaciones.html' }
     )
   }
 
