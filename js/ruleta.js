@@ -103,7 +103,7 @@ let wheelSegments = []
 
     ctx.clearRect(0, 0, SIZE, SIZE)
 
-    let startAngle = currentRotation
+    let startAngle = -Math.PI / 2
 
     wheelOrder.forEach((premio) => {
 
@@ -201,6 +201,9 @@ let wheelSegments = []
 
     ctx.fill()
 
+    canvas.style.transform =
+`rotate(${currentRotation}rad)`
+
 }
 
   function drawLegend(premios) {
@@ -224,40 +227,58 @@ let wheelSegments = []
 
 function getTargetAngleForPremio(premio){
 
-    const segment =
-        wheelSegments.find(s=>s.id===premio.id)
+    const segment=
+        wheelSegments.find(
+            s=>s.id===premio.id
+        )
 
     if(!segment)
         return null
 
-    const center =
-        (segment.start+segment.end)/2
+    const center=
+        (segment.start+
+        segment.end)/2
 
-    const size =
-        segment.end-segment.start
+    const size=
+        segment.end-
+        segment.start
 
-    const offset =
+    const offset=
         (Math.random()-0.5)*
-        Math.min(size*0.3,8)
+        Math.min(size*0.25,0.10)
 
     return center+offset
 
 }
 
-function getRotationDeltaToAngle(targetAngle) {
+function getRotationDeltaToAngle(target){
 
-    // El conic-gradient comienza en -90°
-    const visualAngle = (targetAngle - 90 + 360) % 360
+    let current=currentRotation
 
-    const currentMod = ((currentRotation % 360) + 360) % 360
+    while(current<0)
+        current+=Math.PI*2
 
-    const desiredMod = ((360 - visualAngle) + 360) % 360
+    current=current%(Math.PI*2)
 
-    return (desiredMod - currentMod + 360) % 360
+    let desired=
+        -target
+
+    while(desired<0)
+        desired+=Math.PI*2
+
+    desired=desired%(Math.PI*2)
+
+    let delta=
+        desired-current
+
+    if(delta<0)
+        delta+=Math.PI*2
+
+    return delta
 
 }
 
-function animateWheel(finalRotation){
+async function animateWheel(finalRotation){
 
     return new Promise(resolve=>{
 
@@ -267,38 +288,46 @@ function animateWheel(finalRotation){
 
         const initial = currentRotation
 
-        const distance = finalRotation - initial
+        const distance = finalRotation-initial
 
-        function frame(now){
+        function animate(now){
 
-            let t = (now-start)/duration
+            let t=(now-start)/duration
 
             if(t>1)t=1
 
-            // desaceleración suave
-            const ease =
-                1-Math.pow(1-t,4)
+            /*
+                Curva tipo ruleta real
+            */
 
-            const angle =
-                initial + distance*ease
+            const ease=
+                1-Math.pow(1-t,5)
 
-            wheel.style.transform =
-                `rotate(${angle}deg)`
+            currentRotation=
+                initial+
+                distance*ease
+
+            canvas.style.transform=
+                `rotate(${currentRotation}rad)`
 
             if(t<1){
 
-                requestAnimationFrame(frame)
+                requestAnimationFrame(animate)
 
             }else{
 
                 currentRotation=finalRotation
+
+                canvas.style.transform=
+                `rotate(${currentRotation}rad)`
+
                 resolve()
 
             }
 
         }
 
-        requestAnimationFrame(frame)
+        requestAnimationFrame(animate)
 
     })
 
