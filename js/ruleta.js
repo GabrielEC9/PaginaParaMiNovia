@@ -58,7 +58,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const boletosSpan = document.getElementById('user-boletos')
   const spinBtn = document.getElementById('spin-btn')
-  const wheel = document.getElementById('wheel')
+  const canvas = document.getElementById('wheelCanvas')
+const ctx = canvas.getContext('2d')
+
+const SIZE = canvas.width
+const CENTER = SIZE / 2
+const RADIUS = SIZE / 2 - 20
   const messageBox = document.getElementById('roulette-message')
   const legend = document.getElementById('premios-legend')
 
@@ -69,9 +74,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   let boletosDisponibles = []
   let premiosActivos = []
-  let currentRotation = 0
-  let wheelOrder = []
-  let wheelSegments = []
+let currentRotation = -Math.PI / 2
+let wheelOrder = []
+let wheelSegments = []
 
   resultClose.addEventListener('click', () => {
     modal.classList.add('hidden')
@@ -85,40 +90,118 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   function drawWheel(premios) {
-    if (!premios || premios.length === 0) {
-      wheel.style.background = '#dcdcdc'
-      wheelOrder = []
-      wheelSegments = []
-      return
-    }
+
+    if (!premios.length) return
 
     wheelOrder = shuffle(premios)
     wheelSegments = []
 
-    const total = wheelOrder.reduce((sum, p) => sum + Number(p.peso ?? 1), 0)
-    const usableAngle = 360 - (WHEEL_SEPARATOR * wheelOrder.length)
+    const totalPeso = wheelOrder.reduce(
+        (s, p) => s + Number(p.peso ?? 1),
+        0
+    )
 
-    let current = 0
-    const stops = []
+    ctx.clearRect(0, 0, SIZE, SIZE)
 
-    wheelOrder.forEach((p) => {
-      const weight = Number(p.peso ?? 1)
-      const size = usableAngle * (weight / total)
+    let startAngle = currentRotation
 
-      const start = current
-      const end = current + size
+    wheelOrder.forEach((premio) => {
 
-      wheelSegments.push({ id: p.id, start, end })
+        const peso = Number(premio.peso ?? 1)
 
-      stops.push(`${colorForPremio(p)} ${start}deg ${end}deg`)
-      current = end
+        const arc = (peso / totalPeso) * Math.PI * 2
 
-      stops.push(`#000 ${current}deg ${current + WHEEL_SEPARATOR}deg`)
-      current += WHEEL_SEPARATOR
+        const endAngle = startAngle + arc
+
+        wheelSegments.push({
+
+            id: premio.id,
+
+            start: startAngle,
+
+            end: endAngle
+
+        })
+
+        // COLOR DEL SECTOR
+        ctx.beginPath()
+        ctx.moveTo(CENTER, CENTER)
+
+        ctx.arc(
+            CENTER,
+            CENTER,
+            RADIUS,
+            startAngle,
+            endAngle
+        )
+
+        ctx.closePath()
+
+        ctx.fillStyle = colorForPremio(premio)
+
+        ctx.fill()
+
+        // BORDE
+        ctx.lineWidth = 3
+        ctx.strokeStyle = "#111"
+
+        ctx.stroke()
+
+        // TEXTO
+
+        const middle = (startAngle + endAngle) / 2
+
+        ctx.save()
+
+        ctx.translate(CENTER, CENTER)
+
+        ctx.rotate(middle)
+
+        ctx.textAlign = "right"
+
+        ctx.fillStyle = "#222"
+
+        ctx.font = "bold 22px Arial"
+
+        ctx.fillText(
+
+            premio.nombre,
+
+            RADIUS - 35,
+
+            8
+
+        )
+
+        ctx.restore()
+
+        startAngle = endAngle
+
     })
 
-    wheel.style.background = `conic-gradient(from -90deg, ${stops.join(', ')})`
-  }
+    // CENTRO
+
+    ctx.beginPath()
+
+    ctx.arc(
+
+        CENTER,
+
+        CENTER,
+
+        28,
+
+        0,
+
+        Math.PI * 2
+
+    )
+
+    ctx.fillStyle = "#111"
+
+    ctx.fill()
+
+}
 
   function drawLegend(premios) {
     legend.innerHTML = ''
@@ -139,28 +222,87 @@ document.addEventListener('DOMContentLoaded', async () => {
     })
   }
 
-  function getTargetAngleForPremio(premio) {
-    const segment = wheelSegments.find(s => s.id === premio.id)
-    if (!segment) return null
+function getTargetAngleForPremio(premio){
 
-    const size = segment.end - segment.start
-    const safeMargin = Math.min(2, Math.max(0.35, size * 0.18))
+    const segment =
+        wheelSegments.find(s=>s.id===premio.id)
 
-    const min = segment.start + safeMargin
-    const max = segment.end - safeMargin
+    if(!segment)
+        return null
 
-    if (max <= min) {
-      return (segment.start + segment.end) / 2
-    }
+    const center =
+        (segment.start+segment.end)/2
 
-    return min + Math.random() * (max - min)
-  }
+    const size =
+        segment.end-segment.start
 
-  function getRotationDeltaToAngle(targetAngle) {
+    const offset =
+        (Math.random()-0.5)*
+        Math.min(size*0.3,8)
+
+    return center+offset
+
+}
+
+function getRotationDeltaToAngle(targetAngle) {
+
+    // El conic-gradient comienza en -90°
+    const visualAngle = (targetAngle - 90 + 360) % 360
+
     const currentMod = ((currentRotation % 360) + 360) % 360
-    const desiredMod = ((360 - (targetAngle % 360)) + 360) % 360
+
+    const desiredMod = ((360 - visualAngle) + 360) % 360
+
     return (desiredMod - currentMod + 360) % 360
-  }
+
+}
+
+function animateWheel(finalRotation){
+
+    return new Promise(resolve=>{
+
+        const duration = 9000
+
+        const start = performance.now()
+
+        const initial = currentRotation
+
+        const distance = finalRotation - initial
+
+        function frame(now){
+
+            let t = (now-start)/duration
+
+            if(t>1)t=1
+
+            // desaceleración suave
+            const ease =
+                1-Math.pow(1-t,4)
+
+            const angle =
+                initial + distance*ease
+
+            wheel.style.transform =
+                `rotate(${angle}deg)`
+
+            if(t<1){
+
+                requestAnimationFrame(frame)
+
+            }else{
+
+                currentRotation=finalRotation
+                resolve()
+
+            }
+
+        }
+
+        requestAnimationFrame(frame)
+
+    })
+
+}
 
   async function loadBoletos() {
     const { data, error } = await supabase
@@ -219,15 +361,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       return
     }
 
-    const extraTurns = 1440 + Math.floor(Math.random() * 720)
+    const extraTurns = 5400 + Math.random()*1440
     const delta = getRotationDeltaToAngle(targetAngle) + extraTurns
 
-    currentRotation += delta
-    wheel.style.transform = `rotate(${currentRotation}deg)`
+const finalRotation = currentRotation + delta
 
-    setTimeout(async () => {
-      await resolveSpin(boleto, premio)
-    }, 3200)
+await animateWheel(finalRotation)
+
+await resolveSpin(boleto,premio)
   })
 
   async function resolveSpin(boleto, premio) {
