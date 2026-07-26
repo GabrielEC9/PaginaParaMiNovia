@@ -220,6 +220,11 @@ ctx.fill()
 
     let startAngle = -Math.PI / 2
 
+    console.log("ORDEN VISUAL:")
+wheelOrder.forEach((p, i)=>{
+    console.log(i, p.id, p.nombre)
+})
+
     wheelOrder.forEach((premio) => {
 
         const peso = Number(premio.peso ?? 1)
