@@ -4150,8 +4150,8 @@ body.profile-page {
 }
 
 /* ================= TARJETA DE PERFIL ================= */
-.profile-card {
-  background: #fff;
+body.profile-page .profile-card {
+  background: #ffffff !important;
   border-radius: 20px;
   padding: 32px 24px;
   width: 100%;
@@ -4249,8 +4249,8 @@ body.profile-page {
 }
 
 /* ================= CÓDIGOS DE DESCUENTO ================= */
-.profile-codes {
-  background: #fff;
+body.profile-page .profile-codes {
+  background: #ffffff !important;
   border-radius: 20px;
   padding: 24px;
   width: 100%;
