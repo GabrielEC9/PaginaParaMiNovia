@@ -386,18 +386,14 @@ function getRotationDeltaToAngle(target){
 
     const TWO_PI = Math.PI * 2
 
-    const current =
-        ((currentRotation % TWO_PI) + TWO_PI) % TWO_PI
+    const arrowAngle = -Math.PI / 2
+
+    const desiredRotation = arrowAngle - target
+
+    let delta = desiredRotation - currentRotation
 
 
-    const desired =
-        ((-Math.PI / 2 - target) + TWO_PI) % TWO_PI
-
-
-    let delta = desired - current
-
-
-    if(delta < 0){
+    while(delta < 0){
         delta += TWO_PI
     }
 
@@ -452,6 +448,7 @@ canvas.style.transformOrigin = "center center"
   "GRADOS:",
   finalRotation * 180 / Math.PI
 )
+currentRotation = currentRotation % (Math.PI * 2)
 
                 canvas.style.transform=
                 `rotate(${currentRotation}rad)`
@@ -532,7 +529,7 @@ console.log("SEGMENTO:", wheelSegments.find(s => s.id === premio.id))
       return
     }
 
-    const extraTurns = ( Math.PI*2*6 ) + Math.random()*(Math.PI*2*4)
+    const extraTurns = Math.PI * 2 * 5
     const delta = getRotationDeltaToAngle(targetAngle) + extraTurns
 
 const finalRotation = currentRotation + delta
