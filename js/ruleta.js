@@ -584,7 +584,6 @@ await resolveSpin(boleto,premio)
       }
 
       await loadBoletos()
-      await loadPremios()
     } catch (error) {
       console.error('Error resolviendo el giro:', error)
       messageBox.textContent = 'Ocurrió un error al registrar el giro. Intenta de nuevo.'
