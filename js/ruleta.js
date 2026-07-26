@@ -386,18 +386,16 @@ function getRotationDeltaToAngle(target){
     const TWO_PI = Math.PI * 2
 
     const current =
-        ((currentRotation % TWO_PI) + TWO_PI) % TWO_PI
+        currentRotation % TWO_PI
 
 
-    const desired =
-        ((-target % TWO_PI) + TWO_PI) % TWO_PI
+    let delta =
+        (-Math.PI / 2 - target) - current
 
 
-    let delta = desired - current
-
-
-    if(delta < 0)
+    while(delta < 0){
         delta += TWO_PI
+    }
 
 
     return delta
@@ -444,6 +442,13 @@ canvas.style.transformOrigin = "center center"
             }else{
 
                 currentRotation=finalRotation
+
+                console.log(
+  "ROTACION FINAL:",
+  finalRotation,
+  "GRADOS:",
+  finalRotation * 180 / Math.PI
+)
 
                 canvas.style.transform=
                 `rotate(${currentRotation}rad)`
@@ -530,6 +535,8 @@ console.log("SEGMENTO:", wheelSegments.find(s => s.id === premio.id))
 const finalRotation = currentRotation + delta
 
 await animateWheel(finalRotation)
+
+console.log("TERMINO GIRO, PREMIO REAL:", premio.nombre)
 
 await resolveSpin(boleto,premio)
   })
