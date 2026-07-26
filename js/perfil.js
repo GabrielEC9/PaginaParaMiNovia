@@ -4,7 +4,7 @@ const AVATAR_BUCKET = 'avatars'
 const MAX_AVATAR_MB = 3
 
 // silueta genérica dibujada directo, así no depende de que subas un archivo default.png
-const DEFAULT_AVATAR = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23fff6f6'/><circle cx='50' cy='38' r='18' fill='%23ff9d9d'/><path d='M18 88 Q50 55 82 88 Z' fill='%23ff9d9d'/></svg>"
+const DEFAULT_AVATAR = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23ffffff'/><circle cx='50' cy='38' r='18' fill='%23ffcccc'/><path d='M18 88 Q50 55 82 88 Z' fill='%23ffcccc'/></svg>"
 
 document.addEventListener('DOMContentLoaded', async () => {
   const { data: { user } } = await supabase.auth.getUser()
