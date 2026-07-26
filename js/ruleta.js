@@ -601,16 +601,26 @@ await resolveSpin(boleto,premio)
             valor: premio.valor
           })
 
-        if (codigoError) throw codigoError
+if (codigoError) throw codigoError
 
-        const { error: premioError } = await supabase
-          .from('ruleta_premios')
-          .update({ activo: false })
-          .eq('id', premio.id)
+const { error: premioError } = await supabase
+  .from('ruleta_premios')
+  .update({ activo: false })
+  .eq('id', premio.id)
 
-        if (premioError) throw premioError
+if (premioError) throw premioError
 
-        showResult(premio, `¡Ganaste un código de descuento: ${codigo}! 🎉 Revísalo en tu perfil.`)
+wheelOrder = wheelOrder.filter(
+  p => p.id !== premio.id
+)
+
+drawWheel()
+drawLegend(wheelOrder)
+
+showResult(
+  premio,
+  `¡Ganaste un código de descuento: ${codigo}! 🎉 Revísalo en tu perfil.`
+)
       } else {
         showResult(premio, 'Esta vez no hubo suerte, ¡inténtalo con tu próximo boleto! 💔')
       }
