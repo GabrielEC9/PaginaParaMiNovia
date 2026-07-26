@@ -3776,22 +3776,6 @@ body.roulette-page {
   margin: 0 0 16px;
 }
 
-/* ================= ÁREA DE LA RULETA ================= */
-
-
-.wheel-separator {
-  position: absolute;
-  left: calc(50% - 1px);
-  top: 0;
-  width: 2px;
-  height: 50%;
-  background: rgba(0, 0, 0, 0.95);
-  transform-origin: bottom center;
-  pointer-events: none;
-  z-index: 2;
-  border-radius: 1px;
-  will-change: transform;
-}
 
 /* ================= BOTÓN GIRAR ================= */
 .spin-btn {
@@ -3860,13 +3844,12 @@ body.roulette-page {
     radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 16px 16px,
     radial-gradient(circle, #000 28%, transparent 29%) 8px 8px / 16px 16px,
     #ff1f1f;
-  box-shadow: 0 14px 30px rgba(0,0,0,0.32);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.32);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* ================= RULETA LIMPIA ================= */
 .wheel {
   width: 100%;
   height: 100%;
@@ -3882,30 +3865,33 @@ body.roulette-page {
   outline: 1px solid transparent;
 }
 
-.wheel::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 2;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.75);
-}
-
-/* centro más limpio, sin brillo fuerte */
 .wheel::after {
   content: "";
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 52px;
-  height: 52px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   background: #111;
-  border: 4px solid rgba(255,255,255,0.95);
+  border: 2px solid rgba(255, 255, 255, 0.9);
   transform: translate(-50%, -50%);
   box-shadow: none;
   z-index: 3;
+}
+
+.wheel-separator {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  height: 1.5px;
+  background: rgba(0, 0, 0, 0.96);
+  transform-origin: center center;
+  pointer-events: none;
+  z-index: 2;
+  border-radius: 999px;
+  will-change: transform;
 }
 
 .wheel-pointer {
@@ -3916,7 +3902,7 @@ body.roulette-page {
   font-size: 2rem;
   color: #ff1f1f;
   z-index: 4;
-  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.4));
 }
 
 @media (max-width: 640px) {

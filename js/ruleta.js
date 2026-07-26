@@ -96,17 +96,21 @@ function drawWheel(premios) {
   wheelSegments = []
 
   const total = wheelOrder.reduce((sum, p) => sum + Number(p.peso ?? 1), 0)
-
   let current = 0
   const stops = []
 
   wheelOrder.forEach((p) => {
     const weight = Number(p.peso ?? 1)
     const size = 360 * (weight / total)
+
     const start = current
     const end = current + size
 
-    wheelSegments.push({ id: p.id, start, end })
+    wheelSegments.push({
+      id: p.id,
+      start,
+      end,
+    })
 
     stops.push(`${colorForPremio(p)} ${start}deg ${end}deg`)
     current = end
@@ -124,7 +128,7 @@ function renderSeparators() {
 
     const line = document.createElement('span')
     line.className = 'wheel-separator'
-    line.style.transform = `rotate(${segment.end}deg)`
+    line.style.transform = `translate(-50%, -50%) rotate(${segment.end - 90}deg)`
     wheel.appendChild(line)
   })
 }
