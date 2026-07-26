@@ -1,8 +1,10 @@
 import { supabase } from './supabaseClient.js'
 
 const AVATAR_BUCKET = 'avatars'
-const DEFAULT_AVATAR = '/imagenes/avatar-default.png'
 const MAX_AVATAR_MB = 3
+
+// silueta genérica dibujada directo, así no depende de que subas un archivo default.png
+const DEFAULT_AVATAR = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23fff6f6'/><circle cx='50' cy='38' r='18' fill='%23ff9d9d'/><path d='M18 88 Q50 55 82 88 Z' fill='%23ff9d9d'/></svg>"
 
 document.addEventListener('DOMContentLoaded', async () => {
   const { data: { user } } = await supabase.auth.getUser()
@@ -15,13 +17,16 @@ document.addEventListener('DOMContentLoaded', async () => {
   const avatarEditBtn  = document.getElementById('avatar-edit-btn')
   const avatarInput    = document.getElementById('avatar-input')
   const usernameEl     = document.getElementById('profile-username')
-  const memberSinceEl  = document.getElementById('profile-member-since')
   const bugsEl         = document.getElementById('profile-bugs')
   const streakEl       = document.getElementById('profile-streak')
   const boletosEl      = document.getElementById('profile-boletos')
   const messageBox     = document.getElementById('profile-message')
   const codesAvailableBox = document.getElementById('codes-available')
   const codesUsedBox      = document.getElementById('codes-used')
+
+  // si la imagen ya no carga (link roto, etc.) regresa al ícono genérico en vez de mostrarse rota
+  avatarImg.onerror = () => { avatarImg.onerror = null; avatarImg.src = DEFAULT_AVATAR }
+  avatarImg.src = DEFAULT_AVATAR
 
   function showMessage(text, error = false) {
     messageBox.textContent = text
@@ -30,17 +35,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     setTimeout(() => messageBox.classList.remove('show'), 3500)
   }
 
-  function formatDate(dateStr) {
-    if (!dateStr) return ''
-    const d = new Date(dateStr)
-    return d.toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' })
-  }
-
   /* ================= DATOS DEL PERFIL ================= */
   async function loadProfile() {
     const { data: profile, error } = await supabase
       .from('profiles')
-      .select('username, bugs, streak_days, created_at, avatar_url')
+      .select('username, bugs, streak_days, avatar_url')
       .eq('id', user.id)
       .single()
 
@@ -50,10 +49,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     usernameEl.textContent = profile.username
-    memberSinceEl.textContent = `Miembro desde ${formatDate(profile.created_at)}`
     bugsEl.textContent = profile.bugs ?? 0
     streakEl.textContent = profile.streak_days ?? 0
-    avatarImg.src = profile.avatar_url || DEFAULT_AVATAR
+    if (profile.avatar_url) avatarImg.src = profile.avatar_url
   }
 
   /* ================= BOLETOS DISPONIBLES ================= */

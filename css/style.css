@@ -4208,14 +4208,7 @@ body.profile-page {
   font-size: 1.4rem;
   font-weight: 900;
   color: #ff1f1f;
-  margin: 6px 0 2px;
-}
-
-.profile-member-since {
-  font-size: 0.85rem;
-  color: #777;
-  font-weight: 600;
-  margin-bottom: 18px;
+  margin: 6px 0 18px;
 }
 
 /* ================= ESTADÍSTICAS ================= */
