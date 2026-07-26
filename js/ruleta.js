@@ -108,10 +108,11 @@ let wheelSegments = []
     ctx.clearRect(0, 0, SIZE, SIZE)
 
   // ==========================================
-// CAPARAZÓN DE MARIQUITA
+// BORDE ROJO ESTILO MARIQUITA
 // ==========================================
 
-// sombra exterior
+// círculo rojo exterior
+
 ctx.beginPath()
 
 ctx.arc(
@@ -119,44 +120,69 @@ ctx.arc(
     CENTER,
     OUTER_RADIUS,
     0,
-    Math.PI * 2
+    Math.PI*2
 )
 
-ctx.fillStyle = "#111"
+ctx.fillStyle="#e51c23"
+
 ctx.fill()
 
 
-// capa roja
+// borde negro fino exterior
+
 ctx.beginPath()
 
 ctx.arc(
     CENTER,
     CENTER,
-    OUTER_RADIUS - 12,
+    OUTER_RADIUS,
     0,
-    Math.PI * 2
+    Math.PI*2
 )
 
-ctx.fillStyle = "#d71920"
-ctx.fill()
+ctx.lineWidth=8
+ctx.strokeStyle="#111"
 
-
-
-// brillo del caparazón
-ctx.beginPath()
-
-ctx.arc(
-    CENTER,
-    CENTER,
-    OUTER_RADIUS - 20,
-    0,
-    Math.PI * 2
-)
-
-ctx.strokeStyle = "rgba(255,255,255,0.35)"
-ctx.lineWidth = 6
 ctx.stroke()
 
+
+
+// lunares negros
+
+ctx.fillStyle="#111"
+
+const dots = 18
+
+
+for(let i=0;i<dots;i++){
+
+    const angle =
+        i*Math.PI*2/dots
+
+
+    const x =
+        CENTER+
+        Math.cos(angle)*(OUTER_RADIUS-15)
+
+
+    const y =
+        CENTER+
+        Math.sin(angle)*(OUTER_RADIUS-15)
+
+
+    ctx.beginPath()
+
+    ctx.arc(
+        x,
+        y,
+        7,
+        0,
+        Math.PI*2
+    )
+
+    ctx.fill()
+
+}
 
 
 // ==========================================

@@ -3728,7 +3728,7 @@ body.roulette-page {
 
 .roulette-container {
   width: 100%;
-  max-width: 900px;
+  max-width:1200px;
   padding: 40px 20px 60px;
   display: flex;
   flex-direction: column;
@@ -3819,7 +3819,7 @@ body.roulette-page {
   min-width: 300px;
       flex:1 1 420px;
 
-    max-width:620px;
+    max-width:700px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3830,7 +3830,7 @@ body.roulette-page {
 
     position:relative;
 
-    width:min(560px,92vw);
+    width:min(620px,92vw);
 
     aspect-ratio:1;
 
