@@ -65,7 +65,7 @@ const SIZE = canvas.width
 const CENTER = SIZE / 2
 const OUTER_RADIUS = SIZE/2 - 8
 
-const RING_SIZE = 42
+const RING_SIZE = 28
 
 const RADIUS = OUTER_RADIUS - RING_SIZE
   const messageBox = document.getElementById('roulette-message')
@@ -107,10 +107,11 @@ let wheelSegments = []
 
     ctx.clearRect(0, 0, SIZE, SIZE)
 
-   // ==========================================
-// BORDE ROJO
+  // ==========================================
+// CAPARAZÓN DE MARIQUITA
 // ==========================================
 
+// sombra exterior
 ctx.beginPath()
 
 ctx.arc(
@@ -121,9 +122,42 @@ ctx.arc(
     Math.PI * 2
 )
 
-ctx.fillStyle = "#d81f26"
-
+ctx.fillStyle = "#111"
 ctx.fill()
+
+
+// capa roja
+ctx.beginPath()
+
+ctx.arc(
+    CENTER,
+    CENTER,
+    OUTER_RADIUS - 12,
+    0,
+    Math.PI * 2
+)
+
+ctx.fillStyle = "#d71920"
+ctx.fill()
+
+
+
+// brillo del caparazón
+ctx.beginPath()
+
+ctx.arc(
+    CENTER,
+    CENTER,
+    OUTER_RADIUS - 20,
+    0,
+    Math.PI * 2
+)
+
+ctx.strokeStyle = "rgba(255,255,255,0.35)"
+ctx.lineWidth = 6
+ctx.stroke()
+
+
 
 // ==========================================
 // CÍRCULO BLANCO INTERIOR
@@ -149,7 +183,7 @@ ctx.fill()
 
 ctx.fillStyle = "#111"
 
-const dots = 20
+const dots = 24
 
 for(let i=0;i<dots;i++){
 
@@ -157,25 +191,43 @@ for(let i=0;i<dots;i++){
 
     const x =
         CENTER +
-        Math.cos(angle) * (OUTER_RADIUS - RING_SIZE/2)
+        Math.cos(angle) * (OUTER_RADIUS - 32)
 
     const y =
         CENTER +
-        Math.sin(angle) * (OUTER_RADIUS - RING_SIZE/2)
+        Math.sin(angle) * (OUTER_RADIUS - 32)
+
 
     ctx.beginPath()
 
     ctx.arc(
         x,
         y,
-        8,
+        11,
         0,
         Math.PI * 2
     )
 
+
+    ctx.fillStyle="#111"
+
     ctx.fill()
 
 
+    // pequeño brillo del lunar
+    ctx.beginPath()
+
+    ctx.arc(
+        x-3,
+        y-3,
+        3,
+        0,
+        Math.PI*2
+    )
+
+    ctx.fillStyle="rgba(255,255,255,0.35)"
+
+    ctx.fill()
 }
 
     let startAngle = -Math.PI / 2
