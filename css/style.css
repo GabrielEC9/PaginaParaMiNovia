@@ -1961,16 +1961,14 @@ body.rewards-page {
 
 /* imagen del boleto dentro de la tarjeta desbloqueada/reclamable */
 .reward-boleto-img {
-  width: 100%;
-  max-width: 140px;
+  width: auto;
+  max-width: 100%;
   height: auto;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  border-radius: 10px;
+  max-height: 90px;
+  object-fit: contain;
   margin: 4px auto 8px;
   display: block;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
-  border: 2px solid #ffb400;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,0.3));
 }
 
 /* aviso "premio especial" cuando está bloqueado, con acento dorado */
@@ -2008,7 +2006,7 @@ body.rewards-page {
 }
 
 .reward-boleto-img {
-  max-width: 100px;
+  max-height: 65px;
 }
 
 }
