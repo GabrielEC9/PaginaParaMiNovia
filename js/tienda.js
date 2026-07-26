@@ -64,13 +64,20 @@ document.addEventListener('DOMContentLoaded', async () => {
      CUPONES DISPONIBLES
   =============================== */
   async function loadCoupons() {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('codigos_descuento')
       .select('*')
       .eq('user_id', user.id)
       .eq('usado', false)
 
-    codigosDisponibles = data || []
+    if (error) {
+      console.error('Error cargando cupones:', error)
+      codigosDisponibles = []
+    } else {
+      console.log('Cupones cargados:', data)
+      codigosDisponibles = data || []
+    }
+
     renderCouponOptions()
   }
 
@@ -255,92 +262,99 @@ document.addEventListener('DOMContentLoaded', async () => {
       return
     }
 
-    const itemsArray = [...cart.values()]
+    cartBuyBtn.disabled = true
 
-    const subtotal = itemsArray.reduce(
-      (sum, e) => sum + e.item.cost * e.quantity,
-      0
-    )
+    try {
+      const itemsArray = [...cart.values()]
 
-    const { coupon, discount, blocked } = computeDiscount(subtotal)
-    const cuponAUsar = blocked ? null : coupon // por seguridad, ignora cualquier cupón si se pasó del límite
-    const total = subtotal - discount
+      const subtotal = itemsArray.reduce(
+        (sum, e) => sum + e.item.cost * e.quantity,
+        0
+      )
 
-    if (total > userBugs) {
-      showMessage('No tienes suficientes bugs 🐞', true)
-      return
-    }
+      const { coupon, discount, blocked } = computeDiscount(subtotal)
+      const cuponAUsar = blocked ? null : coupon // por seguridad, ignora cualquier cupón si se pasó del límite
+      const total = subtotal - discount
 
-    /* REGISTRAR COMPRA */
-    const { data: purchase, error: purchaseError } = await supabase
-      .from('purchases')
-      .insert({
-        user_id: user.id,
-        total_bugs_spent: total,
-        total_original: subtotal,
-        codigo_descuento_id: cuponAUsar ? cuponAUsar.id : null
+      if (total > userBugs) {
+        showMessage('No tienes suficientes bugs 🐞', true)
+        return
+      }
+
+      /* REGISTRAR COMPRA */
+      const { data: purchase, error: purchaseError } = await supabase
+        .from('purchases')
+        .insert({
+          user_id: user.id,
+          total_bugs_spent: total,
+          total_original: subtotal,
+          codigo_descuento_id: cuponAUsar ? cuponAUsar.id : null
+        })
+        .select()
+        .single()
+
+      if (purchaseError) {
+        showMessage('Error al registrar la compra ❌', true)
+        return
+      }
+
+      /* REGISTRAR ITEMS */
+      const purchaseItems = itemsArray.map(e => ({
+        purchase_id: purchase.id,
+        item_id: e.item.id,
+        quantity: e.quantity
+      }))
+
+      const { error: itemsError } = await supabase
+        .from('purchase_items')
+        .insert(purchaseItems)
+
+      if (itemsError) {
+        showMessage('Error al guardar los productos ❌', true)
+        return
+      }
+
+      /* ACTUALIZAR BUGS */
+      const newBugs = userBugs - total
+
+      const { error: bugsError } = await supabase
+        .from('profiles')
+        .update({ bugs: newBugs })
+        .eq('id', user.id)
+
+      if (bugsError) {
+        showMessage('Error al actualizar bugs ❌', true)
+        return
+      }
+
+      /* MARCAR CUPÓN COMO USADO (restricción 1: un solo uso) */
+      if (cuponAUsar) {
+        await supabase
+          .from('codigos_descuento')
+          .update({ usado: true, purchase_id: purchase.id })
+          .eq('id', cuponAUsar.id)
+      }
+
+      /* LIMPIAR UI */
+      userBugs = newBugs
+      bugsSpan.textContent = userBugs
+
+      cart.clear()
+      await loadCoupons() // refresca la lista: el cupón usado ya no aparece
+      renderCart()
+
+      document.querySelectorAll('.store-card').forEach(c => {
+        c.classList.remove('selected')
+        c.querySelector('.qty-value').textContent = '0'
       })
-      .select()
-      .single()
 
-    if (purchaseError) {
-      showMessage('Error al registrar la compra ❌', true)
-      return
+      cartPanel.classList.remove('open')
+
+      showMessage(cuponAUsar ? `Pedido recibido con ${cuponAUsar.codigo} aplicado 🎉` : 'Pedido recibido')
+
+    } finally {
+      cartBuyBtn.disabled = false
     }
-
-    /* REGISTRAR ITEMS */
-    const purchaseItems = itemsArray.map(e => ({
-      purchase_id: purchase.id,
-      item_id: e.item.id,
-      quantity: e.quantity
-    }))
-
-    const { error: itemsError } = await supabase
-      .from('purchase_items')
-      .insert(purchaseItems)
-
-    if (itemsError) {
-      showMessage('Error al guardar los productos ❌', true)
-      return
-    }
-
-    /* ACTUALIZAR BUGS */
-    const newBugs = userBugs - total
-
-    const { error: bugsError } = await supabase
-      .from('profiles')
-      .update({ bugs: newBugs })
-      .eq('id', user.id)
-
-    if (bugsError) {
-      showMessage('Error al actualizar bugs ❌', true)
-      return
-    }
-
-    /* MARCAR CUPÓN COMO USADO (restricción 1: un solo uso) */
-    if (cuponAUsar) {
-      await supabase
-        .from('codigos_descuento')
-        .update({ usado: true, purchase_id: purchase.id })
-        .eq('id', cuponAUsar.id)
-    }
-
-    /* LIMPIAR UI */
-    userBugs = newBugs
-    bugsSpan.textContent = userBugs
-
-    cart.clear()
-    await loadCoupons() // refresca la lista: el cupón usado ya no aparece
-    renderCart()
-
-    document.querySelectorAll('.store-card').forEach(c => {
-      c.classList.remove('selected')
-      c.querySelector('.qty-value').textContent = '0'
-    })
-
-    cartPanel.classList.remove('open')
-
-    showMessage(cuponAUsar ? `Pedido recibido con ${cuponAUsar.codigo} aplicado 🎉` : 'Pedido recibido')
   }
 
   /* ===============================
