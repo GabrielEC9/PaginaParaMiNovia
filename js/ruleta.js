@@ -614,8 +614,14 @@ wheelOrder = wheelOrder.filter(
   p => p.id !== premio.id
 )
 
+premiosActivos = premiosActivos.filter(
+  p => p.id !== premio.id
+)
+
 drawWheel()
-drawLegend(wheelOrder)
+drawLegend(premiosActivos)
+
+await loadPremios()
 
 showResult(
   premio,
