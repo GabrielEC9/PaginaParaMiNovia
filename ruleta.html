@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ruleta de la Suerte</title>
+
+  <!-- CSS GLOBAL -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+
+<body class="ladybug-bg roulette-page">
+
+  <!-- FONDO DEL CIELO -->
+  <div class="sky-background">
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
+    <div class="cloud cloud4"></div>
+    <div class="cloud cloud5"></div>
+    <div class="cloud cloud6"></div>
+    <div class="cloud cloud7"></div>
+    <div class="cloud cloud8"></div>
+  </div>
+
+<!-- MENÚ GLOBAL -->
+<header class="main-menu">
+
+  <div class="menu-left">
+    <button id="menu-toggle" class="menu-toggle">☰</button>
+
+    <span class="menu-title">
+      Bienvenida mi amor
+    </span>
+  </div>
+
+  <div class="anniversary-container">
+  <span class="anniversary-label">
+    Próximo aniversario:
+  </span>
+
+  <span id="anniversary-countdown">
+    Calculando...
+  </span>
+</div>
+
+</header>
+
+<!-- SIDEBAR -->
+<nav id="menu-links">
+
+  <div class="menu-header">
+    <span>Menú</span>
+
+    <button id="close-menu" class="close-menu">
+      ✕
+    </button>
+  </div>
+
+  <!-- LINKS DINÁMICOS -->
+  <div class="menu-items"></div>
+  <div class="menu-footer">
+    <button id="logout-btn" class="btn-logout">
+      Cerrar sesión
+    </button>
+  </div>
+
+</nav>
+
+  <!-- CONTENIDO RULETA -->
+<div class="roulette-wrapper">
+
+  <section class="roulette-header">
+    <h1 class="roulette-title">Ruleta de la Suerte</h1>
+  </section>
+
+  <main class="roulette-container">
+
+    <div class="user-stats">
+      <p>Boletos disponibles: <span id="user-boletos">0</span> 🎟️</p>
+    </div>
+
+    <div class="wheel-area">
+      <div class="wheel-pointer">▼</div>
+      <div class="wheel" id="wheel"></div>
+    </div>
+
+    <button id="spin-btn" class="spin-btn" disabled>Girar 🎟️</button>
+
+    <div id="roulette-message" class="reward-message"></div>
+
+    <section class="premios-legend" id="premios-legend"></section>
+
+  </main>
+
+</div>
+
+  <!-- MODAL DE RESULTADO -->
+  <div id="result-modal" class="result-modal hidden">
+    <div class="result-card">
+      <img id="result-image" class="result-image" src="" alt="" />
+      <p id="result-text" class="result-text"></p>
+      <button id="result-close" class="result-close-btn">Cerrar</button>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script type="module" src="/js/supabaseClient.js"></script>
+  <script type="module" src="/js/auth.js"></script>
+  <script type="module" src="/js/ui.js"></script>
+  <script type="module" src="/js/ruleta.js"></script>
+  <script type="module" src="/js/menu.js"></script>
+  <script type="module" src="/js/sky.js"></script>
+
+</body>
+</html>

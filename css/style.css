@@ -3666,3 +3666,255 @@ body.recuerdos-page {
   }
 
 }
+
+/* ==================================================== RULETA.HTML ==================================================== */
+
+body.roulette-page {
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  overflow-y: auto;
+}
+
+.roulette-page .main-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  z-index: 1000;
+}
+
+.roulette-page .sky-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.roulette-header {
+  margin-top: 90px;
+  text-align: center;
+  width: 100%;
+}
+
+.roulette-title {
+  font-size: clamp(2.2rem, 6vw, 3rem);
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #ff1f1f;
+  margin: 0;
+}
+
+.roulette-header::after {
+  content: "";
+  display: block;
+  width: 120px;
+  height: 6px;
+  margin: 12px auto 0;
+  border-radius: 10px;
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 24px 24px,
+    radial-gradient(circle, #000 28%, transparent 29%) 12px 12px / 24px 24px,
+    #ff1f1f;
+}
+
+.roulette-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.roulette-container {
+  width: 100%;
+  padding: 40px 20px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+  animation: fadeInUp 0.6s ease;
+}
+
+/* ================= ÁREA DE LA RULETA ================= */
+.wheel-area {
+  position: relative;
+  width: min(320px, 80vw);
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wheel {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 6px solid #000;
+  box-shadow: 0 14px 30px rgba(0,0,0,0.35);
+  transition: transform 3.2s cubic-bezier(0.15, 0.85, 0.25, 1);
+  position: relative;
+}
+
+.wheel::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #000;
+  border: 4px solid #fff;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  z-index: 3;
+}
+
+.wheel-pointer {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  color: #ff1f1f;
+  z-index: 2;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
+}
+
+/* ================= BOTÓN GIRAR ================= */
+.spin-btn {
+  padding: 16px 34px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+
+  font-weight: 900;
+  font-size: 1.15rem;
+  letter-spacing: 0.5px;
+  color: #fff;
+
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 20px 20px,
+    radial-gradient(circle, #000 28%, transparent 29%) 10px 10px / 20px 20px,
+    #ff1f1f;
+
+  box-shadow: 0 12px 25px rgba(0,0,0,0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.spin-btn:hover:not(:disabled) {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 16px 32px rgba(0,0,0,0.45);
+}
+
+.spin-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.spin-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ================= LEYENDA DE PREMIOS ================= */
+.premios-legend {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 18px;
+}
+
+.premio-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.premio-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.25);
+}
+
+/* ================= MODAL DE RESULTADO ================= */
+.result-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeInUp 0.3s ease;
+}
+
+.result-modal.hidden {
+  display: none;
+}
+
+.result-card {
+  background: #fff;
+  border-radius: 24px;
+  padding: 32px 26px;
+  max-width: 340px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 45px rgba(0,0,0,0.4);
+  animation: claim-pop 0.4s ease;
+}
+
+.result-image {
+  max-width: 100%;
+  max-height: 120px;
+  object-fit: contain;
+  margin: 0 auto 14px;
+  display: block;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,0.3));
+}
+
+.result-text {
+  font-weight: 900;
+  font-size: 1.1rem;
+  color: #ff1f1f;
+  margin-bottom: 18px;
+}
+
+.result-close-btn {
+  padding: 12px 26px;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  font-weight: 900;
+  color: #fff;
+  background: #ff1f1f;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease;
+}
+
+.result-close-btn:hover {
+  transform: scale(1.05);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 640px) {
+  .roulette-title {
+    font-size: 1.9rem;
+  }
+
+  .spin-btn {
+    padding: 14px 28px;
+    font-size: 1.05rem;
+  }
+
+  .premio-item {
+    font-size: 0.85rem;
+  }
+}
