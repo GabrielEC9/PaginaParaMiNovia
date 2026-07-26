@@ -354,26 +354,27 @@ function getTargetAngleForPremio(premio){
 
 function getRotationDeltaToAngle(target){
 
-    let current=currentRotation
+    const current =
+        ((currentRotation % (Math.PI*2)) + Math.PI*2)
+        % (Math.PI*2)
 
-    while(current<0)
-        current+=Math.PI*2
 
-    current=current%(Math.PI*2)
+let desired =
+    -target - Math.PI/2
 
-    let desired=
-        -target
 
-    while(desired<0)
-        desired+=Math.PI*2
+    desired =
+        ((desired % (Math.PI*2)) + Math.PI*2)
+        % (Math.PI*2)
 
-    desired=desired%(Math.PI*2)
 
-    let delta=
-        desired-current
+    let delta =
+        desired - current
 
-    if(delta<0)
-        delta+=Math.PI*2
+
+    if(delta < 0)
+        delta += Math.PI*2
+
 
     return delta
 
@@ -546,8 +547,6 @@ await resolveSpin(boleto,premio)
         if (!codigo) {
     throw new Error("Este premio no tiene código configurado")
 }
-
-        
 
         const { error: codigoError } = await supabase
           .from('codigos_descuento')
