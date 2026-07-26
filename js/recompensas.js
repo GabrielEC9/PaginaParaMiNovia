@@ -1,7 +1,7 @@
 import { supabase } from './supabaseClient.js'
 
 const CYCLE_DAYS = 14
-const BOLETO_IMAGE = '/imagenes/boleto/boleto.png' // ajusta si tu archivo se llama distinto
+const BOLETO_IMAGE = '/imagenes/boleto.png' 
 
 document.addEventListener('DOMContentLoaded', async () => {
   const { data: { user } } = await supabase.auth.getUser()
