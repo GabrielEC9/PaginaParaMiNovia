@@ -385,21 +385,15 @@ function getRotationDeltaToAngle(target){
 
     const TWO_PI = Math.PI * 2
 
-    const current =
-        currentRotation % TWO_PI
+    const current = currentRotation % TWO_PI
 
-
-    let delta =
-        (-Math.PI / 2 - target) - current
-
+    let delta = -target - current
 
     while(delta < 0){
         delta += TWO_PI
     }
 
-
     return delta
-
 }
 
 async function animateWheel(finalRotation){
