@@ -3,9 +3,18 @@ import { supabase } from './supabaseClient.js'
 const CODE_PREFIX = 'DESC'
 
 const WHEEL_PALETTE = [
-  '#ff1f1f', '#ff6b1f', '#ffb400', '#c81d1d', '#e08a00',
-  '#8a1f1f', '#ff9d4d', '#d4af00', '#b3401f', '#f2542d',
-  '#a6180f', '#ffcf40'
+  '#F4C6D7', // rosa suave
+  '#F9D5A7', // durazno
+  '#FFF1A8', // amarillo pastel
+  '#CDECCF', // verde menta
+  '#BFE3E1', // aqua suave
+  '#C9D7F5', // azul pastel
+  '#DCCEF5', // lila
+  '#F0C8E8', // rosa/lila
+  '#F7C9C9', // coral claro
+  '#D7E8C8', // verde lima suave
+  '#F6D8C1', // crema melocotón
+  '#D9E1F2'  // azul grisáceo pastel
 ]
 
 function generateCode() {
