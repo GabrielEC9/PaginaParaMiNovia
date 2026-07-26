@@ -3778,30 +3778,6 @@ body.roulette-page {
 
 /* ================= ÁREA DE LA RULETA ================= */
 
-.wheel::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 2;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
-}
-
-.wheel::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: #111;
-  border: 3px solid rgba(255,255,255,0.9);
-  transform: translate(-50%, -50%);
-  box-shadow: none;
-  z-index: 3;
-}
 
 .wheel-separator {
   position: absolute;
@@ -3815,18 +3791,6 @@ body.roulette-page {
   z-index: 2;
   border-radius: 1px;
   will-change: transform;
-}
-
-/* flecha */
-.wheel-pointer {
-  position: absolute;
-  top: -14px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 2rem;
-  color: #ff1f1f;
-  z-index: 4;
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.4));
 }
 
 /* ================= BOTÓN GIRAR ================= */
