@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     modal.classList.remove('hidden')
   }
 
-  function drawWheel(premios) {
+function drawWheel(premios) {
   if (!premios || premios.length === 0) {
     wheel.style.background = '#dcdcdc'
     wheel.innerHTML = ''
@@ -106,18 +106,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     const start = current
     const end = current + size
 
-    wheelSegments.push({
-      id: p.id,
-      start,
-      end,
-    })
+    wheelSegments.push({ id: p.id, start, end })
 
     stops.push(`${colorForPremio(p)} ${start}deg ${end}deg`)
     current = end
   })
 
   wheel.style.background = `conic-gradient(from -90deg, ${stops.join(', ')})`
-
   renderSeparators()
 }
 
@@ -129,7 +124,7 @@ function renderSeparators() {
 
     const line = document.createElement('span')
     line.className = 'wheel-separator'
-    line.style.transform = `translateX(-50%) rotate(${segment.end}deg)`
+    line.style.transform = `rotate(${segment.end}deg)`
     wheel.appendChild(line)
   })
 }
