@@ -2107,7 +2107,7 @@ body.rewards-page {
   background:
     radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 20px 20px,
     radial-gradient(circle, #000 28%, transparent 29%) 10px 10px / 20px 20px,
-    #1f8f3a;
+    #ff1f1f;
 }
 
 .recover-btn.free::after {
