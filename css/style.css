@@ -2115,6 +2115,19 @@ body.rewards-page {
   margin-left: 8px;
 }
 
+/* Cuando hay dos opciones para elegir (pase gratis o bugs) */
+.recover-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.recover-options .recover-btn {
+  margin-top: 0;
+}
+
 
 /* ============================================================== TIENDA.HTML ============================================================== */
 

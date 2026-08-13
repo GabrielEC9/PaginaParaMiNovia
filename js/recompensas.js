@@ -102,43 +102,29 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const pase = pases && pases[0] ? pases[0] : null
 
-    const recoverBtn = document.createElement('button')
-    recoverBtn.classList.add('recover-btn')
+    async function recoverWithPase() {
+      await supabase
+        .from('racha_gratis')
+        .update({ usado: true, used_at: new Date().toISOString() })
+        .eq('id', pase.id)
 
-    if (pase) {
-      recoverBtn.textContent = 'Recuperar racha (GRATIS 🎟️)'
-      recoverBtn.classList.add('free')
-    } else {
-      recoverBtn.textContent = `Recuperar racha ( - ${recoverCost} )`
+      await supabase
+        .from('profiles')
+        .update({
+          streak_days: profile.lost_streak,
+          lost_streak: 0,
+          streak_lost_at: null,
+          streak_recovered: true,
+          last_claim: todayStr
+        })
+        .eq('id', user.id)
+
+      messageBox.textContent = '¡Racha recuperada gratis con tu pase! 🎉'
+      messageBox.className = 'reward-message completed'
+      setTimeout(() => location.reload(), 1200)
     }
 
-    recoverBtn.addEventListener('click', async () => {
-
-      // ==== usando el pase gratis ganado en la ruleta ====
-      if (pase) {
-        await supabase
-          .from('racha_gratis')
-          .update({ usado: true, used_at: new Date().toISOString() })
-          .eq('id', pase.id)
-
-        await supabase
-          .from('profiles')
-          .update({
-            streak_days: profile.lost_streak,
-            lost_streak: 0,
-            streak_lost_at: null,
-            streak_recovered: true,
-            last_claim: todayStr
-          })
-          .eq('id', user.id)
-
-        messageBox.textContent = '¡Racha recuperada gratis con tu pase! 🎉'
-        messageBox.className = 'reward-message completed'
-        setTimeout(() => location.reload(), 1200)
-        return
-      }
-
-      // ==== pagando con bugs, como antes ====
+    async function recoverWithBugs() {
       if (bugs < recoverCost) {
         alert('No tienes suficientes bugs')
         return
@@ -158,10 +144,36 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       messageBox.textContent = '¡Racha recuperada con éxito!'
       messageBox.className = 'reward-message completed'
-
       setTimeout(() => location.reload(), 1200)
-    })
-    container.appendChild(recoverBtn)
+    }
+
+    if (pase) {
+      // dos opciones para elegir: gratis con el pase, o pagando con bugs como siempre
+      const recoverGroup = document.createElement('div')
+      recoverGroup.classList.add('recover-options')
+
+      const freeBtn = document.createElement('button')
+      freeBtn.classList.add('recover-btn', 'free')
+      freeBtn.textContent = 'Recuperar racha (GRATIS 🎟️)'
+      freeBtn.addEventListener('click', recoverWithPase)
+
+      const bugsBtn = document.createElement('button')
+      bugsBtn.classList.add('recover-btn')
+      bugsBtn.textContent = `Recuperar racha ( - ${recoverCost} )`
+      bugsBtn.addEventListener('click', recoverWithBugs)
+
+      recoverGroup.appendChild(freeBtn)
+      recoverGroup.appendChild(bugsBtn)
+      container.appendChild(recoverGroup)
+
+    } else {
+      // solo la opción de pagar con bugs, como antes
+      const recoverBtn = document.createElement('button')
+      recoverBtn.classList.add('recover-btn')
+      recoverBtn.textContent = `Recuperar racha ( - ${recoverCost} )`
+      recoverBtn.addEventListener('click', recoverWithBugs)
+      container.appendChild(recoverBtn)
+    }
   }
 
   /* ================= DÍAS ================= */
