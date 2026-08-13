@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const bugsEl         = document.getElementById('profile-bugs')
   const streakEl       = document.getElementById('profile-streak')
   const boletosEl      = document.getElementById('profile-boletos')
+  const pasesEl        = document.getElementById('profile-pases')
   const messageBox     = document.getElementById('profile-message')
   const codesAvailableBox = document.getElementById('codes-available')
   const codesUsedBox      = document.getElementById('codes-used')
@@ -68,6 +69,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     boletosEl.textContent = (data || []).length
+  }
+
+  /* ================= PASES DE RACHA GRATIS ================= */
+  async function loadPases() {
+    const { data, error } = await supabase
+      .from('racha_gratis')
+      .select('id')
+      .eq('user_id', user.id)
+      .eq('usado', false)
+
+    if (error) {
+      console.error('Error cargando pases de racha gratis:', error)
+      return
+    }
+
+    pasesEl.textContent = (data || []).length
   }
 
   /* ================= CÓDIGOS DE DESCUENTO ================= */
@@ -178,5 +195,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   /* ================= INIT ================= */
   await loadProfile()
   await loadBoletos()
+  await loadPases()
   await loadCodes()
 })
