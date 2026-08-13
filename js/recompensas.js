@@ -1,7 +1,7 @@
 import { supabase } from './supabaseClient.js'
 
 const CYCLE_DAYS = 14
-const BOLETO_IMAGE = '/imagenes/boleto.png' 
+const BOLETO_IMAGE = '/imagenes/boleto.png'
 
 document.addEventListener('DOMContentLoaded', async () => {
   const { data: { user } } = await supabase.auth.getUser()
@@ -91,11 +91,54 @@ document.addEventListener('DOMContentLoaded', async () => {
   const recoverCost = profile.lost_streak * 3 || 50
 
   if (canRecover) {
+
+    // ¿tiene un pase de racha gratis sin usar, ganado en la ruleta?
+    const { data: pases } = await supabase
+      .from('racha_gratis')
+      .select('id')
+      .eq('user_id', user.id)
+      .eq('usado', false)
+      .limit(1)
+
+    const pase = pases && pases[0] ? pases[0] : null
+
     const recoverBtn = document.createElement('button')
-    recoverBtn.textContent = `Recuperar racha ( - ${recoverCost} )`
     recoverBtn.classList.add('recover-btn')
 
+    if (pase) {
+      recoverBtn.textContent = 'Recuperar racha (GRATIS 🎟️)'
+      recoverBtn.classList.add('free')
+    } else {
+      recoverBtn.textContent = `Recuperar racha ( - ${recoverCost} )`
+    }
+
     recoverBtn.addEventListener('click', async () => {
+
+      // ==== usando el pase gratis ganado en la ruleta ====
+      if (pase) {
+        await supabase
+          .from('racha_gratis')
+          .update({ usado: true, used_at: new Date().toISOString() })
+          .eq('id', pase.id)
+
+        await supabase
+          .from('profiles')
+          .update({
+            streak_days: profile.lost_streak,
+            lost_streak: 0,
+            streak_lost_at: null,
+            streak_recovered: true,
+            last_claim: todayStr
+          })
+          .eq('id', user.id)
+
+        messageBox.textContent = '¡Racha recuperada gratis con tu pase! 🎉'
+        messageBox.className = 'reward-message completed'
+        setTimeout(() => location.reload(), 1200)
+        return
+      }
+
+      // ==== pagando con bugs, como antes ====
       if (bugs < recoverCost) {
         alert('No tienes suficientes bugs')
         return

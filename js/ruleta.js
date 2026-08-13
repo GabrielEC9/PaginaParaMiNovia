@@ -627,6 +627,19 @@ showResult(
   premio,
   `¡Ganaste un código de descuento: ${codigo}! 🎉 Revísalo en tu perfil.`
 )
+} else if (premio.tipo === 'racha_gratis') {
+
+        const { error: paseError } = await supabase
+          .from('racha_gratis')
+          .insert({ user_id: user.id, usado: false })
+
+        if (paseError) throw paseError
+
+        showResult(
+          premio,
+          '¡Ganaste una recuperación de racha 100% gratis! 🔥 La próxima vez que pierdas tu racha, podrás recuperarla sin gastar bugs.'
+        )
+
       } else {
         showResult(premio, 'Esta vez no hubo suerte, ¡inténtalo con tu próximo boleto! 💔')
       }

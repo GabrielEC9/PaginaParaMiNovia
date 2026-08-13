@@ -2102,6 +2102,19 @@ body.rewards-page {
   margin-left: 8px;
 }
 
+/* Botón de recuperar racha cuando se usa el pase gratis de la ruleta */
+.recover-btn.free {
+  background:
+    radial-gradient(circle, #000 28%, transparent 29%) 0 0 / 20px 20px,
+    radial-gradient(circle, #000 28%, transparent 29%) 10px 10px / 20px 20px,
+    #1f8f3a;
+}
+
+.recover-btn.free::after {
+  content: "🎉";
+  margin-left: 8px;
+}
+
 
 /* ============================================================== TIENDA.HTML ============================================================== */
 
