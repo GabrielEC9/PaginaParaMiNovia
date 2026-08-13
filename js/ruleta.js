@@ -637,7 +637,7 @@ showResult(
 
         showResult(
           premio,
-          '¡Ganaste una recuperación de racha 100% gratis! 🔥 La próxima vez que pierdas tu racha, podrás recuperarla sin gastar bugs.'
+          '¡Ganaste una recuperación de racha 100% gratis! La próxima vez que pierdas tu racha, podrás recuperarla sin gastar bugs.'
         )
 
       } else {
