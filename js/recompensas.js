@@ -1,6 +1,6 @@
 import { supabase } from './supabaseClient.js'
 
-const CYCLE_DAYS = 14
+const CYCLE_DAYS = 30
 const BOLETO_IMAGE = '/imagenes/boleto.png'
 
 document.addEventListener('DOMContentLoaded', async () => {
